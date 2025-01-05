@@ -12,7 +12,6 @@ const Header = () => {
   const [confirm, setConfirm] = useState(false);
     const handleModal = () => {
       setShowPortal(!showPortal);
-      console.log(confirm);
     };
 
   return( 
