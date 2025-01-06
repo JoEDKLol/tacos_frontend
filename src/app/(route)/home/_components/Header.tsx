@@ -6,6 +6,7 @@ import { LuPenLine } from "react-icons/lu";
 import TEST from "@/app/components/modals/Test";
 import { useState } from "react";
 import CustomConfirm from "@/app/components/modals/CustomConfirm";
+import SignIn from "@/app/components/modals/SignIn";
 
 const Header = () => {  
   const [showPortal, setShowPortal] = useState(false);
@@ -37,7 +38,7 @@ const Header = () => {
             </svg>
             </button>
           </div>
-          <CustomConfirm show={showPortal} handleModal={handleModal} setShowPortal={setShowPortal} setConfirm={setConfirm}/>
+          <SignIn show={showPortal} handleModal={handleModal} setShowPortal={setShowPortal} setConfirm={setConfirm} message={"message"}/>
       </div>
       <div className="flex justify-end me-4">
         {
