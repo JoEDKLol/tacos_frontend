@@ -3,17 +3,29 @@ import { TbHomeStar } from "react-icons/tb";
 import { PiSignOutFill } from "react-icons/pi";
 import { PiSignInBold } from "react-icons/pi";
 import { LuPenLine } from "react-icons/lu";
-import TEST from "@/app/components/modals/Test";
 import { useState } from "react";
-import CustomConfirm from "@/app/components/modals/CustomConfirm";
 import SignIn from "@/app/components/modals/SignIn";
+import PasswordChange from "@/app/components/modals/PasswordChange";
+import SignUp from "@/app/components/modals/SignUp";
 
 const Header = () => {  
-  const [showPortal, setShowPortal] = useState(false);
-  const [confirm, setConfirm] = useState(false);
-    const handleModal = () => {
-      setShowPortal(!showPortal);
-    };
+  const [showSigninPortal, setShowSigninPortal] = useState(false);
+  const [showPasswordChangePortal, setShowPasswordChangePortal] = useState(false);
+  const [showSignUpPortal, setShowSignUpPortal] = useState(false);
+  
+  const signInHandleModal = (showYn:boolean) => {
+    setShowSigninPortal(showYn);
+  };
+
+  const passwordChangeHandleModal = (showYn:boolean) => {
+    setShowPasswordChangePortal(showYn);
+  };
+
+  const signUpHandleModal = (showYn:boolean) => {
+    setShowSignUpPortal(showYn);
+  };
+
+  
 
   return( 
     <header
@@ -38,7 +50,10 @@ const Header = () => {
             </svg>
             </button>
           </div>
-          <SignIn show={showPortal} handleModal={handleModal} setShowPortal={setShowPortal} setConfirm={setConfirm} message={"message"}/>
+          <SignIn show={showSigninPortal} signInHandleModal={signInHandleModal} passwordChangeHandleModal={passwordChangeHandleModal} signUpHandleModal={signUpHandleModal} />
+          <PasswordChange show={showPasswordChangePortal} signInHandleModal={signInHandleModal} passwordChangeHandleModal={passwordChangeHandleModal} signUpHandleModal={signUpHandleModal}/>
+          <SignUp show={showSignUpPortal} signInHandleModal={signInHandleModal} passwordChangeHandleModal={passwordChangeHandleModal} signUpHandleModal={signUpHandleModal}/>
+
       </div>
       <div className="flex justify-end me-4">
         {
@@ -50,12 +65,12 @@ const Header = () => {
             >
             <span className="group-hover:text-white block text-[#CE1126]">MyBlog</span>
             </button>
-            <p className="block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
+            <p className="group block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
             text-2xl mr-1 rounded hover:bg-[#CE1126]
             cursor-pointer p-1
             "
             // onClick={()=>movetoMyBlogOnclickHandler()}
-            ><span className="text-[#CE1126] hover:text-white"><TbHomeStar /></span></p>
+            ><span className="text-[#CE1126] group-hover:text-white"><TbHomeStar /></span></p>
 
             <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
             bg-transparent hover:bg-[#CE1126] text-[#CE1126] font-semibold   py-1 px-2 mr-2   hover:border-transparent rounded"
@@ -64,42 +79,41 @@ const Header = () => {
             >
             <span className="group-hover:text-white block text-[#CE1126]">Logout</span>
             </button>
-            <p className="block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
+            <p className="group block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
             text-2xl rounded hover:bg-[#CE1126]
             cursor-pointer p-1
             "
             // onClick={()=>logoutOnclickHandler()}
-            ><span className="text-[#CE1126] hover:text-white"><PiSignOutFill  /></span></p>
+            ><span className="text-[#CE1126] group-hover:text-white"><PiSignOutFill  /></span></p>
           </>
           :
           <>
             <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
             bg-transparent hover:bg-[#CE1126] font-semibold   py-1 px-2 mr-2  hover:border-transparent rounded"
-            // onClick={()=>loginOnclickHandler()}
-            onClick={()=>handleModal()}
+            onClick={()=>signInHandleModal(true)}
             
             >
             <span className="group-hover:text-white block text-[#CE1126]">Sign In</span>
             </button>
-            <p className="block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block mr-1 bg-white
+            <p className="group block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block mr-1 bg-white
             text-2xl rounded hover:bg-[#CE1126] 
             cursor-pointer p-1
             "
-            // onClick={()=>loginOnclickHandler()}
-            ><span className="text-[#CE1126] hover:text-white"><PiSignInBold /></span></p>
+            onClick={()=>signInHandleModal(true)}
+            ><span className="text-[#CE1126] group-hover:text-white"><PiSignInBold /></span></p>
 
             <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
             bg-transparent hover:bg-[#CE1126] font-semibold   py-1 px-2 hover:border-transparent rounded"
-              // onClick={()=>siginUpOnclickHandler()}
+              onClick={()=>signUpHandleModal(true)}
             >
             <span className="group-hover:text-white block text-[#CE1126]">Sign Up</span>
             </button>
-            <p className="block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
+            <p className="group block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
             text-2xl rounded hover:bg-[#CE1126]
             cursor-pointer p-1
             "
-            // onClick={()=>siginUpOnclickHandler()}
-            ><span className="text-[#CE1126] hover:text-white"><LuPenLine /></span></p>
+            onClick={()=>signUpHandleModal(true)}
+            ><span className="text-[#CE1126] group-hover:text-white"><LuPenLine /></span></p>
           </>
         }
         
