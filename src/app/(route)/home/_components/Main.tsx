@@ -51,18 +51,25 @@ const Main = () => {
                     <span className="ms-1 text-sm">10</span>
                     <span className="ms-3 text-lg"><MdOutlineComment/></span>
                     <span className="ms-1 text-sm">10</span>
-                    <span className="ms-3 text-lg"><GoLocation/></span>
-                    <span className="ms-1 text-sm">4715 Foothill Blvd, Oakland, CA 94601</span>
+                    <span className="ms-3 text-lg hidden
+                    2xl:block xl:block lg:block md:block sm:hidden
+                    "><GoLocation/></span>
+                    <span className="ms-1 text-sm hidden
+                    2xl:block xl:block lg:block md:block sm:hidden
+                    ">4715 Foothill Blvd, Oakland, CA 94601</span>
                   </p>
-                  <p className="flex justify-normal mt-2">
-                    
+                  <p className="flex justify-normal mt-2
+                  2xl:hidden xl:hidden lg:hidden md:hidden sm:flex
+                  ">
+                    <span className="text-lg "><GoLocation/></span>
+                    <span className="ms-1 text-sm ">4715 Foothill Blvd, Oakland, CA 94601</span>
                   </p>
 
                   <p className="flex flex-col mt-2 w-full ">
                     
                     <span className="text-sm font-bold ">Review - Daehee Kim</span>
                     <span className=" text-sm h-[62px] break-words line-clamp-3 ">4715 Foothill Blvd, Oakland, CA 94601
-                    4715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 94601
+                    CA 946014715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 946014715 Foothill Blvd, Oakland, CA 94601
 
                     </span>
 

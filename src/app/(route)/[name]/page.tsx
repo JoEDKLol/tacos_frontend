@@ -1,9 +1,11 @@
+import Layout from "./Layout";
+
 
 
 const restaurantsMain = () => {
   
   return(<>  
-    <>restaurants name</>
+    <><Layout/></>
   </>
   );
 };

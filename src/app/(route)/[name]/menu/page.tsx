@@ -1,9 +1,14 @@
+import Layout from "./Layout";
+import Main from "./Main";
 
 
 const menu = () => {
   
   return(<>  
-    <>menu</>
+    <>
+      <Layout/>
+      <Main/>
+    </>
   </>
   );
 };
