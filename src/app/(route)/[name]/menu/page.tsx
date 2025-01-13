@@ -7,7 +7,6 @@ const menu = () => {
   return(<>  
     <>
       <Layout/>
-      <Main/>
     </>
   </>
   );

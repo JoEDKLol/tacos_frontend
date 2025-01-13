@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import RestaurantsMainPage from "./components/layout/Index";
 
 
 export const metadata: Metadata = {
@@ -18,8 +19,9 @@ export default function RootLayout({
   return (
    <html lang="en">
     <body>
-      <div id="portal" />
-      {children}
+      <div id="portal" />{children}
+      {/* <RestaurantsMainPage>{children}</RestaurantsMainPage> */}
+       
     </body>
    </html>
   )

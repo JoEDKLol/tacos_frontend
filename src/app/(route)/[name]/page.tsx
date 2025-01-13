@@ -2,7 +2,7 @@ import Layout from "./Layout";
 
 
 
-const restaurantsMain = () => {
+const RestaurantsMain = () => {
   
   return(<>  
     <><Layout/></>
@@ -10,4 +10,4 @@ const restaurantsMain = () => {
   );
 };
 
-export default restaurantsMain
+export default RestaurantsMain
