@@ -1,6 +1,6 @@
 import Header from "../_componets/Header";
 
-const Layout = () => {
+const Main = () => {
 
   
   return(
@@ -10,4 +10,4 @@ const Layout = () => {
   );
 };
 
-export default Layout
+export default Main

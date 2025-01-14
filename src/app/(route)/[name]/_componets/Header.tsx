@@ -1,12 +1,12 @@
 'use client';
-import { TbHomeStar } from "react-icons/tb";
-import { PiSignOutFill } from "react-icons/pi";
-import { PiSignInBold } from "react-icons/pi";
-import { LuPenLine } from "react-icons/lu";
+// import { TbHomeStar } from "react-icons/tb";
+// import { PiSignOutFill } from "react-icons/pi";
+// import { PiSignInBold } from "react-icons/pi";
+// import { LuPenLine } from "react-icons/lu";
 import { useEffect, useState } from "react";
-import SignIn from "@/app/components/modals/SignIn";
-import PasswordChange from "@/app/components/modals/PasswordChange";
-import SignUp from "@/app/components/modals/SignUp";
+// import SignIn from "@/app/components/modals/SignIn";
+// import PasswordChange from "@/app/components/modals/PasswordChange";
+// import SignUp from "@/app/components/modals/SignUp";
 import Image from "next/image";
 
 
@@ -33,7 +33,9 @@ interface designSet {
   imageYn : boolean
   imageUrl : string
   imageStyle : {
-
+    objectFit: string
+    , borderRadius: string
+    , overflow: string
   }
 }
 
@@ -66,9 +68,9 @@ interface menuBarDesignSet {
 
 
 const Header = () => {  
-  const [showSigninPortal, setShowSigninPortal] = useState(false);
-  const [showPasswordChangePortal, setShowPasswordChangePortal] = useState(false);
-  const [showSignUpPortal, setShowSignUpPortal] = useState(false);
+  // const [showSigninPortal, setShowSigninPortal] = useState(false);
+  // const [showPasswordChangePortal, setShowPasswordChangePortal] = useState(false);
+  // const [showSignUpPortal, setShowSignUpPortal] = useState(false);
 
   const [logoSet, setLogoSet] = useState<logoSet>({ 
     height:" h-[100px]", width:" w-[100px]", bgColor:" bg-[#006341] " , border:" border-2 ", borderColor:" border-white ", ms:" ms-5 ",  me:" me-5 " , 
@@ -83,7 +85,8 @@ const Header = () => {
       { 
         objectFit: "contain"
         , borderRadius: '12px' 
-        , overflow: "hidden" }
+        , overflow: "hidden" 
+      }
     
   });
 
@@ -163,17 +166,17 @@ const Header = () => {
     setMenuBarDesignStr(menuBarDesign);
   },[menuBarDesignSet])
 
-  const signInHandleModal = (showYn:boolean) => {
-    setShowSigninPortal(showYn);
-  };
+  // const signInHandleModal = (showYn:boolean) => {
+  //   setShowSigninPortal(showYn);
+  // };
 
-  const passwordChangeHandleModal = (showYn:boolean) => {
-    setShowPasswordChangePortal(showYn);
-  };
+  // const passwordChangeHandleModal = (showYn:boolean) => {
+  //   setShowPasswordChangePortal(showYn);
+  // };
 
-  const signUpHandleModal = (showYn:boolean) => {
-    setShowSignUpPortal(showYn);
-  };
+  // const signUpHandleModal = (showYn:boolean) => {
+  //   setShowSignUpPortal(showYn);
+  // };
 
   
 

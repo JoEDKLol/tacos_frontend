@@ -7,7 +7,7 @@ import Header from "./Header";
 
 const RestaurantsMainPage = ({ children }: { children: React.ReactNode }) => {
   
-  const path:any = usePathname();
+  const path = usePathname();
 
   console.log(path);
 

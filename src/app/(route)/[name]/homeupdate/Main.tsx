@@ -8,8 +8,8 @@ const Main = () => {
   return(
     <>  
       <div>homeupdate</div>
-      <div>
-        <QuillEditorScreen/>
+      <div className="h-[90vh] border p-1">
+        <QuillEditorScreen bgColor={"white"}/>
       </div>
     </>
   );

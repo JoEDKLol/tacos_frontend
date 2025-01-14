@@ -7,7 +7,7 @@ const QuillNoSSRWrapper = dynamic(
   async () => {
     const { default: QuillComponent } = await import('react-quill-new')
 
-    const Quill = ({ ref, ...props }:any) => (
+    const Quill = ({ ref, ...props } : any) => (
       <QuillComponent ref={ref} {...props} />
     )
     return Quill

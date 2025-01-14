@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import RestaurantsMainPage from "./components/layout/Index";
+// import RestaurantsMainPage from "./components/layout/Index";
 
 
 export const metadata: Metadata = {

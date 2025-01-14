@@ -1,11 +1,17 @@
 'use client';
 import React, { useMemo, useRef, useState } from 'react';
 import 'react-quill-new/dist/quill.snow.css'; // Import Quill styles
-import QuillNoSSRWrapper from './quillEditor';
+import QuillNoSSRWrapper from './QuillEditor';
 import ReactQuill from 'react-quill-new';
+import './styles.scss';
 
+interface styleProps {
+  bgColor: string;
+}
 
-const QuillEditorScreen = () => {
+const QuillEditorScreen = (props:styleProps) => {
+
+  console.log(props);
   
   const [value, setValue] = useState('');
   const quillInstance = useRef<ReactQuill>(null);
@@ -18,7 +24,7 @@ const QuillEditorScreen = () => {
     }
   };
 
-  const modules = useMemo( 
+  const modules = useMemo(
     () => ({
       toolbar: {
         container: [
@@ -51,13 +57,25 @@ const QuillEditorScreen = () => {
     [],
   );
 
+  // const styles = useMemo(
+  //   () => ({
+  //     ".qlContainer": { border: "none" },
+      
+  //   }),
+  //   [],
+  // );
+
+
+
 
   return(
     <>  
-      <div>
+      <div className='quill'>asd
       <QuillNoSSRWrapper
+        className="ql-error"
         ref={quillInstance}
-        theme="snow" 
+        theme="snow"
+        // style={styles}
         value={value}
         onChange={setValue}
         onFocus={handleEditorFocus}
