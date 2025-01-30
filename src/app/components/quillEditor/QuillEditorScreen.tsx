@@ -2,8 +2,14 @@
 import React, { useMemo, useRef, useState } from 'react';
 import 'react-quill-new/dist/quill.snow.css'; // Import Quill styles
 import QuillNoSSRWrapper from './QuillEditor';
-import ReactQuill from 'react-quill-new';
+import ReactQuill from "react-quill-new";
 import './styles.scss';
+import './styles2.scss';
+// import { ImageActions } from "@xeger/quill-image-actions";
+// import { ImageFormats } from "@xeger/quill-image-formats";
+
+// ReactQuill.Quill.register("modules/imageActions", ImageActions);
+// ReactQuill.Quill.register("modules/imageFormats", ImageFormats);
 
 interface styleProps {
   bgColor: string;
@@ -11,13 +17,12 @@ interface styleProps {
 
 const QuillEditorScreen = (props:styleProps) => {
 
-  console.log(props);
   
   const [value, setValue] = useState('');
   const quillInstance = useRef<ReactQuill>(null);
 
   const handleEditorFocus = () => {
-    console.log(quillInstance.current);
+    // console.log(quillInstance.current);
     if (quillInstance.current) {
       console.log('Editor focused!');
       // Access the Quill instance using quillRef.current.getEditor()
@@ -26,6 +31,8 @@ const QuillEditorScreen = (props:styleProps) => {
 
   const modules = useMemo(
     () => ({
+      // imageActions: {}, //추가
+      // imageFormats: {}, //추가
       toolbar: {
         container: [
           [{ header: [1, 2, false] }],
@@ -35,8 +42,19 @@ const QuillEditorScreen = (props:styleProps) => {
           ['clean'],
           [{ color: [] }, { background: [] }],
           [{ align: [] }],
+          //         [{ align: [] }], //추가
+          // ["clean"],	//추가
         ],
+        // handlers: {
+        //   image: imageHandler // 이미지 tool 사용에 대한 핸들러 설정
+        // },
+
+        // 이미지 크기 조절
+        // ImageResize: {
+        //   modules: ['Resize']
+        // }
       },
+      
 
       // ImageResize : {
       //   modules: ["Resize", "DisplaySize"],
@@ -57,25 +75,22 @@ const QuillEditorScreen = (props:styleProps) => {
     [],
   );
 
-  // const styles = useMemo(
-  //   () => ({
-  //     ".qlContainer": { border: "none" },
-      
-  //   }),
-  //   [],
-  // );
-
+  const styles = 
+    {
+      backgroundColor:props.bgColor,
+    };
+    
 
 
 
   return(
     <>  
-      <div className='quill'>asd
+      <div className='quill'>
       <QuillNoSSRWrapper
-        className="ql-error"
+        className="style"
         ref={quillInstance}
         theme="snow"
-        // style={styles}
+        style={styles}
         value={value}
         onChange={setValue}
         onFocus={handleEditorFocus}

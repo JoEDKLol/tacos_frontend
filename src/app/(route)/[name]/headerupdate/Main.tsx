@@ -13,19 +13,6 @@ const Main = () => {
   const [bgColorQuill, setBgColorQuill] = useState<string>(""); //초기값
   const [bgColor, setBgColor] = useState<string>(""); //초기값 
 
-
-
-  // useEffect(()=>{  
-  //   // console.log(color); //{h: 0, s: 67, l: 31, a: 1}
-  //   // setBgColorQuill(color); 
-  //   // console.log("bg-[" + color + "]"); 
-  //   // const strBgColor = "bg-[" + color + "]";
-
-  //   // "bg-[#000000]"
-  //   // setBgColor(strBgColor);      
-  //   // bbcolor = strBgColor;
-  //   // console.log(bgColor); 
-  // },[color])
   function quillBgColorApply(){
     setBgColorQuill(quillColorButton);
   }
@@ -47,7 +34,7 @@ const Main = () => {
       
       <div className="mb-1">
         <div className="flex justify-center items-center h-10 border-b bg-[#006341]">
-          <p className="text-white text-xl">Menu Update</p>
+          <p className="text-white text-xl">Header Update</p>
         </div>
       </div>
       <div className=" flex justify-center ">

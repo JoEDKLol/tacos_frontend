@@ -47,7 +47,7 @@ const Main = () => {
       
       <div className="mb-1">
         <div className="flex justify-center items-center h-10 border-b bg-[#006341]">
-          <p className="text-white text-xl">Menu Update</p>
+          <p className="text-white text-xl">About Update</p>
         </div>
       </div>
       <div className=" flex justify-center ">

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Portal from "./Portal";
 import { FaRegWindowClose } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 
 const PasswordChange = (props:any) => {
   

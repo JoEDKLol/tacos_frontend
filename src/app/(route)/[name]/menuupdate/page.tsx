@@ -1,7 +1,6 @@
 import Layout from "./Layout";
 
-
-const about = () => {
+const menuUpdate = () => {
   
   return(<>  
     <Layout/>
@@ -9,4 +8,4 @@ const about = () => {
   );
 };
 
-export default about
+export default menuUpdate

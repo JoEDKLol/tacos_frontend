@@ -4,7 +4,7 @@ const Main = () => {
   
   return(
     <>  
-      <div>menu</div>
+      <div>about</div>
     </>
   );
 };
