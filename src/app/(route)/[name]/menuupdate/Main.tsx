@@ -74,7 +74,7 @@ const Main = () => {
         </div>
 
         <div className="">
-          <p className="flex justify-center">Menu-Color</p>
+          <p className="flex justify-center">MenuText-Color</p>
           <ColorButton color={menuColorButton} setColor={setMenuColorButton}/>
           <p className="my-1 flex justify-between w-[100%] ">
             <input className="text-sm p-1 ps-2 w-[130px] border border-[#006341] outline-none rounded" value={menuColorButton}
@@ -94,7 +94,9 @@ const Main = () => {
 
       <div className={" h-[90vh] border p-1 " } style={{backgroundColor:bgColor}}>
         <div className="flex justify-center">
-          <p className="" style={{fontSize:menuSize + "px", fontWeight:"bold", color:menuColor}}>MENU</p>
+          <p className="" style={{fontSize:menuSize + "px", fontWeight:"bold", color:menuColor}}>
+            <input className="p-1 border border-black rounded text-center outline-none"></input>
+          </p>
           <div className="ms-5 flex items-center ">
             <p className=" text-[20px] hover:text-[25px]" style={{ fontWeight:"bold", color:menuColor}} 
             onClick={()=>menuSizeUp()}

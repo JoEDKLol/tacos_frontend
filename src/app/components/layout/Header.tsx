@@ -163,17 +163,17 @@ const Header = () => {
     setMenuBarDesignStr(menuBarDesign);
   },[menuBarDesignSet])
 
-  const signInHandleModal = (showYn:boolean) => {
-    setShowSigninPortal(showYn);
-  };
+  // const signInHandleModal = (showYn:boolean) => {
+  //   setShowSigninPortal(showYn);
+  // };
 
-  const passwordChangeHandleModal = (showYn:boolean) => {
-    setShowPasswordChangePortal(showYn);
-  };
+  // const passwordChangeHandleModal = (showYn:boolean) => {
+  //   setShowPasswordChangePortal(showYn);
+  // };
 
-  const signUpHandleModal = (showYn:boolean) => {
-    setShowSignUpPortal(showYn);
-  };
+  // const signUpHandleModal = (showYn:boolean) => {
+  //   setShowSignUpPortal(showYn);
+  // };
 
   
 

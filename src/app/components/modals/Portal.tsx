@@ -1,6 +1,5 @@
 
 import { useEffect, useRef } from "react";
-import { Poppins } from "next/font/google";
 import { createPortal } from "react-dom";
 
 type ClientPortalInterface = {

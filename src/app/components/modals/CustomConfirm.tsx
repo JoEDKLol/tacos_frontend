@@ -23,11 +23,6 @@ const CustomConfirm = (props:any) => {
     props.handleModal();
   }
 
-  function closeYes(){
-    props.setConfirm(false);
-    props.handleModal();
-  }
-
   return (
     <Portal
       selector="portal"

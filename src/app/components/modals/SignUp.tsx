@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import Portal from "./Portal";
 import { FaRegWindowClose } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
+import { transaction } from "@/app/utils/axios";
+import loadingScreenShow from "@/app/store/loadingScreen";
 
 const SignUp = (props:any) => {
   
   const [block, setBlock] = useState<string>("block")
-  
+  const screenShow = loadingScreenShow();
+
   useEffect(() => {
     
     if(props.show){
@@ -27,15 +29,24 @@ const SignUp = (props:any) => {
     props.signUpHandleModal(false);
     props.signInHandleModal(true);
   }
+  
+  
 
+  async function sendEmail(){
+    const obj = {
 
+    }
+    await transaction("post", "signup", obj, "", false, true, screenShow, "");
+    
+    
+  }
 
   return (
     <Portal
       selector="portal"
       show={props.show}>
       <div className="static">
-        <div className=' absolute top-0 right-0 left-0 z-50 w-[100%] h-[100%] border flex justify-center items-center'>
+        <div className=' absolute top-0 right-0 left-0 z-10 w-[100%] h-[100%] border flex justify-center items-center'>
           <div className={block +  "  w-[300px] h-[400px] border-2 rounded-md border-[#006341] shadow-lg shadow-green-900/50  bg-white"}>
             <div className="flex justify-end h-[24px] bg-[#006341] ">
               <p className="mr-1 text-lg mt-0.5 text-white  cursor-pointer "
@@ -50,7 +61,9 @@ const SignUp = (props:any) => {
             <div className="mt-4 p-2 text-[#006341]">
               <p className="flex justify-between">
                 <input placeholder="Email" type="text" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"></input>
-                <button className="ms-1 border border-[#006341] w-[90px] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded">
+                <button className="ms-1 border border-[#006341] w-[90px] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                onClick={()=>sendEmail()}
+                >
                   Send
                 </button>
               </p>

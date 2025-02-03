@@ -8,6 +8,7 @@ import SignIn from "@/app/components/modals/SignIn";
 import PasswordChange from "@/app/components/modals/PasswordChange";
 import SignUp from "@/app/components/modals/SignUp";
 import Image from "next/image";
+// import LodingScreen from "@/app/components/modals/lodingScreen";
 
 const Header = () => {  
   const [showSigninPortal, setShowSigninPortal] = useState(false);
@@ -16,6 +17,7 @@ const Header = () => {
   
   const signInHandleModal = (showYn:boolean) => {
     setShowSigninPortal(showYn);
+
   };
 
   const passwordChangeHandleModal = (showYn:boolean) => {
@@ -62,6 +64,8 @@ const Header = () => {
         <SignIn show={showSigninPortal} signInHandleModal={signInHandleModal} passwordChangeHandleModal={passwordChangeHandleModal} signUpHandleModal={signUpHandleModal} />
         <PasswordChange show={showPasswordChangePortal} signInHandleModal={signInHandleModal} passwordChangeHandleModal={passwordChangeHandleModal} signUpHandleModal={signUpHandleModal}/>
         <SignUp show={showSignUpPortal} signInHandleModal={signInHandleModal} passwordChangeHandleModal={passwordChangeHandleModal} signUpHandleModal={signUpHandleModal}/>
+
+        
 
       </div>
       <div className="flex justify-end me-4">

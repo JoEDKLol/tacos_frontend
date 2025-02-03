@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import Header from "./Header";
+// import LoadingScreen from "../common/loadingScreen/Index";
 
 
 
@@ -20,10 +21,12 @@ const RestaurantsMainPage = ({ children }: { children: React.ReactNode }) => {
       {
         (path !== "/")?
         <>
+        test
         <Header/>{children}
         </>
         :
         <>
+        test
         {children}
         </>
       }    

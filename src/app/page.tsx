@@ -1,6 +1,6 @@
 'use client';
 import Image from "next/image";
-import image1 from "../../public/landingImgs/_36d446e2-cd81-46e7-810e-38de6556f484.jpg"
+// import image1 from "../../public/landingImgs/_36d446e2-cd81-46e7-810e-38de6556f484.jpg"
 
 
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ export default function Page() {
   
 
   useEffect(()=>{
-    let arrImages = [];
+    const arrImages = [];
     arrImages.push("/landingImgs/_8f324ccf-2985-4ba4-9e12-f5f6e8119eea.jpg");
     arrImages.push("/landingImgs/_36d446e2-cd81-46e7-810e-38de6556f484.jpg");
     arrImages.push("/landingImgs/_77107536-e204-4bfc-9ef2-4e35057cfd14.jpg");
@@ -21,7 +21,7 @@ export default function Page() {
     // arrImages.push("/landingImgs/_e98f4a99-4b3c-462a-969c-8dd7d36fdbf8.jpg");
     // arrImages.push("/landingImgs/_fef648fd-a351-4e55-a190-dedbaa6813b9.jpg");
     
-    arrImages.map((i, value) => console.log(i));
+    arrImages.map((i) => console.log(i));
     
     setImages(arrImages);
 
@@ -32,6 +32,7 @@ export default function Page() {
 
 
   return(
+    
     <div className="h-screen ">
       <div className="h-[100%]  flex justify-center ">
         <div className="flex justify-center items-center w-[98%]  ">
