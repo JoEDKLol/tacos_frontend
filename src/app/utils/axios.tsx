@@ -5,14 +5,13 @@ const axiosNoAuth = axios.create({
 	withCredentials: true,
 })
 
-const transaction = async (type:string, url:string, obj:any, callback:any, callbackYn:boolean, loadingScreenYn:any, screenShow:any, setErrorPage:any) => {
+const transaction = async (type:string, url:string, obj:any, callback:any, callbackYn:boolean, loadingScreenYn:any, screenShow:any, errorPage:any) => {
 	
 	if(loadingScreenYn === true) screenShow.screenShowTrue();
 	
 	try{
 		let resp:any, data:any;
-		console.log(process.env.API_URL);
-
+		
 		if(type === "get"){
 			// resp = await axiosNoAuth.get(url ,obj);
 			resp = await axiosNoAuth.get(url, {params:obj});
@@ -52,19 +51,18 @@ const transaction = async (type:string, url:string, obj:any, callback:any, callb
 		
 	}
 	catch(error:any){
+		
 		if(loadingScreenYn === true) screenShow.screenShowFalse()
-		// if(setErrorPage !== null) setErrorPage(true);
-		if(setErrorPage !== null) console.log("test");
+		if(errorPage !== null){
+			errorPage.screenShowTrue();
+			errorPage.messageSet(error.response.data.message);
+		} 
+			
 		if(error){
 			if(callbackYn){
 				callback("", error.response.data);
 			}else{
-				const resObj = {
-					sendObj : {
-						success : "n"
-					}
-				}
-				return resObj;
+				return error.response.data;
 			}
 		}
 	}
