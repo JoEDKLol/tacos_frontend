@@ -59,10 +59,18 @@ const transaction = async (type:string, url:string, obj:any, callback:any, callb
 		} 
 			
 		if(error){
+			const resObj = {
+				
+				sendObj : {
+					success : "n",
+					code: error.response.data.code,
+					message : error.response.data.message
+				}
+			}
 			if(callbackYn){
-				callback("", error.response.data);
+				callback("", resObj);
 			}else{
-				return error.response.data;
+				return resObj;
 			}
 		}
 	}

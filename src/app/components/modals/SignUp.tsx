@@ -16,13 +16,13 @@ const SignUp = (props:any) => {
   const [password, setPassword] = useState<string>("")
   const [rePassword, setRePassword] = useState<string>("")
 
-  const [emailObjDisable, setEmailObjDisable] = useState<any>({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white "});
-  const [numberObjDisable, setNumberObjDisable] = useState<any>({objDisable:true, classHover:"bg-gray-200"});
+  const [emailObjDisable, setEmailObjDisable] = useState<any>({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white bg-white "});
+  const [numberObjDisable, setNumberObjDisable] = useState<any>({objDisable:true, classHover:"bg-gray-100"});
   const [passwordDisable, setPasswordDisable] = useState<boolean>(true);
   const [rePasswordDisable, setRePasswordDisable] = useState<boolean>(true);
-  const [signUpObjDisable, setSignUpObjDisable] = useState<any>({objDisable:true, classHover:"bg-gray-200"});
+  const [signUpObjDisable, setSignUpObjDisable] = useState<any>({objDisable:true, classHover:"bg-gray-100"});
   
-
+  const [signUpSeccess, setSignUpSeccess] = useState<boolean>(false);
 
   const [validationMsg, setValidationMsg] = useState<string>("");
 
@@ -52,7 +52,7 @@ const SignUp = (props:any) => {
     let interval:any;
     if(isRunning === true){
       
-      let startTime = 10;
+      let startTime = 180;
       interval = setInterval(() => {
         setTimer(timerMS(startTime)); 
         startTime = startTime-1;
@@ -81,12 +81,13 @@ const SignUp = (props:any) => {
     }
   }, [numberObjDisable.objDisable]);
 
-  // useEffect(() => {
-  //   if(verifyNumber.length > 7){
+  useEffect(() => {
+    if(passwordDisable === false){
+      focusPassword.current?.focus();
+    }
+  }, [passwordDisable]);
 
-  //   }
-  // }, [verifyNumber]);
-
+  
   useEffect(()=>{
     let totalByte = 0;
     if(verifyNumber !== undefined){
@@ -94,7 +95,7 @@ const SignUp = (props:any) => {
       for(let i =0; i < verifyNumber.length; i++) {
         const currentByte = verifyNumber.charCodeAt(i);
         //48~57 0~9
-        if(currentByte > 48 && currentByte < 57){
+        if(currentByte >= 48 && currentByte <= 57){
           inputValue += verifyNumber.charAt(i);
         }
         totalByte++;
@@ -111,12 +112,13 @@ const SignUp = (props:any) => {
   function initF(){ 
     setIsRunning(false);
     setVerifyNumber(""); 
-    setEmailObjDisable({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white "});
-    setNumberObjDisable({objDisable:true, classHover:"bg-gray-200"});
+    setEmailObjDisable({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white bg-white "});
+    setNumberObjDisable({objDisable:true, classHover:" bg-gray-100 "});
     setPasswordDisable(true);
     setRePasswordDisable(true);
 
-    setSignUpObjDisable({objDisable:true, classHover:"bg-gray-200"})
+    setSignUpObjDisable({objDisable:true, classHover:" bg-gray-100 "})
+    setSignUpSeccess(false);
     
   } 
 
@@ -162,15 +164,21 @@ const SignUp = (props:any) => {
     const obj = {
       email : verifyEmail
     }
-    // const resObj = await transaction("post", "sendemail", obj, "", false, true, screenShow, errorShow);
-    
-    // if(resObj.sendObj.success){
-    if(1===1){
+    const resObj = await transaction("post", "sendemail", obj, "", false, true, screenShow, errorShow);
+    if(resObj.sendObj.success==="y"){
       setIsRunning(true);
-      setEmailObjDisable({objDisable:true, classHover:"bg-gray-200"})
-      setNumberObjDisable({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white "});
+      setEmailObjDisable({objDisable:true, classHover:" bg-gray-100 "})
+      setNumberObjDisable({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white bg-white "});
       
     }else{
+      if(resObj.sendObj.code === "1011"){
+        setValidationMsg(resObj.sendObj.message);
+      }
+
+      if(resObj.sendObj.code === "1014"){
+        setValidationMsg(resObj.sendObj.message);
+      }
+
       setIsRunning(false);
     }
   }
@@ -179,14 +187,25 @@ const SignUp = (props:any) => {
     setVerifyNumber(e.target.value);    
   }
 
-  function verifyNumberCheck(){
+  async function verifyNumberCheck(){
+    setValidationMsg("");
+    const obj = {
+      email : verifyEmail,
+      verifynumber : verifyNumber
+    }
+    const resObj = await transaction("get", "checkverifynumber", obj, "", false, true, screenShow, errorShow);
+    
+    if(resObj.sendObj.success==="y"){
+      setNumberObjDisable({objDisable:true, classHover:"bg-gray-100"});
+      setIsRunning(false);
+      setPasswordDisable(false);
+      setRePasswordDisable(false);
+      setSignUpObjDisable({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white bg-white "});
+    }else{
+      setValidationMsg(resObj.sendObj.message);
+    }
 
-    return;
-
-    setIsRunning(false);
-    setPasswordDisable(false);
-    setRePasswordDisable(false);
-    setSignUpObjDisable({objDisable:false, classHover:" hover:bg-[#006341] hover:text-white "});
+   
   }
 
   function passwordOnChangeHandler(e:any){
@@ -197,7 +216,7 @@ const SignUp = (props:any) => {
     setRePassword(e.target.value)
   }
 
-  function signUp(){
+  async function signUp(){
     setValidationMsg("");
     const checkObj = {
       password:password,
@@ -216,6 +235,23 @@ const SignUp = (props:any) => {
       
       setValidationMsg(retObj.str);
       return;
+    }else{
+      const obj = {
+        email : verifyEmail,
+        password : password
+      }
+      const resObj = await transaction("post", "signup", obj, "", false, true, screenShow, errorShow);
+
+      if(resObj.sendObj.success==="y"){
+        // console.log("회원가입 성공");
+        setSignUpSeccess(true);
+
+      }else{
+        // console.log("회원가입 실패");
+        setValidationMsg(resObj.sendObj.message);
+      }
+
+
     }
 
 
@@ -230,97 +266,125 @@ const SignUp = (props:any) => {
       <div className="static">
         <div className=' absolute top-0 right-0 left-0 z-10 w-[100%] h-[100%] border flex justify-center items-center'>
           <div className={block +  "  w-[300px] h-[400px] border-2 rounded-md border-[#006341] shadow-lg shadow-green-900/50  bg-white"}>
-            <div className="flex justify-end h-[24px] bg-[#006341] ">
-              <p className="mr-1 text-lg mt-0.5 text-white  cursor-pointer "
-              onClick={()=>close()}
-              >
-                <FaRegWindowClose />
-              </p>
-            </div>
-            <div className=" flex justify-center">
-              <p className="text-2xl font-bold mt-2 text-[#006341]">Sign Up</p> 
-            </div>
-            <div className="mt-4 p-2 text-[#006341]"> 
-              <p className="flex justify-between">
-                <input placeholder="Email" type="text" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"
-                ref={focusEmail}
-                onChange={(e)=>emailOnChangeHandler(e)}
-                disabled={emailObjDisable.objDisable}
-                ></input>
-                <button className={emailObjDisable.classHover + " ms-1 border border-[#006341] w-[90px] bg-white text-[#006341] font-bold py-1 rounded"}
-                disabled={emailObjDisable.objDisable}
-                onClick={()=>sendEmail()} 
+            
+            {(!signUpSeccess)?<>
+              <div className="flex justify-end h-[24px] bg-[#006341] ">
+                <p className="mr-1 text-lg mt-0.5 text-white  cursor-pointer "
+                onClick={()=>close()}
                 >
-                  Send
-                </button>
-              </p>
-              
-              
-            </div>
+                  <FaRegWindowClose />
+                </p>
+              </div>
+              <div className=" flex justify-center">
+                <p className="text-2xl font-bold mt-2 text-[#006341]">Sign Up</p> 
+              </div>
+              <div className="mt-4 p-2 text-[#006341]"> 
+                <p className="flex justify-between">
+                  <input placeholder="Email" type="text" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"
+                  ref={focusEmail}
+                  onChange={(e)=>emailOnChangeHandler(e)}
+                  disabled={emailObjDisable.objDisable}
+                  ></input>
+                  <button className={emailObjDisable.classHover + " ms-1 border border-[#006341] w-[90px] text-[#006341] font-bold py-1 rounded"}
+                  disabled={emailObjDisable.objDisable}
+                  onClick={()=>sendEmail()} 
+                  >
+                    Send
+                  </button>
+                </p>
+                
+                
+              </div>
 
-            <div className="relative p-2 text-[#006341] ">
-              <p className="flex justify-between">
-                <input placeholder="Number" type="text" className=" relative w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded" 
-                ref={focusNumber}
-                disabled={numberObjDisable.objDisable}
-                value={verifyNumber}
-                onChange={(e)=>verifyNumberOnChangeHandler(e)}
-                ></input>
+              <div className="relative p-2 text-[#006341] ">
+                <p className="flex justify-between">
+                  <input placeholder="Number" type="text" className=" relative w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded" 
+                  ref={focusNumber}
+                  disabled={numberObjDisable.objDisable}
+                  value={verifyNumber}
+                  onChange={(e)=>verifyNumberOnChangeHandler(e)}
+                  ></input>
+                  <button 
+                  disabled={numberObjDisable.objDisable}
+                  className={numberObjDisable.classHover + " ms-1 border border-[#006341] w-[90px] text-[#006341] font-bold py-1 rounded"}
+                  onClick={()=>verifyNumberCheck()}
+                  >
+                  Verify
+                  </button>
+                </p>
+                <p className="absolute top-4 left-44 text-sm text-red-500">{timer}</p>
+              </div>
+
+              <div className="p-2 text-[#006341]">
+                <p className="flex justify-between">
+                  <input placeholder="Password"  type="password" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"
+                  onChange={(e)=>passwordOnChangeHandler(e)}
+                  disabled={passwordDisable}
+                  ref={focusPassword}
+                  ></input>
+                </p>
+              </div>
+
+              <div className="p-2 text-[#006341]">
+                <p className="flex justify-between">
+                  <input placeholder="Repassword"  type="password" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"
+                  onChange={(e)=>rePasswordOnChangeHandler(e)}
+                  disabled={rePasswordDisable} 
+                  ref={focusRepassword}
+                  ></input>
+                </p>
+              </div>
+              <div className="h-[20px] px-2">
+                <p className="flex justify-center text-red-500 text-xs">{validationMsg}</p>
+              </div>
+              <div className="mt-3 p-2 flex justify-center w-[100%]">
+                <p className=" w-[100%]">
+                  <button className={signUpObjDisable.classHover + " border border-[#006341] w-[100%]  text-[#006341] font-bold py-1 px-4 rounded"}
+                  disabled={signUpObjDisable.objDisable}
+                  onClick={()=>signUp()}
+                  >
+                  Sign Up
+                  </button>
+                </p>
+              </div>
+
+              <div className=" flex justify-center w-[100%]">
+                <p className=" text-sm leading-relaxed text-[#006341]">Already have an account?
+                {/* <button onClick={()=>{clickSignUpModal()}} className="font-bold text-grey-700">Create an Account</button> */}
+                </p>
+                <p className=" text-sm leading-relaxed text-[#006341] font-bold cursor-pointer hover:text-base"
+                onClick={()=>moveSignInPage()}
+                >Sign Up
+                {/* <button onClick={()=>{clickSignUpModal()}} className="font-bold text-grey-700"></button> */}
+                </p>
+              </div>
+            </>
+            :<>
+              <div className="flex justify-end h-[24px] bg-[#006341] ">
+                <p className="mr-1 text-lg mt-0.5 text-white  cursor-pointer "
+                onClick={()=>close()}
+                >
+                  <FaRegWindowClose />
+                </p>
+              </div>
+              <div className=" flex justify-center">
+                <p className="text-2xl font-bold mt-2 text-[#006341]">Sign Up Success</p> 
+              </div>
+
+              <div className=" flex justify-center mt-48">
                 <button 
-                disabled={numberObjDisable.objDisable}
-                className={numberObjDisable.classHover + " ms-1 border border-[#006341] w-[90px] bg-white text-[#006341] font-bold py-1 rounded"}
-                onClick={()=>verifyNumberCheck()}
-                >
-                Verify
+                  className={" hover:bg-[#006341] hover:text-white ms-1 border border-[#006341] w-[60%] bg-white text-[#006341] font-bold py-1 rounded"}
+                  onClick={()=>moveSignInPage()}
+                  >
+                  Go to Sign in page
                 </button>
-              </p>
-              <p className="absolute top-4 left-44 text-sm text-red-500">{timer}</p>
-            </div>
 
-            <div className="p-2 text-[#006341]">
-              <p className="flex justify-between">
-                <input placeholder="Password"  type="password" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"
-                onChange={(e)=>passwordOnChangeHandler(e)}
-                disabled={passwordDisable}
-                ref={focusPassword}
-                ></input>
-              </p>
-            </div>
+              </div>
+            </>}
 
-            <div className="p-2 text-[#006341]">
-              <p className="flex justify-between">
-                <input placeholder="Repassword"  type="password" className="w-[100%] h-[10px] border border-[#006341] outline-none py-4 px-3 rounded"
-                onChange={(e)=>rePasswordOnChangeHandler(e)}
-                disabled={rePasswordDisable} 
-                ref={focusRepassword}
-                ></input>
-              </p>
-            </div>
-            <div className="h-[20px] px-2">
-              <p className="flex justify-center text-red-500 text-xs">{validationMsg}</p>
-            </div>
-            <div className="mt-3 p-2 flex justify-center w-[100%]">
-              <p className=" w-[100%]">
-                <button className={signUpObjDisable.classHover + " border border-[#006341] w-[100%] bg-white text-[#006341] font-bold py-1 px-4 rounded"}
-                disabled={signUpObjDisable.objDisable}
-                onClick={()=>signUp()}
-                >
-                Sign Up
-                </button>
-              </p>
-            </div>
+            
 
-            <div className=" flex justify-center w-[100%]">
-              <p className=" text-sm leading-relaxed text-[#006341]">Already have an account?
-              {/* <button onClick={()=>{clickSignUpModal()}} className="font-bold text-grey-700">Create an Account</button> */}
-              </p>
-              <p className=" text-sm leading-relaxed text-[#006341] font-bold cursor-pointer hover:text-base"
-              onClick={()=>moveSignInPage()}
-              >Sign Up
-              {/* <button onClick={()=>{clickSignUpModal()}} className="font-bold text-grey-700"></button> */}
-              </p>
-            </div>
-
+            
 
           </div>
           
