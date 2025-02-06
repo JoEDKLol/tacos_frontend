@@ -1,12 +1,10 @@
-
-
 import { useRef, useEffect, useState } from "react";
 import Portal from "./Portal";
 import { FaRegWindowClose } from "react-icons/fa";
 import { transaction } from "@/app/utils/axios";
 import loadingScreenShow from "@/app/store/loadingScreen";
 import errorScreenShow from "@/app/store/errorScreen";
-import { checkEmail, checkInputData, checkPassword } from "@/app/utils/checkUserValidation";
+import { checkEmail, checkPassword } from "@/app/utils/checkUserValidation";
 
 const SignUp = (props:any) => {
   
@@ -354,7 +352,7 @@ const SignUp = (props:any) => {
                 </p>
                 <p className=" text-sm leading-relaxed text-[#006341] font-bold cursor-pointer hover:text-base"
                 onClick={()=>moveSignInPage()}
-                >Sign Up
+                >Sign In
                 {/* <button onClick={()=>{clickSignUpModal()}} className="font-bold text-grey-700"></button> */}
                 </p>
               </div>
