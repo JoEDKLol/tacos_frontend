@@ -3,21 +3,39 @@ import { TbHomeStar } from "react-icons/tb";
 import { PiSignOutFill } from "react-icons/pi";
 import { PiSignInBold } from "react-icons/pi";
 import { LuPenLine } from "react-icons/lu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignIn from "@/app/components/modals/SignIn";
 import PasswordChange from "@/app/components/modals/PasswordChange";
 import SignUp from "@/app/components/modals/SignUp";
 import Image from "next/image";
-// import LodingScreen from "@/app/components/modals/lodingScreen";
+import loadingScreenShow from "@/app/store/loadingScreen";
+import errorScreenShow from "@/app/store/errorScreen";
+import userState from "@/app/store/user";
+import { signOut } from "next-auth/react";
+import { transaction } from "@/app/utils/axios";
+import { useRouter } from "next/navigation";
 
 const Header = () => {  
   const [showSigninPortal, setShowSigninPortal] = useState(false);
   const [showPasswordChangePortal, setShowPasswordChangePortal] = useState(false);
   const [showSignUpPortal, setShowSignUpPortal] = useState(false);
-  
+  const [signinYn, setSigninYn] = useState(false);
+  const screenShow = loadingScreenShow();
+  const errorShow = errorScreenShow();
+  const userStateSet = userState();
+  const router = useRouter();
+
+  useEffect(()=>{
+    console.log(userStateSet.userseq);
+    if(userStateSet.id){
+      setSigninYn(true);
+    }else{
+      setSigninYn(false);
+    }
+  },[userStateSet]);
+
   const signInHandleModal = (showYn:boolean) => {
     setShowSigninPortal(showYn);
-
   };
 
   const passwordChangeHandleModal = (showYn:boolean) => {
@@ -28,6 +46,17 @@ const Header = () => {
     setShowSignUpPortal(showYn);
   };
 
+
+  async function logoutOnclickHandler(){
+    signOut();
+    sessionStorage.removeItem("tacos-accesstoken");
+    const retObj = await transaction("get", "logout", {}, "", false, true, screenShow, errorShow);
+    console.log(retObj);
+  }
+
+  function movetoMyInfoOnclickHandler(){
+    router.push('/' + userStateSet.userseq + "/management")
+  }
   
 
   return( 
@@ -49,9 +78,6 @@ const Header = () => {
           <input type="search" name="serch" placeholder="Search" className="w-[150px] 
           2xl:w-[300px] xl:w-[300px] lg:w-[300px] md:w-[300px] sm:w-[260px]
           border bg-white h-10 px-3 pr-6 rounded text-sm focus:outline-none"
-          // onChange={(e)=>searchTextOnchangeHandler(e)}
-          // onKeyDown={(e)=>searchTextOnKeyDownHandler(e)}
-
           />
           <button type="submit" className="absolute right-0 top-0 mt-3 mr-2"
           // onClick={(e)=>priSearch()}
@@ -70,24 +96,24 @@ const Header = () => {
       </div>
       <div className="flex justify-end me-4">
         {
-          (1!==1)?
+          (signinYn)?
           <>
             <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
             bg-transparent hover:bg-[#CE1126] font-semibold  py-1 px-2 mr-2   hover:border-transparent rounded"
-            // onClick={()=>movetoMyBlogOnclickHandler()}
+            onClick={()=>movetoMyInfoOnclickHandler()}
             >
-            <span className="group-hover:text-white block text-[#CE1126]">MyBlog</span>
+            <span className="group-hover:text-white block text-[#CE1126]">MyInfo</span>
             </button>
             <p className="group block 2xl:hidden xl:hidden lg:hidden md:hidden sm:block bg-white
             text-2xl mr-1 rounded hover:bg-[#CE1126]
             cursor-pointer p-1
             "
-            // onClick={()=>movetoMyBlogOnclickHandler()}
+            onClick={()=>movetoMyInfoOnclickHandler()}
             ><span className="text-[#CE1126] group-hover:text-white"><TbHomeStar /></span></p>
 
             <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
             bg-transparent hover:bg-[#CE1126] text-[#CE1126] font-semibold   py-1 px-2 mr-2   hover:border-transparent rounded"
-            // onClick={()=>logoutOnclickHandler()}
+            onClick={()=>logoutOnclickHandler()}
 
             >
             <span className="group-hover:text-white block text-[#CE1126]">Logout</span>
@@ -96,7 +122,7 @@ const Header = () => {
             text-2xl rounded hover:bg-[#CE1126]
             cursor-pointer p-1
             "
-            // onClick={()=>logoutOnclickHandler()}
+            onClick={()=>logoutOnclickHandler()}
             ><span className="text-[#CE1126] group-hover:text-white"><PiSignOutFill  /></span></p>
           </>
           :

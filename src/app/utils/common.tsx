@@ -16,15 +16,15 @@ const addComma = (price:number) => {
 }
 
 const storeAccessToken = (accesstoken:string) => {
-    return sessionStorage.setItem('myblog-accesstoken', accesstoken);
+    return sessionStorage.setItem('tacos-accesstoken', accesstoken);
 }
 
 const getAccessToken = () => {
-    return sessionStorage.getItem('myblog-accesstoken');
+    return sessionStorage.getItem('tacos-accesstoken');
 }
 
 const clearAccessToken = () => {
-    return sessionStorage.removeItem("myblog-accesstoken");
+    return sessionStorage.removeItem("tacos-accesstoken");
 }
 
 const getDate = (str:string) => {

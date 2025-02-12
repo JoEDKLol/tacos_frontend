@@ -1,7 +1,7 @@
 import Layout from "./Layout";
 
 
-const menu = () => {
+const Menu = () => {
   
   return(<>  
     <>
@@ -11,4 +11,4 @@ const menu = () => {
   );
 };
 
-export default menu
+export default Menu

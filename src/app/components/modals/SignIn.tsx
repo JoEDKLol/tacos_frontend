@@ -74,6 +74,7 @@ const SignIn = (props:any) => {
         //access토큰 정보는 session storege클래스에 담아준다.
         userStateSet.userSet(retObj.sendObj.resObj);
         storeAccessToken(retObj.accessToken);
+        props.signInHandleModal(false);
       }else{
         errorShow.screenShowTrue();
         errorShow.messageSet("Internal Server Error");

@@ -3,7 +3,8 @@ import "./globals.css";
 import LoadingScreen from "./components/common/loadingScreen/Index";
 import ErrorScreen from "./components/common/errorScreen/Index";
 import AuthSession from "./api/auth/AuthSession";
-import CommonTransaction from "./api/Index";
+import CommonTransaction from "./api/common/Index";
+
 
 
 

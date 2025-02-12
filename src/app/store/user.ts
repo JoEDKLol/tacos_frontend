@@ -3,6 +3,7 @@ import { create } from 'zustand';
 interface userState {
   id: string;
   email:string;
+  userseq : number
   userSet: (obj:any) => void;
 }
 
@@ -10,7 +11,8 @@ interface userState {
 const userState = create<userState>((set) => ({
   id : "",
   email : "",
-  userSet: (obj:any) => {set({ id:obj.id, email:obj.email})},
+  userseq : 0, 
+  userSet: (obj:any) => {set({ id:obj.id, email:obj.email, userseq:obj.userseq})},
 }));
 
 export default userState;
