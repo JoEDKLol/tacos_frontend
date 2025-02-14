@@ -1,7 +1,9 @@
 import Layout from "./_components/Layout";
 
 
-const Home = () => {
+
+
+const Management = () => {
   
   return(<>  
     <><Layout/></>
@@ -9,4 +11,4 @@ const Home = () => {
   );
 };
 
-export default Home
+export default Management

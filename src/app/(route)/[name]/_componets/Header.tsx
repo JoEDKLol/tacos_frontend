@@ -203,7 +203,7 @@ const Header = () => {
             quality={30} 
             layout="fill"
             loading="lazy"
-            style={designSet.imageStyle}
+            // style={designSet.imageStyle}
         />:""
         }
         

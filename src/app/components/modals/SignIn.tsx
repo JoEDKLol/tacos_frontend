@@ -23,7 +23,7 @@ const SignIn = (props:any) => {
   const userStateSet = userState();
 
   useEffect(() => {
-    
+    setValidationMsg("");
     if(props.show){
       setBlock("visible transform translate-y-8 ease-out duration-700 ");
     }else{

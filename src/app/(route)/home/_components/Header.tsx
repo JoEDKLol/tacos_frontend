@@ -26,7 +26,6 @@ const Header = () => {
   const router = useRouter();
 
   useEffect(()=>{
-    console.log(userStateSet.userseq);
     if(userStateSet.id){
       setSigninYn(true);
     }else{
@@ -55,7 +54,7 @@ const Header = () => {
   }
 
   function movetoMyInfoOnclickHandler(){
-    router.push('/' + userStateSet.userseq + "/management")
+    router.push('/management');
   }
   
 
@@ -143,7 +142,7 @@ const Header = () => {
 
             <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
             bg-transparent hover:bg-[#CE1126] font-semibold   py-1 px-2 hover:border-transparent rounded"
-              onClick={()=>signUpHandleModal(true)}
+            onClick={()=>signUpHandleModal(true)}
             >
             <span className="group-hover:text-white block text-[#CE1126]">Sign Up</span>
             </button>

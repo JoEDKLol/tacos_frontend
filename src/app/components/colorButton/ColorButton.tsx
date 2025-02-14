@@ -2,11 +2,8 @@
 import * as ColorPicker from "react-colorful";
 
 const ColorButton = (props:any) => {
-
-  
-
   return (
-    <div>
+    <div className="">
       <ColorPicker.HexColorPicker 
         color={props.color}
         onChange={props.setColor}

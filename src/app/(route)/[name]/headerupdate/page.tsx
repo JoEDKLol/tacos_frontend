@@ -1,6 +1,6 @@
 import Layout from "./Layout";
 
-const headerUpdate = () => {
+const HeaderUpdate = () => {
   
   return(<>  
     <Layout/>
@@ -8,4 +8,4 @@ const headerUpdate = () => {
   );
 };
 
-export default headerUpdate
+export default HeaderUpdate

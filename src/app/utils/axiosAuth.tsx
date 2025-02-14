@@ -14,7 +14,8 @@ axiosAuth.interceptors.request.use((config)=>{
 const transactionAuth = async (type:string, url:string, obj:any, callback:any, callbackYn:boolean, loadingScreenYn:any, screenShow:any, errorPage:any) => {
 	if(loadingScreenYn === true) screenShow.screenShowTrue();
 	try{
-        let resp:any, data:any;
+    let resp:any, data:any;
+		
 		if(type === "get"){
 			resp = await axiosAuth.get(url, {params:obj});
 			data = await resp.data;
@@ -23,43 +24,32 @@ const transactionAuth = async (type:string, url:string, obj:any, callback:any, c
 			data = await resp.data;
 		}
 
-		// if(url===""){
+		if(data.sendObj.code === "2011"){ //access token check failed
+			resp = await axiosAuth.get('getAccessToken', {});
+			data = await resp.data;
 
-		// 	if(loadingScreenYn === true) screenShow.screenShowFalse();
-			
-		// 	if(callbackYn){
-		// 		callback(data);
-		// 	}else{
-		// 		return data;
-		// 	}
-		// }else{
-			
-			if(data.sendObj.code === "2011"){ //access token check failed
-				resp = await axiosAuth.get('getAccessToken', {});
-				data = await resp.data;
-
-				if(data.sendObj.success){
-					storeAccessToken(resp.headers.accesstoken);
-					let _resp:any, _data:any;
-					if(type === "get"){
-						_resp = await axiosAuth.get(url, {params:obj});
-						_data = await _resp.data;
-					}else if(type === "post"){
-						_resp = await axiosAuth.post(url ,obj);
-						_data = await _resp.data;
-					}
-					if(_data.success){
-						_data.user = data.user;
-						_data.regetAccessToken = true;
-					}
-
-					data = _data;
-				}else{
-					//failed 
-					data.refreshTokenCheckFail = true;
+			if(data.sendObj.success){
+				storeAccessToken(resp.headers.accesstoken);
+				let _resp:any, _data:any;
+				if(type === "get"){
+					_resp = await axiosAuth.get(url, {params:obj});
+					_data = await _resp.data;
+				}else if(type === "post"){
+					_resp = await axiosAuth.post(url ,obj);
+					_data = await _resp.data;
+				}
+				if(_data.success){
+					_data.user = data.user;
+					_data.regetAccessToken = true;
 				}
 
+				data = _data;
+			}else{
+				//failed 
+				data.refreshTokenCheckFail = true;
 			}
+
+		}
 
 		// }
 
