@@ -15,8 +15,8 @@ const ErrorScreen = () => {
   return (
 
     (screenShow.screenShow)?(
-      <div className="static">
-        <div className=' absolute top-0 right-0 left-0 z-50 w-[100%] h-[100%] border flex justify-center items-center'>
+      <div className="">
+        <div className=' fixed top-0 right-0 left-0 z-50 w-[100%] h-[100%] border flex justify-center items-center'>
           <div className={ "  w-[300px] h-[170px] border-2 rounded-md border-[#006341] shadow-lg shadow-green-900/50 bg-white "}>
             <div className="flex justify-end h-[16%] bg-[#006341] ">
               <p className="mr-1 text-lg mt-0.5 text-white  cursor-pointer "

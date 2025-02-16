@@ -147,4 +147,9 @@ const checkEmail = (emObj:any) => {
     return retObj;
 }
 
-export {checkInputData, checkPassword, checkEmail};
+const checkInputNull = (value:string) => {
+    if(value === "") return false;
+    return true;
+}
+
+export {checkInputData, checkPassword, checkEmail, checkInputNull};
