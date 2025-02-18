@@ -140,6 +140,42 @@ const Main = () => {
     }
   },[restaurantAddress]);
 
+  useEffect(()=>{
+    let totalByte = 0;
+    for(let i =0; i < introduction.length; i++) {
+      const currentByte = introduction.charCodeAt(i);
+      if(currentByte > 128){
+        totalByte += 2;
+      }else {
+        totalByte++;
+      }
+
+      if(totalByte > 200){
+        setIntroduction(introduction.substring(0, i));
+        break;
+      }
+    }
+  },[introduction]);
+
+  useEffect(()=>{
+    let totalByte = 0;
+    for(let i =0; i < hashtag.length; i++) {
+      const currentByte = hashtag.charCodeAt(i);
+      if(currentByte > 128){
+        totalByte += 2;
+      }else {
+        totalByte++;
+      }
+
+      if(totalByte > 20){
+        setHashtag(hashtag.substring(0, i));
+        break;
+      }
+    }
+  },[hashtag]);
+
+  
+
   const showCustomConfirmHandleModal = (showYn:boolean) => {
     setShowCustomConfirmPortal(showYn);
   };
@@ -207,7 +243,6 @@ const Main = () => {
     for(let i=0; i<hashtagArr.length; i++){
       const obj = {
         tagname : hashtagArr[i], 
-        // restaurantseq : userStateSet.userseq, 
         reguser:userStateSet.email, 
         upduser:userStateSet.email, 
       }
@@ -222,7 +257,8 @@ const Main = () => {
       img: img, 
       thumbImg : thumbImg, 
       introduction : introduction, 
-      hashtagArr : hashtagArrObj
+      hashtagArr : hashtagArrObj, 
+      hashtags : hashtagArr
     }
 
     const retObj = await transactionAuth("post", "res/restaurantnewsave", obj, "", false, true, screenShow, errorShow);
@@ -289,6 +325,23 @@ const Main = () => {
     setCurrentCurrentHashIndex(false);
     const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
     restaurant[choosenIndex].address = e.target.value;
+
+    let totalByte = 0;
+    for(let i =0; i < restaurant[choosenIndex].address.length; i++) {
+      const currentByte = restaurant[choosenIndex].address.charCodeAt(i);
+      if(currentByte > 128){
+        totalByte += 2;
+      }else {
+        totalByte++;
+      }
+
+      if(totalByte > 80){
+        restaurant[choosenIndex].address = restaurant[choosenIndex].address.substring(0, i);
+        break;
+      }
+    }
+
+
     setRestaurantAddressIndex(choosenIndex);
     setRestaurant([...restaurant]);
   }
@@ -300,8 +353,26 @@ const Main = () => {
     setCurrentCurrentHashIndex(false);
     const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
     restaurant[choosenIndex].introduction = e.target.value;
+
+    let totalByte = 0;
+    for(let i =0; i < restaurant[choosenIndex].introduction.length; i++) {
+      const currentByte = restaurant[choosenIndex].introduction.charCodeAt(i);
+      if(currentByte > 128){
+        totalByte += 2;
+      }else {
+        totalByte++;
+      }
+
+      if(totalByte > 200){
+        restaurant[choosenIndex].introduction = restaurant[choosenIndex].introduction.substring(0, i);
+        break;
+      }
+    }
+
+
     setIntroductionIndex(choosenIndex);
     setRestaurant([...restaurant]);
+
   }
 
   function eachHashtagOnChange(e:any, restaurantseq:any){
@@ -311,6 +382,22 @@ const Main = () => {
     setCurrentCurrentHashIndex(true)
     const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
     restaurant[choosenIndex].hashTagList = e.target.value;
+
+    let totalByte = 0;
+    for(let i =0; i < restaurant[choosenIndex].hashTagList.length; i++) {
+      const currentByte = restaurant[choosenIndex].hashTagList.charCodeAt(i);
+      if(currentByte > 128){
+        totalByte += 2;
+      }else {
+        totalByte++;
+      }
+
+      if(totalByte > 20){
+        restaurant[choosenIndex].hashTagList = restaurant[choosenIndex].hashTagList.substring(0, i);
+        break;
+      }
+    }
+
     setHashIndex(choosenIndex);
     setRestaurant([...restaurant]);
 
@@ -414,7 +501,8 @@ const Main = () => {
       img: restaurant[choosenIndex].img, 
       thumbImg : restaurant[choosenIndex].thumbImg,
       introduction : restaurant[choosenIndex].introduction, 
-      hashtagArr : hashtagArrObj
+      hashtagArr : hashtagArrObj, 
+      hashtags : hashTagArrList
     }
 
     const retObj = await transactionAuth("post", "res/restaurantupdate", obj, "", false, true, screenShow, errorShow);
@@ -462,6 +550,12 @@ const Main = () => {
       return;
     }
 
+    if(hashtagArr.length >= 10){
+      setHashtagErrMsg("Please add less than 10.")
+      focusHashTag.current?.focus();
+      return;
+    }
+
     const choosenIndex = hashtagArr.findIndex((e) => e === hashtag)
     if(choosenIndex > -1){
       setHashtagErrMsg("There is the same hashtag.");
@@ -490,6 +584,13 @@ const Main = () => {
     if(!checkInputNull(hashTagListName)){
       // setHashtagErrMsg("Please check Hashtag.");
       restaurant[choosenIndex].hashtagErrMsg = "Please check Hashtag.";
+      setRestaurant([...restaurant]);
+      focusHashTagList.current[hashIndex]?.focus();
+      return;
+    }
+
+    if(restaurant[choosenIndex].hashTagArr.length >= 10){
+      restaurant[choosenIndex].hashtagErrMsg = "Please add less than 10.";
       setRestaurant([...restaurant]);
       focusHashTagList.current[hashIndex]?.focus();
       return;
