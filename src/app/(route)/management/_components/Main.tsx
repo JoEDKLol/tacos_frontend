@@ -519,6 +519,7 @@ const Main = () => {
   async function deleteOnClick(restaurantseq:any){
     const obj = {
       restaurantseq:restaurantseq,
+      email:userStateSet.email
     }
 
     const retObj = await transactionAuth("post", "res/restaurantdelete", obj, "", false, true, screenShow, errorShow);

@@ -130,11 +130,35 @@ const ButtonHashTagAddMainSearchIcon = (props:any) => {
   );
 }
 
+const ButtonTagHome = (props:any) => {
+  return (
+    <p 
+    className=" bg-white  text-[#006341] 
+    border-[#006341] border px-3 py-1 rounded-2xl text-base 
+    flex justify-center m-1" 
+    >{props.name}
+    </p> 
+  );
+}
+
+const ButtonNextSearcHome = (props:any) => {
+  return (
+    <button
+    className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+    border-[#006341] border px-3 py-1 rounded text-base 
+    flex justify-center" 
+    onClick={props.onClick}
+    >{props.name}
+    </button> 
+  );
+}
+
 
 
 export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag, 
   ButtonSmallSettingMove, ButtonTagSearch, ButtonTagListInMainSearch
-  , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon
+  , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
+  , ButtonNextSearcHome
 };
 
 
