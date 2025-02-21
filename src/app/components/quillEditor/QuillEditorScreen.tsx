@@ -1,38 +1,47 @@
 'use client';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import 'react-quill-new/dist/quill.snow.css'; // Import Quill styles
-import QuillNoSSRWrapper from './QuillEditor';
+// import QuillNoSSRWrapper from './QuillEditor'; 
 import ReactQuill from "react-quill-new";
 import './styles.scss';
 import './styles2.scss';
-// import { ImageActions } from "@xeger/quill-image-actions";
-// import { ImageFormats } from "@xeger/quill-image-formats";
+import QuillNoSSRWrapper2 from './QuillEditor2';
+import { transactionFile } from '@/app/utils/axiosFile';
+import loadingScreenShow from '@/app/store/loadingScreen';
+import errorScreenShow from '@/app/store/errorScreen';
 
-// ReactQuill.Quill.register("modules/imageActions", ImageActions);
-// ReactQuill.Quill.register("modules/imageFormats", ImageFormats);
 
-interface styleProps {
-  bgColor: string;
-}
 
-const QuillEditorScreen = (props:styleProps) => {
-
+const QuillEditorScreen = (props:any) => {
+  const screenShow = loadingScreenShow();
+  const errorShow = errorScreenShow();
   
-  const [value, setValue] = useState('');
   const quillInstance = useRef<ReactQuill>(null);
 
-  const handleEditorFocus = () => {
-    // console.log(quillInstance.current);
-    if (quillInstance.current) {
-      console.log('Editor focused!');
-      // Access the Quill instance using quillRef.current.getEditor()
+  // const handleEditorFocus = () => {
+  //   // console.log(quillInstance.current);
+  //   if (quillInstance.current) {
+  //     console.log('Editor focused!');
+  //     // Access the Quill instance using quillRef.current.getEditor()
+  //   }
+  // };
+
+  const imageHandler = async (imageBase64URL:any, imageBlob:any, editor:any) => {
+
+    // const imgUploadRes = await transactionFile("blog/fileUpload", imageBlob, obj, "", false, true, setLoadingBarState, setErrorPage);
+    const imgUploadRes = await transactionFile("res/fileUpload", imageBlob, {}, "", false, true, screenShow, errorShow);
+
+    if(imgUploadRes.sendObj.success === "y"){
+      const range = editor.getSelection();
+          editor.insertEmbed(range.index, "image", `${imgUploadRes.sendObj.resObj.img_url}`);
+    }else{
+      errorShow.screenShowTrue();
+        errorShow.messageSet(imgUploadRes.sendObj.resObj.errMassage);
     }
-  };
+  }
 
   const modules = useMemo(
     () => ({
-      // imageActions: {}, //추가
-      // imageFormats: {}, //추가
       toolbar: {
         container: [
           [{ header: [1, 2, false] }],
@@ -45,32 +54,37 @@ const QuillEditorScreen = (props:styleProps) => {
           //         [{ align: [] }], //추가
           // ["clean"],	//추가
         ],
-        // handlers: {
-        //   image: imageHandler // 이미지 tool 사용에 대한 핸들러 설정
-        // },
+        handlers: {
+          image: imageHandler // 이미지 tool 사용에 대한 핸들러 설정
+        },
 
-        // 이미지 크기 조절
-        // ImageResize: {
-        //   modules: ['Resize']
-        // }
+        
+      },
+      // 이미지 크기 조절
+      ImageResize : {
+        modules: ["Resize", "DisplaySize"],
       },
       
+      imageCompress: {
+        quality: 0.5,
+        maxWidth: 500, 
+        maxHeight: 500, 
+        debug: false, // default
+        suppressErrorLogging: false, 
+        // insertIntoEditor : undefined
+        insertIntoEditor: (imageBase64URL:any, imageBlob:any, editor:any) => {
+          imageHandler(imageBase64URL, imageBlob, editor)
+        }
+      },
+    }),
+    [],
+  );
 
-      // ImageResize : {
-      //   modules: ["Resize", "DisplaySize"],
-      // },
+  const modules2 = useMemo(
+    () => (
+      {
+      toolbar: null,
       
-      // imageCompress: {
-      //   quality: 0.9,
-      //   maxWidth: 1000, 
-      //   maxHeight: 1000, 
-      //   debug: false, // default
-      //   suppressErrorLogging: false, 
-      //   // insertIntoEditor : undefined
-      //   insertIntoEditor: (imageBase64URL:any, imageBlob:any, editor:any) => {
-      //     imageHandler(imageBase64URL, imageBlob, editor)
-      //   }
-      // },
     }),
     [],
   );
@@ -78,6 +92,7 @@ const QuillEditorScreen = (props:styleProps) => {
   const styles = 
     {
       backgroundColor:props.bgColor,
+      width: props.quillWidth + "vw",
     };
     
 
@@ -86,16 +101,16 @@ const QuillEditorScreen = (props:styleProps) => {
   return(
     <>  
       <div className='quill'>
-      <QuillNoSSRWrapper
-        className="style"
+      <QuillNoSSRWrapper2
+        className={props.styleType}
         ref={quillInstance}
         theme="snow"
         style={styles}
-        value={value}
-        onChange={setValue}
-        onFocus={handleEditorFocus}
+        value={props.content}
+        onChange={props.setContent}
+        readOnly={props.readOnly}
         modules={
-          modules
+          (props.styleType==="style")?modules:modules2
         }
       />
     </div>

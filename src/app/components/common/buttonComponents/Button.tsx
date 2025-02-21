@@ -3,6 +3,7 @@ import { RiArrowRightCircleLine } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
 import { PiHashStraightBold } from "react-icons/pi";
+import { GrRefresh } from "react-icons/gr";
 const ButtonLg = (props:any) => {
   return (
 
@@ -153,12 +154,24 @@ const ButtonNextSearcHome = (props:any) => {
   );
 }
 
+const ButtonRefresh = (props:any) => {
+  return (
+    <button
+    className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+    border-[#006341] border px-1 py-1 rounded text-base 
+    flex justify-center" 
+    onClick={props.onClick}
+    ><GrRefresh/>
+    </button> 
+  );
+}
+
 
 
 export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag, 
   ButtonSmallSettingMove, ButtonTagSearch, ButtonTagListInMainSearch
   , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
-  , ButtonNextSearcHome
+  , ButtonNextSearcHome, ButtonRefresh
 };
 
 

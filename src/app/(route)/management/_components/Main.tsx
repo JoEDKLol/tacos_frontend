@@ -2,6 +2,9 @@
 
 import { ButtonSmall, ButtonSmallMove, ButtonSmallSettingMove, ButtonTag } from "@/app/components/common/buttonComponents/Button";
 import LoginMove from "@/app/components/common/LoginMove";
+import MapComponent from "@/app/components/googleMap/GoogleMap";
+import Map from "@/app/components/googleMap/GoogleMap2";
+import GoogleMap3 from "@/app/components/googleMap/GoogleMap3";
 import CustomConfirm from "@/app/components/modals/CustomConfirm";
 import errorScreenShow from "@/app/store/errorScreen";
 import loadingScreenShow from "@/app/store/loadingScreen";
@@ -13,6 +16,7 @@ import imageCompression from "browser-image-compression";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { GoLocation } from "react-icons/go";
 
 interface restaurantList {
   userseq : number
@@ -822,7 +826,9 @@ const Main = () => {
               {
                 (regScreenYn)?
                 <>
-
+                <div>
+                  <GoogleMap3/>
+                </div>
                 <div className="flex justify-center mt-2 p-2 border-2 border-[#006341] rounded">
                   <div className="w-[120px] me-2">
                     <div className='ring-1 w-[120px] h-[120px] ring-[#006341] rounded relative ' >
@@ -876,11 +882,14 @@ const Main = () => {
                     </div>
                     <div>
                       <p className="text-sm font-bold mb-1 text-[#006341]">Address</p>
-                      <p>
+                      <p className="flex justify-center">
                         <input type="text" 
                         onChange={(e)=>restaurantAddressOnChange(e)}
                         className="text-[#aacfc2] border border-[#aacfc2] w-full px-2 py-1 text-sm focus:border-[#006341] focus:text-[#006341] outline-none rounded"
-                        value={restaurantAddress}/></p>
+                        value={restaurantAddress}/>
+                        <span className="pt-1 ps-1 text-lg hover:text-2xl text-[#006341]"><GoLocation/></span>
+                      </p>
+                      
                     </div>
                     <div>
                       <p className="text-sm font-bold mb-1 text-[#006341]">Introduction</p>
@@ -937,20 +946,7 @@ const Main = () => {
               
             </div>
           </div>
-          
-
-          {/* <p  
-          onClick={()=>movetoHeaderUpdateOnclickHandler()}
-          className="">Hearder Update</p>
-          <p 
-          onClick={()=>movetoMainUpdateOnclickHandler()}
-          className="">Main Update</p>
-          <p 
-          onClick={()=>movetoAboutUpdateOnclickHandler()}
-          className="">About Update</p>
-          <p 
-          onClick={()=>movetoMenuUpdateOnclickHandler()}
-          className="">Menu Update</p> */}
+        
 
         </div>
         
