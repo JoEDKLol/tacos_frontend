@@ -2,10 +2,10 @@
 
 import { ButtonSmall, ButtonSmallMove, ButtonSmallSettingMove, ButtonTag } from "@/app/components/common/buttonComponents/Button";
 import LoginMove from "@/app/components/common/LoginMove";
-import MapComponent from "@/app/components/googleMap/GoogleMap";
-import Map from "@/app/components/googleMap/GoogleMap2";
-import GoogleMap3 from "@/app/components/googleMap/GoogleMap3";
+// import GoogleMap3 from "@/app/components/googleMap/GoogleMap3";
+// import GoogleMapPopup from "@/app/components/googleMap/googleMapPopup";
 import CustomConfirm from "@/app/components/modals/CustomConfirm";
+import GoogleMapPopup from "@/app/components/modals/GoogleMapPopup";
 import errorScreenShow from "@/app/store/errorScreen";
 import loadingScreenShow from "@/app/store/loadingScreen";
 import userState from "@/app/store/user";
@@ -16,7 +16,7 @@ import imageCompression from "browser-image-compression";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { GoLocation } from "react-icons/go";
+import { SiGooglemaps } from "react-icons/si";
 
 interface restaurantList {
   userseq : number
@@ -30,6 +30,7 @@ interface restaurantList {
   hashTagList : string
   hashTagArr : [any]
   hashtagErrMsg : string
+  latLng : object
 }
 
 interface restaurantLists extends Array<restaurantList>{}
@@ -49,6 +50,8 @@ const Main = () => {
   const [errMsg, setErrMsg] = useState<string>("");
   const [thumbImg, setThumbImg] = useState<any>("");
   const [introduction, setIntroduction] = useState<string>("");
+  const [latLng, setLatLng] = useState<object>({});
+  
 
   const focusRestaurantName = useRef<HTMLInputElement>(null);
 
@@ -76,6 +79,12 @@ const Main = () => {
   const [hashtagErrMsg, setHashtagErrMsg] = useState<string>("");
 
   const focusHashTag = useRef<HTMLInputElement>(null); 
+
+  const [showGooglePortal, setShowGooglePortal] = useState(false);
+  const [showGooglePortalList, setShowGooglePortalList] = useState(false);
+
+  const [googleMapType, setGoogleMapType] = useState<string>("");
+  const [mapSelectedRestaurantseq, setMapSelectedRestaurantseq] = useState<number>(0);
 
   useEffect(()=>{
     //유저번호로 레스토랑 정보 조회해 온다. 
@@ -262,9 +271,9 @@ const Main = () => {
       thumbImg : thumbImg, 
       introduction : introduction, 
       hashtagArr : hashtagArrObj, 
-      hashtags : hashtagArr
+      hashtags : hashtagArr, 
+      latLng : latLng
     }
-
     const retObj = await transactionAuth("post", "res/restaurantnewsave", obj, "", false, true, screenShow, errorShow);
     
     if(retObj.sendObj.success==="y"){
@@ -505,9 +514,13 @@ const Main = () => {
       img: restaurant[choosenIndex].img, 
       thumbImg : restaurant[choosenIndex].thumbImg,
       introduction : restaurant[choosenIndex].introduction, 
+
+      latLng : restaurant[choosenIndex].latLng, 
+
       hashtagArr : hashtagArrObj, 
       hashtags : hashTagArrList
     }
+
 
     const retObj = await transactionAuth("post", "res/restaurantupdate", obj, "", false, true, screenShow, errorShow);
     
@@ -633,6 +646,32 @@ const Main = () => {
       
   }
 
+  const googleHandleModal = (restaurantseq:number, showYn:boolean, type:string) => {
+    if(type==="each"){
+      setGoogleMapType("each");
+      setShowGooglePortal(showYn);
+      setShowGooglePortalList(false);
+
+    }else{
+      setGoogleMapType("list");
+      setShowGooglePortal(false);
+      setShowGooglePortalList(showYn);
+      setMapSelectedRestaurantseq(restaurantseq);
+    }
+  };
+
+  const setRestaurantListAddressFromGoogleMap = (restaurantseq:any, latLng:any, searchText:string) => {
+    
+    console.log(restaurantseq);
+    console.log(latLng);
+    console.log(searchText);
+    
+    const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
+    restaurant[choosenIndex].latLng = latLng;
+    restaurant[choosenIndex].address = searchText;
+    setRestaurant([...restaurant]);
+  }
+
   return(
     <>{
       (userStateSet.id)?
@@ -746,12 +785,17 @@ const Main = () => {
                             </div>
                             <div>
                               <p className="text-sm font-bold mb-1 text-[#006341]">Address</p>
-                              <p>
+                              <p className="flex justify-center">
                                 <input type="text" 
                                 ref={(element) => {focusRestaurantAddressList.current[index] = element;}}
                                 onChange={(e)=>eachRestaurantAddressOnChange(e, item.restaurantseq)}
                                 className="text-[#aacfc2] border border-[#aacfc2] w-full px-2 py-1 text-sm focus:border-[#006341] focus:text-[#006341] outline-none rounded"
-                                value={item.address}/></p>
+                                value={item.address}/>
+                                <span className="pt-1 ps-1 text-lg hover:text-2xl text-[#006341]"
+                                onClick={()=>googleHandleModal(item.restaurantseq, true, "list")}
+                                ><SiGooglemaps/></span>
+                              </p>
+                                
                             </div>
 
                             <div>
@@ -823,12 +867,12 @@ const Main = () => {
                 </div>
               }
 
-              {
+              { 
                 (regScreenYn)?
                 <>
-                <div>
+                {/* <div>
                   <GoogleMap3/>
-                </div>
+                </div> */}
                 <div className="flex justify-center mt-2 p-2 border-2 border-[#006341] rounded">
                   <div className="w-[120px] me-2">
                     <div className='ring-1 w-[120px] h-[120px] ring-[#006341] rounded relative ' >
@@ -887,7 +931,9 @@ const Main = () => {
                         onChange={(e)=>restaurantAddressOnChange(e)}
                         className="text-[#aacfc2] border border-[#aacfc2] w-full px-2 py-1 text-sm focus:border-[#006341] focus:text-[#006341] outline-none rounded"
                         value={restaurantAddress}/>
-                        <span className="pt-1 ps-1 text-lg hover:text-2xl text-[#006341]"><GoLocation/></span>
+                        <span className="pt-1 ps-1 text-lg hover:text-2xl text-[#006341]"
+                        onClick={()=>googleHandleModal(0, true, "each")}
+                        ><SiGooglemaps/></span>
                       </p>
                       
                     </div>
@@ -943,7 +989,20 @@ const Main = () => {
                 :
                 <div></div>
               }
-              
+              <GoogleMapPopup show={showGooglePortal} googleHandleModal={googleHandleModal} 
+              setSearchText={setRestaurantAddress} searchText={restaurantAddress} setLatLng={setLatLng} 
+              googleMapType={googleMapType}
+              mapSelectedRestaurantseq={mapSelectedRestaurantseq}
+              setRestaurantListAddressFromGoogleMap={setRestaurantListAddressFromGoogleMap}
+              />
+
+              <GoogleMapPopup show={showGooglePortalList} googleHandleModal={googleHandleModal} 
+              setSearchText={setRestaurantAddress}
+              searchText={restaurantAddress} setLatLng={setLatLng}  
+              googleMapType={googleMapType}
+              mapSelectedRestaurantseq={mapSelectedRestaurantseq}
+              setRestaurantListAddressFromGoogleMap={setRestaurantListAddressFromGoogleMap}
+              />
             </div>
           </div>
         

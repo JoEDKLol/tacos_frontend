@@ -1,5 +1,5 @@
 'use client';
-import { TbHomeStar } from "react-icons/tb";
+// import { TbHomeStar } from "react-icons/tb";
 import { PiSignOutFill } from "react-icons/pi";
 import { PiSignInBold } from "react-icons/pi";
 import { LuPenLine } from "react-icons/lu";
@@ -14,10 +14,11 @@ import userState from "@/app/store/user";
 import { signOut } from "next-auth/react";
 import { transaction } from "@/app/utils/axios";
 import { useRouter } from "next/navigation";
-import { ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTag, ButtonTagListInMainSearch, ButtonTagSearch } from "@/app/components/common/buttonComponents/Button";
+import { ButtonClose, ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTag, ButtonTagListInMainSearch, ButtonTagSearch } from "@/app/components/common/buttonComponents/Button";
 import { checkInputNull } from "@/app/utils/checkUserValidation";
 import restaurantListState from "@/app/store/restaurantList";
 import searchConditionsState from "@/app/store/searchConditions";
+import { CiSettings } from "react-icons/ci";
 
 const Header = () => {  
   const router = useRouter();
@@ -128,7 +129,12 @@ const Header = () => {
 
   async function searchHashTagSearch(){
     const retObj = await transaction("get", "res/searchhashtags", {}, "", false, true, screenShow, errorShow);
-    setHashTagList(retObj.sendObj.resObj);
+    if(retObj.sendObj.success === "y"){
+      setHashTagList(retObj.sendObj.resObj);
+    }else{
+      setHashTagList([]);
+    }
+    
   }
 
   function hashTagAddButtonOnChange(e:any){
@@ -203,8 +209,14 @@ const Header = () => {
       keyword:searchText, 
     }
     const retObj = await transaction("get", "res/searchreslisthome", obj, "", false, true, screenShow, errorShow);
-    restaurantListSet.restaurantListSet(retObj.sendObj.resObj);
-    searchConditionsSet.searchConditionSet(obj);
+    
+    if(retObj.sendObj.success === "y"){
+      restaurantListSet.restaurantListSet(retObj.sendObj.resObj);
+      searchConditionsSet.searchConditionSet(obj);
+    }else{
+      restaurantListSet.restaurantListSet([]);
+    }
+    
   }
   
   return( 
@@ -266,7 +278,7 @@ const Header = () => {
               cursor-pointer p-1
               "
               onClick={()=>movetoMyInfoOnclickHandler()}
-              ><span className="text-[#CE1126] group-hover:text-white"><TbHomeStar /></span></p>
+              ><span className="text-[#CE1126] group-hover:text-white"><CiSettings /></span></p>
 
               <button className="group hidden 2xl:block xl:block lg:block md:block sm:hidden bg-white
               bg-transparent hover:bg-[#CE1126] text-[#CE1126] font-semibold   py-1 px-2 mr-2   hover:border-transparent rounded"
@@ -335,7 +347,11 @@ const Header = () => {
                   <p className="flex items-center">
                     <span className="ms-2 text-red-500 text-xs font-normal">{hashtagErrMsg}</span>
                   </p>
-                  
+                  <p className="flex-1 me-1">
+                    <span className="w-full flex justify-end">
+                      <ButtonClose onClick={()=>hashTagSearchScreen()}/>
+                    </span>
+                  </p>
               </div>
               <div className="flex flex-wrap pt-1 ps-1">
               {

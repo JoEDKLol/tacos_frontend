@@ -111,7 +111,21 @@ const Main = () => {
     const retObj = await transactionAuth("get", "management/homelayoutsearch", obj, "", false, true, screenShow, errorShow);
     
     if(retObj.sendObj.success === "y"){
-      setLayOut(retObj.sendObj.resObj.home);
+
+      if(retObj.sendObj.resObj.home){
+        setLayOut(retObj.sendObj.resObj.home);
+      }else{
+        setLayOut(
+          {
+            bgColor:"#ffffff",
+            bgColorQuill:"#ffffff", 
+            content:"", 
+            quillWidth:"70",
+            quillTop:"10"
+          }
+        );
+      }
+
       setHomeLayoutYn(true);
     }else{
       setHomeLayoutYn(false);
@@ -164,7 +178,6 @@ const Main = () => {
           <div className="w-full" >
             <div className="flex justify-center items-center h-10 bg-[#006341]">
               <p className="text-white text-xl">Menu Update</p>
-              {/* <ButtonSmall onClick={()=>save()} name={"SAVE"}/> */}
             </div>
           </div>
 
@@ -178,7 +191,7 @@ const Main = () => {
               <div className="flex justify-end p-1 border border-white bg-[#739e8f] ">
                 <p className="flex justify-center items-center mr-1">
                   <ButtonRefresh 
-                  // onClick={()=>hearderLayoutSearch()}
+                  onClick={()=>homeLayoutSearch()}
                   />
                 </p>
                 <p><ButtonBase onClick={()=>save()} name={"SAVE"}/> </p>

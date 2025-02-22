@@ -580,6 +580,7 @@ const Main = () => {
         bgColor : bgColor, 
         headerHight : headerHight, 
         borderColor : borderColor, 
+        
         headerBorderWidth : headerBorderWidth, 
         hearderType : hearderType, 
         hearderImg : hearderImg, 
@@ -660,7 +661,61 @@ const Main = () => {
     const retObj = await transactionAuth("get", "management/hearderlayoutsearch", obj, "", false, true, screenShow, errorShow);
     
     if(retObj.sendObj.success === "y"){
-      setLayOut(retObj.sendObj.resObj.header);
+
+      if(retObj.sendObj.resObj.header){
+        setLayOut(retObj.sendObj.resObj.header);
+      }else{
+        setLayOut(
+          {
+            bgColor : "#ffffff", 
+            headerHight : "70", 
+            borderColor : "#000000", 
+            headerBorderWidth : "1", 
+            hearderType : "", 
+            hearderImg : "b", 
+            hearderThumbImg : "", 
+            logoType : "b", 
+            img : "", 
+            thumbImg : "", 
+            imageWidthSize : "50", 
+            imageHeightSize : "50", 
+            logoBoxBorderColor : "#000000", 
+            logoBoxRadius : "10", 
+            logoBoxBorderSize : "1", 
+            logoSize : "15", 
+            logoColor : "#000000", 
+            logoBoxBgColor : "#ffffff", 
+            logoBoxSize : "50", 
+            logoBoxSizeHeigh : "50", 
+            restaurantTitleSize : "20", 
+            restaurantTitleColor : "#000000", 
+            titleBoxBgColor : "#ffffff", 
+            titleBoxSize : "150", 
+            titleBoxSizeHeight : "50", 
+            titleBoxBorderColor : "#000000", 
+            titleBoxBorderSize : "1", 
+            titleBoxRadius : "10", 
+            menuBgColor : "#ffffff", 
+            menuHeight : "40", 
+            menuBorderColor : "#000000", 
+            menuBorderWidth : "1", 
+            menuTextSize : "15", 
+            menuTextColor : "#000000", 
+            menuItemPadding : "350", 
+            menuBoxColor : "#ffffff", 
+            menuTextBoxSize : "100", 
+            menuTextBoxSizeHeight : "20", 
+            menuBoxBorderColor : "#000000", 
+            menuTextBorderWidth : "1", 
+            menuTextBoxRadiusSize : "5", 
+            logoText : "", 
+            titleText : "", 
+            menuText1 : "HOME", 
+            menuText2 : "ABOUT", 
+            menuText3 : "MENU"
+          }
+        );
+      }
       setHearderLayoutYn(true);
     }else{
       setHearderLayoutYn(false);
@@ -674,7 +729,7 @@ const Main = () => {
 
     setBgColor(layOutObj.bgColor); setBgColorButton(layOutObj.bgColor);
     setHeaderHight(layOutObj.headerHight); 
-    setBorderColor(layOutObj.borderColor); setBorderColorButton(layOutObj.headerHight);
+    setBorderColor(layOutObj.borderColor); setBorderColorButton(layOutObj.borderColor);
     setHeaderBorderWidth(layOutObj.headerBorderWidth); 
     setHearderType(layOutObj.hearderType);
     setHearderImg(layOutObj.hearderImg); 
@@ -1635,7 +1690,7 @@ const Main = () => {
                   ><IoIosArrowDown/></button>
                 </div>
 
-                <p className="flex  font-bold justify-center text-sm text-[#006341] border-b border-[#006341]  mb-1">MenuBox-Border-Width</p>
+                <p className="flex  font-bold justify-center text-xs text-[#006341] border-b border-[#006341]  mb-1">MenuBox-Border-Width</p>
                 <div className="flex justify-center pb-1">
                   <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
                   onClick={()=>menuBoxBorderUp()}

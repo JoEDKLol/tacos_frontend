@@ -10,8 +10,9 @@ import { useState } from "react";
 import { transaction } from "@/app/utils/axios";
 import loadingScreenShow from "@/app/store/loadingScreen";
 import errorScreenShow from "@/app/store/errorScreen";
+import { useRouter } from "next/navigation";
 const Main = () => {
-
+  const router = useRouter();
   const restaurantListSet = restaurantListState();
   const searchConditionsSet = searchConditionsState();
   const [currnetPage, setCurrentPage] = useState<number>(1);
@@ -31,9 +32,10 @@ const Main = () => {
       restaurantListSet.restaurantListAdd(retObj.sendObj.resObj);
       setCurrentPage(currnetPage+1);
     }
+  }
 
-
-    console.log(obj);
+  function restaurantClickHandler(name:string){
+    router.push('/' + name);
   }
 
 
@@ -46,7 +48,9 @@ const Main = () => {
               <div key={index + data.restaurantseq + Math.random()}>  
                 <div className="flex justify-center mt-5 w-[100%]">
                   <div className="flex flex-col w-[80%]">
-                    <div className="mt-5 flex justify-normal border-2 border-[#006341]  rounded hover:shadow-lg hover:shadow-green-900/50  ">
+                    <div 
+                    // onClick={()=>restaurantClickHandler(data.restaurantname)}
+                    className="mt-5 flex justify-normal border-2 border-[#006341]  rounded hover:shadow-lg hover:shadow-green-900/50  ">
                       <div className="hidden
                       2xl:block xl:block lg:block md:block sm:hidden
                       ">
@@ -93,7 +97,13 @@ const Main = () => {
                       </div>
 
 
-                        <p className="text-4xl font-bold">{data.restaurantname}</p> 
+                        <div className="">
+                          <p 
+                          onClick={()=>restaurantClickHandler(data.restaurantname)} 
+                          className="text-3xl font-bold break-words cursor-pointer hover:text-4xl ">
+                          {data.restaurantname}
+                          </p>
+                        </div> 
                         <p className="flex justify-normal mt-2 ms-2">
                           <span className=" text-lg"><TbThumbUpFilled/></span>
                           <span className="ms-1 text-sm">{data.likeCounts}</span>
@@ -122,7 +132,7 @@ const Main = () => {
 
                         </p>
 
-                        <div className="flex justify-normal mt-4 ">
+                        <div className="flex justify-normal mt-1 pt-2  flex-wrap border-t border-[#006341] ">
 
                           {
                             data.hashtags.map((data:any, index:any)=>{
@@ -134,7 +144,9 @@ const Main = () => {
                             })
                           }
                         </div>
-
+                        <div className="flex justify-normal mt-1 pt-2  flex-wrap border-t border-[#006341] ">
+                          comment
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -145,7 +157,12 @@ const Main = () => {
         }
         <div className="flex justify-center mt-2 w-[100%]">
           <div className="flex justify-end w-[80%]">
-            <ButtonNextSearcHome onClick={()=>nextSearch()} name={"NEXT"}/>
+            {
+              (restaurantListSet.restaurantList.length > 0)?
+              <ButtonNextSearcHome onClick={()=>nextSearch()} name={"NEXT"}/>
+              :""
+            }
+            
           </div>
         </div>
       </div>
