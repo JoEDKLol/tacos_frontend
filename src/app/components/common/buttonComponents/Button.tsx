@@ -135,7 +135,7 @@ const ButtonHashTagAddMainSearchIcon = (props:any) => {
 const ButtonTagHome = (props:any) => {
   return (
     <p 
-    className=" bg-white  text-[#006341] 
+    className=" bg-[#006341] text-white
     border-[#006341] border px-2 py-1 rounded-md text-sm 
     flex justify-center m-1" 
     >{props.name}
@@ -179,12 +179,24 @@ const ButtonClose = (props:any) => {
   );
 }
 
+const ButtonComment = (props:any) => {
+  return (
+    <button
+    className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+    border-[#006341] border px-2 py-1 rounded-full text-xs 
+    flex justify-center" 
+    onClick={props.onClick}
+    >{props.name}
+    </button> 
+  );
+}
+
 
 
 export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag, 
   ButtonSmallSettingMove, ButtonTagSearch, ButtonTagListInMainSearch
   , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
-  , ButtonNextSearcHome, ButtonRefresh, ButtonClose
+  , ButtonNextSearcHome, ButtonRefresh, ButtonClose, ButtonComment
 };
 
 

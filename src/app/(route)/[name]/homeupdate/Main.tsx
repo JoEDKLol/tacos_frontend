@@ -177,7 +177,7 @@ const Main = () => {
         <>
           <div className="w-full" >
             <div className="flex justify-center items-center h-10 bg-[#006341]">
-              <p className="text-white text-xl">Menu Update</p>
+              <p className="text-white text-xl">home Update</p>
             </div>
           </div>
 
