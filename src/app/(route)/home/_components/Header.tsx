@@ -72,13 +72,13 @@ const Header = () => {
 
   },[]);
 
-  useEffect(()=>{
-    console.log(restaurantListSet.restaurantList);
-  },[restaurantListSet])
+  // useEffect(()=>{
+  //   // console.log(restaurantListSet.restaurantList);
+  // },[restaurantListSet])
 
-  useEffect(()=>{
-    console.log(searchConditionsSet.searchCondition);
-  },[searchConditionsSet])
+  // useEffect(()=>{
+  //   // console.log(searchConditionsSet.searchCondition);
+  // },[searchConditionsSet])
 
   
 
@@ -211,8 +211,22 @@ const Header = () => {
     const retObj = await transaction("get", "res/searchreslisthome", obj, "", false, true, screenShow, errorShow);
     
     if(retObj.sendObj.success === "y"){
+
+      if(retObj.sendObj.resObj.length > 0){
+
+        for(let i=0; i<retObj.sendObj.resObj.length; i++){
+          retObj.sendObj.resObj[i].commentScreen = "hidden";
+          retObj.sendObj.resObj[i].comments = [];
+          retObj.sendObj.resObj[i].currentComment = "";
+          retObj.sendObj.resObj[i].currentCommentSeq = 0;
+          retObj.sendObj.resObj[i].validationMsg = "";
+        }
+      }
+
+
       restaurantListSet.restaurantListSet(retObj.sendObj.resObj);
       searchConditionsSet.searchConditionSet(obj);
+      setHashTagSearchScreenYn(false);
     }else{
       restaurantListSet.restaurantListSet([]);
     }

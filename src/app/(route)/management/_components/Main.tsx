@@ -662,10 +662,6 @@ const Main = () => {
 
   const setRestaurantListAddressFromGoogleMap = (restaurantseq:any, latLng:any, searchText:string) => {
     
-    console.log(restaurantseq);
-    console.log(latLng);
-    console.log(searchText);
-    
     const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
     restaurant[choosenIndex].latLng = latLng;
     restaurant[choosenIndex].address = searchText;

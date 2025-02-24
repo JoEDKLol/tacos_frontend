@@ -11,6 +11,12 @@ interface restaurantObject {
   thumbImg : string
   introduction : string
   hashtags : Array<string>
+  //add comment 
+  commentScreen : string
+  comments : Array<string>
+  currentComment : string
+  currentCommentSeq : number
+  validationMsg : string
 };
 
 interface restaurantListState {

@@ -191,12 +191,37 @@ const ButtonComment = (props:any) => {
   );
 }
 
+const ButtonCommentSelected = (props:any) => {
+  return (
+    <button
+    className=" bg-[#006341]  text-white hover:bg-white hover:text-[#006341]
+    border-[#006341] border px-2 py-1 rounded-full text-xs 
+    flex justify-center" 
+    onClick={props.onClick}
+    >{props.name}
+    </button> 
+  );
+}
+
+const ButtonCommentSave = (props:any) => {
+  return (
+    <button
+    className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+    border-[#006341] border px-1 rounded text-xs 
+    flex justify-center" 
+    onClick={props.onClick}
+    >{props.name}
+    </button> 
+  );
+}
+
 
 
 export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag, 
   ButtonSmallSettingMove, ButtonTagSearch, ButtonTagListInMainSearch
   , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
   , ButtonNextSearcHome, ButtonRefresh, ButtonClose, ButtonComment
+  , ButtonCommentSelected, ButtonCommentSave
 };
 
 
