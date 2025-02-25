@@ -13,10 +13,19 @@ interface restaurantObject {
   hashtags : Array<string>
   //add comment 
   commentScreen : string
-  comments : Array<string>
+  comments : [
+    {
+      _id : any
+      comment : string
+      updateYn : boolean
+      commentseq : number
+      
+    }
+  ]
   currentComment : string
   currentCommentSeq : number
   validationMsg : string
+  lastCommentSeq : number
 };
 
 interface restaurantListState {

@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import userState from "@/app/store/user";
 import { transactionAuth } from "@/app/utils/axiosAuth";
 import { checkInputNull } from "@/app/utils/checkUserValidation";
+import { getDate } from "@/app/utils/common";
 
 
 const Main = () => {
@@ -28,6 +29,9 @@ const Main = () => {
   
   const focusCommentListRef = useRef<null[] | HTMLTextAreaElement[]>([]);
   const [regCommnetIndex, setRegCommnetIndex] = useState<any>(-1);
+
+  const focusRegCommentListRef = useRef<null[] | HTMLTextAreaElement[]>([]);
+  const [regCommentListIndex, setRegCommentListIndex] = useState<any>(-1);
 
   async function nextSearch(){
     const searchObj = searchConditionsSet.searchCondition;
@@ -56,8 +60,22 @@ const Main = () => {
   },[regCommnetIndex])
 
   useEffect(()=>{
-    focusCommentListRef.current[regCommnetIndex]?.focus();
+
+    if(regCommnetIndex > -1){
+      focusCommentListRef.current[regCommnetIndex]?.focus();
+    }
+
+    if(regCommentListIndex > -1){
+      focusRegCommentListRef.current[regCommentListIndex]?.focus();
+    }
+
   },[restaurantListSet]); 
+
+  useEffect(()=>{
+    if(regCommentListIndex > -1){
+			focusRegCommentListRef.current[regCommentListIndex]?.focus();
+		}
+  },[regCommentListIndex])
 
   function commentOnClickHandler(seq:number, blockState:string, index:number){
     const choosenIndex = restaurantListSet.restaurantList.findIndex((val) => val.restaurantseq === seq);
@@ -99,7 +117,7 @@ const Main = () => {
     if(!checkInputNull(restaurantListSet.restaurantList[choosenIndex].currentComment)){
       focusCommentListRef.current[regCommnetIndex]?.focus();
       restaurantListSet.restaurantList[choosenIndex].validationMsg = "Please check comment.";
-      restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
+      // restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
 
       return;
     }
@@ -116,9 +134,9 @@ const Main = () => {
 
     if(retObj.sendObj.success === 'y'){
       restaurantListSet.restaurantList[choosenIndex].currentComment = ""
+      restaurantListSet.restaurantList[choosenIndex].comments.unshift(retObj.sendObj.resObj.saveComment);
+      restaurantListSet.restaurantList[choosenIndex].commentCounts = retObj.sendObj.resObj.commentCounts;
       restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
-    }else{
-
     }
   }
 
@@ -134,6 +152,14 @@ const Main = () => {
     const retObj = await transaction("get", "res/commentsearch", obj, "", false, true, screenShow, errorShow);
     if(retObj.sendObj.success === 'y'){
       if(retObj.sendObj.resObj.comments.length > 0){
+
+        for(let i=0; i<retObj.sendObj.resObj.comments.length; i++){
+          retObj.sendObj.resObj.comments[i].updateYn = true;
+        }
+
+        // console.log(retObj.sendObj.resObj.lastCommentSeq);
+
+        restaurantListSet.restaurantList[choosenIndex].lastCommentSeq = retObj.sendObj.resObj.lastCommentSeq;
         restaurantListSet.restaurantList[choosenIndex].comments = retObj.sendObj.resObj.comments;
         restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
       }
@@ -141,6 +167,7 @@ const Main = () => {
   }
 
   function commentOnchangeHandler(e:any, seq:number, index:number){
+    setRegCommentListIndex(-1);
     setRegCommnetIndex(index)
     const choosenIndex = restaurantListSet.restaurantList.findIndex((val:any) => val.restaurantseq === seq);
     restaurantListSet.restaurantList[choosenIndex].currentComment = e.target.value;
@@ -160,9 +187,122 @@ const Main = () => {
       }
     }
 
-
     restaurantListSet.restaurantListSet(restaurantListSet.restaurantList);
   }
+
+  function commentUpdateOnchangeHandler(e:any, restaurantseq:number, commentId:any, index:number){
+    setRegCommnetIndex(-1);
+    setRegCommentListIndex(index);
+    const choosenIndex = restaurantListSet.restaurantList.findIndex((val:any) => val.restaurantseq === restaurantseq);
+    const commentIndex = restaurantListSet.restaurantList[choosenIndex].comments.findIndex((val2:any) => val2._id === commentId);
+    restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment = e.target.value;
+
+    let totalByte = 0;
+    for(let i =0; i < restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment.length; i++) {
+      const currentByte = restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment.charCodeAt(i);
+      if(currentByte > 128){
+        totalByte += 2;
+      }else {
+        totalByte++;
+      }
+
+      if(totalByte > 500){
+        restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment = restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment.substring(0, i);
+        break;
+      }
+    }
+    
+    
+    // restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment = e.target.value;
+    restaurantListSet.restaurantListSet(restaurantListSet.restaurantList);
+  }
+
+  function commentUpdateOnClickHandler(restaurantseq:number, commentId:any, index:number, updateYn:boolean){
+    setRegCommnetIndex(-1);
+    setRegCommentListIndex(index);
+    const choosenIndex = restaurantListSet.restaurantList.findIndex((val:any) => val.restaurantseq === restaurantseq);
+    const commentIndex = restaurantListSet.restaurantList[choosenIndex].comments.findIndex((val2:any) => val2._id === commentId);
+    restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].updateYn = updateYn;
+
+  }
+
+  async function commentUpdateSaveOnClickHandler(restaurantseq:number, commentId:any, index:number){
+    setRegCommnetIndex(-1);
+    setRegCommentListIndex(index);
+
+    const choosenIndex = restaurantListSet.restaurantList.findIndex((val:any) => val.restaurantseq === restaurantseq);
+    const commentIndex = restaurantListSet.restaurantList[choosenIndex].comments.findIndex((val2:any) => val2._id === commentId);
+
+
+    if(!checkInputNull(restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment)){
+      focusRegCommentListRef.current[index]?.focus();
+      return;
+    }
+
+    const obj = {
+      email : userStateSet.email,
+      restaurantseq : restaurantseq,
+      comment : restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].comment,
+      commentseq : restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].commentseq,
+    } 
+
+    const retObj = await transactionAuth("post", "res/commentupdate", obj, "", false, true, screenShow, errorShow);
+    
+    if(retObj.sendObj.success === 'y'){
+      restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].updateYn = true;
+      setRegCommentListIndex(-1);
+    }
+  }
+
+  async function commentDeleteOnClickHandler(restaurantseq:number, commentId:any, index:number){
+    setRegCommnetIndex(-1);
+    setRegCommentListIndex(index);
+
+    const choosenIndex = restaurantListSet.restaurantList.findIndex((val:any) => val.restaurantseq === restaurantseq);
+    const commentIndex = restaurantListSet.restaurantList[choosenIndex].comments.findIndex((val2:any) => val2._id === commentId);
+
+    const obj = {
+      restaurantseq : restaurantseq,
+      commentseq : restaurantListSet.restaurantList[choosenIndex].comments[commentIndex].commentseq,
+    } 
+
+    const retObj = await transactionAuth("post", "res/commentdelete", obj, "", false, true, screenShow, errorShow);
+    
+    if(retObj.sendObj.success === 'y'){
+      setRegCommentListIndex(-1);
+      restaurantListSet.restaurantList[choosenIndex].commentCounts = retObj.sendObj.resObj.commentCounts;
+      restaurantListSet.restaurantList[choosenIndex].comments.splice(index, 1);
+    }
+  }
+
+  async function commentNextSearchOnClickHandler(restaurantseq:number){
+
+    setRegCommnetIndex(-1);
+    setRegCommentListIndex(-1);
+
+    const choosenIndex = restaurantListSet.restaurantList.findIndex((val) => val.restaurantseq === restaurantseq);
+    
+    const obj = {
+      restaurantseq : restaurantseq, 
+      currentSeq : restaurantListSet.restaurantList[choosenIndex].lastCommentSeq
+    } 
+
+    const retObj = await transaction("get", "res/commentsearch", obj, "", false, true, screenShow, errorShow);
+    if(retObj.sendObj.success === 'y'){
+      if(retObj.sendObj.resObj.comments.length > 0){
+
+        for(let i=0; i<retObj.sendObj.resObj.comments.length; i++){
+          retObj.sendObj.resObj.comments[i].updateYn = true;
+        }
+
+        restaurantListSet.restaurantList[choosenIndex].lastCommentSeq = retObj.sendObj.resObj.lastCommentSeq;
+        restaurantListSet.restaurantList[choosenIndex].comments.push(...retObj.sendObj.resObj.comments);
+        restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
+      }
+    }
+  }
+
+
 
   return(
     <div className="">  
@@ -304,8 +444,9 @@ const Main = () => {
                         value={data.currentComment} 
                         id=""  className="
                         resize-none border w-full h-[120px] px-2 py-1 text-sm 
-                        focus:border-[#006341] text-[#006341] outline-none rounded
-                        focus:bg-white bg-slate-200
+                        border-[#006341]
+                        text-[#006341] outline-none rounded
+                        bg-white 
                         "
                         />
 
@@ -321,25 +462,58 @@ const Main = () => {
                       <div className=" mt-1 p-1  ">
 
                         {
-                          data.comments.map((val:any, index:any)=>{
+                          data.comments.map((val:any, index2:any)=>{
                             return ( 
-                              <div key={val._id+ index}>
+                              <div key={val._id+ index2}>
                                 <div className="border-2 mb-2 rounded border-[#006341]  ">
-                                  <div className="mx-1 my-2 flex flex-between">
-                                    <p className="bg-white border border-[#006341] font-bold  px-2 py-1 text-xs rounded">{val.userinfo.email}</p>
+                                  <div className="mx-1 my-2 flex justify-between w-full">
+                                    <p className="">
+                                      <span className="bg-white border border-[#006341] px-1 py-0.5 text-xs rounded">
+                                      {
+                                      (!val.userinfo.name)?"guest":""
+                                      
+                                      }
+
+                                      </span>
+                                      <span className="ms-1 text-xs">
+                                        {getDate(val.regdate)}
+                                      </span>
+                                      
+                                    </p>
+                                    {
+                                      (val.userinfo._id === userStateSet.id)?
+                                      <p className="flex items-end me-2">
+
+
+                                        {
+                                          (val.updateYn)?
+                                          <ButtonCommentSave 
+                                          onClick={()=>commentUpdateOnClickHandler(data.restaurantseq, val._id, index2, false)}
+                                          name={"update"}/>
+                                          :<ButtonCommentSave 
+                                          onClick={()=>commentUpdateSaveOnClickHandler(data.restaurantseq, val._id, index2)}
+                                          name={"save"}/>
+                                        }
+                                        <span className="ms-1">
+                                          <ButtonCommentSave 
+                                          onClick={()=>commentDeleteOnClickHandler(data.restaurantseq, val._id, index2)}
+                                          name={"delete"}/>
+                                        </span>
+                                        
+                                      </p>
+                                      :""
+                                    }
+                                    
                                   </div>
                                   <div className=" px-1 pb-1 h-[120px] flex items-end">
                                     <textarea   
                                     spellCheck={false} 
-                                    readOnly
-                                    // ref={(element) => {focusCommentListRef.current[index] = element;}}
-                                    // onChange={(e)=>commentOnchangeHandler(e, data.restaurantseq, index)}
-                                    // onFocus={(e)=>e.target.value = e.target.value}
-                                    // value={(commentList.length > 0)?commentList[0].comment:""}
-                                    // value={(commentList.length > 0)?commentList[0].comment:index}
+                                    disabled={val.updateYn}
+                                    ref={(element) => {focusRegCommentListRef.current[index2] = element;}}
+                                    onChange={(e)=>commentUpdateOnchangeHandler(e, data.restaurantseq, val._id, index2)}
                                     value={val.comment} 
                                     id=""  className="
-                                    resize-none border w-full h-full px-2 py-1 text-sm bg-slate-200
+                                    resize-none border w-full h-full px-2 py-1 text-sm bg-slate-100
                                     focus:border-[#006341] focus:bg-white text-[#006341] outline-none rounded
                                     
                                     "
@@ -355,7 +529,7 @@ const Main = () => {
                         {
                           (data.comments.length > 0)?
                           <ButtonCommentSave 
-                          // onClick={()=>commentSaveOnClickHandler(data.restaurantseq, index)}
+                          onClick={()=>commentNextSearchOnClickHandler(data.restaurantseq)}
                           name={"next"}/>
                           :""
                         }

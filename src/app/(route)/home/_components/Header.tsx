@@ -220,6 +220,8 @@ const Header = () => {
           retObj.sendObj.resObj[i].currentComment = "";
           retObj.sendObj.resObj[i].currentCommentSeq = 0;
           retObj.sendObj.resObj[i].validationMsg = "";
+          retObj.sendObj.resObj[i].lastCommentSeq = 0;
+
         }
       }
 
