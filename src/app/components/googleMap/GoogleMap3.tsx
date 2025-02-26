@@ -40,38 +40,21 @@ const GoogleMap3 = (props:any) => {
   useEffect(() => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
-
-            setLat(position.coords.latitude);
-            setLng(position.coords.longitude);
-
-
-            // setMyLocation({
-            //     latitude: position.coords.latitude,
-            //     longitude: position.coords.longitude,
-            // });
+          setLat(position.coords.latitude);
+          setLng(position.coords.longitude);  
         });
     } else {
-        // window.alert("현재위치를 알수 없습니다.");
+      setLat(37.7833141);
+      setLng(-122.2030887);  
+      // console.log("현재위치를 알수 없습니다");
     }
   }, []);
 
-  // useEffect(()=>{
-  //   console.log("현재 텍스트 " + searchText);
-  // }, [searchText])
-  
   const handlerMapClick = (e:any) => {
     const lat = e.latLng.lat();
     const lng = e.latLng.lng();
     setLat(lat);
     setLng(lng);
-    // console.log(lat, lng)
-    
-    // if(props.googleMapType === "each"){
-    //   props.setLatLng({lat:lat, lng:lng });
-    // }else{
-    //   props.setRestaurantListAddressFromGoogleMap(props.mapSelectedRestaurantseq, {lat:lat, lng:lng });
-    // }
-    
   };
 
   if (!isLoaded) {
@@ -103,8 +86,6 @@ const GoogleMap3 = (props:any) => {
                   const { lat, lng } = getLatLng(results[0]);
                   setLat(lat);
                   setLng(lng);
-                  // setSearchTextf(address, { lat:lat, lng:lng });
-
                 });
               }}
             />

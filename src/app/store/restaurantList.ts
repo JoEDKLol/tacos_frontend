@@ -26,6 +26,7 @@ interface restaurantObject {
   currentCommentSeq : number
   validationMsg : string
   lastCommentSeq : number
+  userLike : string
 };
 
 interface restaurantListState {

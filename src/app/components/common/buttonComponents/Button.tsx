@@ -5,6 +5,8 @@ import { CiSettings } from "react-icons/ci";
 import { PiHashStraightBold } from "react-icons/pi";
 import { GrRefresh } from "react-icons/gr";
 import { CgClose } from "react-icons/cg";
+// import { AiFillLike } from "react-icons/ai";
+import { AiOutlineLike } from "react-icons/ai";
 const ButtonLg = (props:any) => {
   return (
 
@@ -215,13 +217,49 @@ const ButtonCommentSave = (props:any) => {
   );
 }
 
+const ButtonLike = (props:any) => {
+  return (
+    <button
+    className=" bg-[#006341]  text-white hover:text-[#006341] hover:bg-white
+    border-[#006341] border px-2 py-1 rounded-full text-base 
+    flex justify-center" 
+    onClick={props.onClick}
+    ><AiOutlineLike/>
+    </button> 
+  );
+}
+
+const ButtonDisLike = (props:any) => {
+  return (
+    <button
+    className="  bg-white text-[#006341] hover:text-white hover:bg-[#006341]
+    border-[#006341] border px-2 py-1 rounded-full text-base
+    flex justify-center" 
+    onClick={props.onClick}
+    ><AiOutlineLike/>
+    </button> 
+  );
+}
+
+
+const ButtonLikeNotWorking = () => {
+  return (
+    <span
+    className="  bg-white text-[#006341]
+    border-[#006341] border px-2 py-1 rounded-full text-base
+    flex justify-center" 
+    ><AiOutlineLike/>
+    </span> 
+  );
+}
 
 
 export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag, 
   ButtonSmallSettingMove, ButtonTagSearch, ButtonTagListInMainSearch
   , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
   , ButtonNextSearcHome, ButtonRefresh, ButtonClose, ButtonComment
-  , ButtonCommentSelected, ButtonCommentSave
+  , ButtonCommentSelected, ButtonCommentSave, ButtonLike, ButtonDisLike
+  , ButtonLikeNotWorking
 };
 
 

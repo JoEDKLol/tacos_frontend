@@ -1,10 +1,12 @@
 'use client';
-import { TbThumbUpFilled } from "react-icons/tb";
+// import { TbThumbUpFilled } from "react-icons/tb";
+import { AiFillLike } from "react-icons/ai";
+// import { AiOutlineLike } from "react-icons/ai";
 import { MdOutlineComment } from "react-icons/md";
 import { GoLocation } from "react-icons/go";
 import Image from "next/image";
 import restaurantListState from "@/app/store/restaurantList";
-import { ButtonComment, ButtonCommentSave, ButtonCommentSelected, ButtonNextSearcHome, ButtonTagHome } from "@/app/components/common/buttonComponents/Button";
+import { ButtonComment, ButtonCommentSave, ButtonCommentSelected, ButtonDisLike, ButtonLike, ButtonLikeNotWorking, ButtonNextSearcHome, ButtonTagHome } from "@/app/components/common/buttonComponents/Button";
 import searchConditionsState from "@/app/store/searchConditions";
 import { useEffect, useRef, useState } from "react";
 import { transaction } from "@/app/utils/axios";
@@ -43,6 +45,27 @@ const Main = () => {
 
     const retObj = await transaction("get", "res/searchreslisthome", obj, "", false, true, screenShow, errorShow);
     if(retObj.sendObj.resObj.length > 0){
+
+      for(let i=0; i<retObj.sendObj.resObj.length; i++){
+        retObj.sendObj.resObj[i].commentScreen = "hidden";
+        retObj.sendObj.resObj[i].comments = [];
+        retObj.sendObj.resObj[i].currentComment = "";
+        retObj.sendObj.resObj[i].currentCommentSeq = 0;
+        retObj.sendObj.resObj[i].validationMsg = "";
+        retObj.sendObj.resObj[i].lastCommentSeq = 0;
+      
+        if(userStateSet.id){
+          const index = userStateSet.likesArr.findIndex((val:any) => val.restaurantseq === retObj.sendObj.resObj[i].restaurantseq);
+          if(index > -1){
+            if(userStateSet.likesArr[index].likeyn === "y"){
+              retObj.sendObj.resObj[i].userLike = "y";
+            }else{
+              retObj.sendObj.resObj[i].userLike = "n";
+            }
+          }
+        }
+      }
+
       restaurantListSet.restaurantListAdd(retObj.sendObj.resObj);
       setCurrentPage(currnetPage+1);
     }
@@ -148,6 +171,7 @@ const Main = () => {
       restaurantseq : restaurantseq, 
       currentSeq : restaurantListSet.restaurantList[choosenIndex].currentCommentSeq, 
     } 
+
 
     const retObj = await transaction("get", "res/commentsearch", obj, "", false, true, screenShow, errorShow);
     if(retObj.sendObj.success === 'y'){
@@ -282,6 +306,12 @@ const Main = () => {
 
     const choosenIndex = restaurantListSet.restaurantList.findIndex((val) => val.restaurantseq === restaurantseq);
     
+    console.log(restaurantListSet.restaurantList[choosenIndex].lastCommentSeq);
+
+    if(restaurantListSet.restaurantList[choosenIndex].lastCommentSeq === 0){
+      return;
+    }
+
     const obj = {
       restaurantseq : restaurantseq, 
       currentSeq : restaurantListSet.restaurantList[choosenIndex].lastCommentSeq
@@ -299,6 +329,32 @@ const Main = () => {
         restaurantListSet.restaurantList[choosenIndex].comments.push(...retObj.sendObj.resObj.comments);
         restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
       }
+    }
+  }
+
+  async function likeClickHandler(likeyn:string, restaurantseq:number, restaurantId:any){
+
+    setRegCommnetIndex(-1);
+    setRegCommentListIndex(-1);
+
+    const obj = {
+      userseq:userStateSet.userseq,
+      email : userStateSet.email,
+      restaurantseq : restaurantseq,
+      restaurantinfo : restaurantId, 
+      likeyn : likeyn
+    }
+
+    // console.log(obj);
+
+    const retObj = await transactionAuth("post", "res/likeupdate", obj, "", false, true, screenShow, errorShow);
+    // console.log(retObj);
+    if(retObj.sendObj.success === 'y'){
+      const choosenIndex = restaurantListSet.restaurantList.findIndex((val) => val.restaurantseq === restaurantseq);
+      restaurantListSet.restaurantList[choosenIndex].likeCounts = retObj.sendObj.resObj.likeCounts;
+      restaurantListSet.restaurantList[choosenIndex].userLike = retObj.sendObj.resObj.userLike;
+      restaurantListSet.restaurantListSet([...restaurantListSet.restaurantList]);
+      
     }
   }
 
@@ -373,7 +429,7 @@ const Main = () => {
                           </p>
                         </div> 
                         <p className="flex justify-normal mt-2 ms-2">
-                          <span className=" text-lg"><TbThumbUpFilled/></span>
+                          <span className=" text-lg"><AiFillLike/></span>
                           <span className="ms-1 text-sm">{data.likeCounts}</span>
                           <span className="ms-3 text-lg"><MdOutlineComment/></span>
                           <span className="ms-1 text-sm">{data.commentCounts}</span>
@@ -427,11 +483,40 @@ const Main = () => {
                           name={"comment"}/>
                         }
                       </p>
-                      <p>
+                      <p className="me-1">
                         <ButtonComment 
                         onClick={()=>restaurantClickHandler(data.restaurantname)} 
                         name={"visit"}/>
                       </p>
+                      
+
+
+                      {
+                        (userStateSet.id)?
+                        (data.userLike === "y")?
+                        <p>
+                          <ButtonLike 
+                          onClick={()=>likeClickHandler("n", data.restaurantseq, data._id)} 
+                          />
+                        </p>
+                        :
+                        <p>
+                          <ButtonDisLike 
+                          onClick={()=>likeClickHandler("y", data.restaurantseq, data._id)} 
+                          />
+                        </p>
+                        :
+                        <p>
+                          <ButtonLikeNotWorking/>
+                        </p>
+
+                      }
+
+
+                      
+
+
+                      
                       
                     </div>
                     <div className={data.commentScreen + " mx-2 mb-2   "}>
@@ -452,8 +537,8 @@ const Main = () => {
 
                         <div className="flex justify-between ">
                         <p className="text-red-500 text-xs">{data.validationMsg}</p>
-                        <p>
-                          <ButtonCommentSave 
+                        <p className="">
+                          <ButtonCommentSave
                           onClick={()=>commentSaveOnClickHandler(data.restaurantseq, index)}
                           name={"save"}/>
                         </p>

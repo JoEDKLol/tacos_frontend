@@ -19,6 +19,7 @@ import { checkInputNull } from "@/app/utils/checkUserValidation";
 import restaurantListState from "@/app/store/restaurantList";
 import searchConditionsState from "@/app/store/searchConditions";
 import { CiSettings } from "react-icons/ci";
+// import { transactionAuth } from "@/app/utils/axiosAuth";
 
 const Header = () => {  
   const router = useRouter();
@@ -60,6 +61,7 @@ const Header = () => {
   useEffect(()=>{
     if(userStateSet.id){
       setSigninYn(true);
+      setRestaurantLikes();
     }else{
       setSigninYn(false);
     }
@@ -209,7 +211,6 @@ const Header = () => {
       keyword:searchText, 
     }
     const retObj = await transaction("get", "res/searchreslisthome", obj, "", false, true, screenShow, errorShow);
-    
     if(retObj.sendObj.success === "y"){
 
       if(retObj.sendObj.resObj.length > 0){
@@ -221,7 +222,18 @@ const Header = () => {
           retObj.sendObj.resObj[i].currentCommentSeq = 0;
           retObj.sendObj.resObj[i].validationMsg = "";
           retObj.sendObj.resObj[i].lastCommentSeq = 0;
-
+          
+          if(userStateSet.id){
+            const index = userStateSet.likesArr.findIndex((val:any) => val.restaurantseq === retObj.sendObj.resObj[i].restaurantseq);
+            if(index > -1){
+              if(userStateSet.likesArr[index].likeyn === "y"){
+                retObj.sendObj.resObj[i].userLike = "y";
+              }else{
+                retObj.sendObj.resObj[i].userLike = "n";
+              }
+            }
+          }
+        
         }
       }
 
@@ -234,6 +246,46 @@ const Header = () => {
     }
     
   }
+
+  function setRestaurantLikes(){
+
+    for(let i=0; i<restaurantListSet.restaurantList.length; i++){
+      const index = userStateSet.likesArr.findIndex((val:any) => val.restaurantseq === restaurantListSet.restaurantList[i].restaurantseq);
+      if(index > -1){
+        if(userStateSet.likesArr[index].likeyn === "y"){
+          restaurantListSet.restaurantList[i].userLike = "y";
+        }else{
+          restaurantListSet.restaurantList[i].userLike = "n";
+        }
+      }
+
+
+    }
+    
+    restaurantListSet.restaurantListSet(restaurantListSet.restaurantList);
+
+  }
+
+
+
+  // async function setRestaurantLikes(){
+  //   const obj = {
+  //     userseq:userStateSet.userseq,
+  //   }
+  //   console.log(restaurantListSet.restaurantList);
+  //   const retObj = await transactionAuth("get", "res/likesearch", obj, "", false, true, screenShow, errorShow);
+    
+  //   if(retObj.sendObj.success === "y"){
+
+  //     if(retObj.sendObj.resObj.length > 0){
+
+
+
+  //     }
+
+  //   }
+
+  // }
   
   return( 
     <header

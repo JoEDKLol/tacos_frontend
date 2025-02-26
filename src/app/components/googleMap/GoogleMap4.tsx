@@ -11,7 +11,7 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 import styles from './styles/Home.module.css';
 
-const GoogleMap3: NextPage = () => {
+const GoogleMap4: NextPage = () => {
   const [lat, setLat] = useState(27.672932021393862);
   const [lng, setLng] = useState(85.31184012689732);
 
@@ -42,7 +42,7 @@ const GoogleMap3: NextPage = () => {
   useEffect(() => {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
-
+            console.log("????????????????");
             console.log(position.coords.latitude);
             console.log(position.coords.longitude);
             setLat(position.coords.latitude);
@@ -181,4 +181,4 @@ const PlacesAutocomplete = ({
   );
 };
 
-export default GoogleMap3;
+export default GoogleMap4;

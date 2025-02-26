@@ -39,7 +39,7 @@ const CommonTransaction = ({ children }: any) => {
           storeAccessToken(retObj.accessToken);
         }else{
           //access token get 실패
-          userStateSet.userSet({ id:"", email:"", userseq:0});
+          userStateSet.userSet({ id:"", email:"", userseq:0, likesArr:[]});
         }
     }
 
