@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 interface restaurantObject {
+  _id:any
   restaurantseq: number;
   restaurantname:string;
   likeCounts : number

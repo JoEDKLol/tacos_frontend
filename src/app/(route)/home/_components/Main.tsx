@@ -17,7 +17,11 @@ import userState from "@/app/store/user";
 import { transactionAuth } from "@/app/utils/axiosAuth";
 import { checkInputNull } from "@/app/utils/checkUserValidation";
 import { getDate } from "@/app/utils/common";
-
+import CustomConfirm from "@/app/components/modals/CustomConfirm";
+import GoogleMapPopupMain from "@/app/components/modals/GoogleMapPopupMain";
+import { VscEdit } from "react-icons/vsc";
+import { VscSaveAs } from "react-icons/vsc";
+import { VscTrash } from "react-icons/vsc";
 
 const Main = () => {
   const userStateSet = userState();
@@ -34,6 +38,54 @@ const Main = () => {
 
   const focusRegCommentListRef = useRef<null[] | HTMLTextAreaElement[]>([]);
   const [regCommentListIndex, setRegCommentListIndex] = useState<any>(-1);
+
+
+  const [showCustomConfirmPortal, setShowCustomConfirmPortal] = useState<boolean>(false);
+
+  const showCustomConfirmHandleModal = (showYn:boolean) => {
+    setShowCustomConfirmPortal(showYn);
+  };
+
+  const [fName, setFName] = useState<string>("");
+  const [params, setParams] = useState<any>([]);
+  const [confirmMessage, setConfirmMessage] = useState<string>("");
+
+  function setConfirmRes(res:boolean, parfName:string, parValues:any){
+    
+    if(res){
+      if(parfName === "UPDATE"){
+        commentUpdateSaveOnClickHandler(parValues[0], parValues[1], parValues[2]);
+      }
+
+      if(parfName === "DELETE"){
+        commentDeleteOnClickHandler(parValues[0], parValues[1], parValues[2]);
+      }
+
+      if(parfName === "SAVE"){
+        commentSaveOnClickHandler(parValues[0], parValues[1])
+      }
+    }
+  }
+
+  function confirmModal(parText:string, parfName:string, ...parValues:any){
+    setConfirmMessage(parText);
+    setFName(parfName);
+    setParams(parValues);
+    showCustomConfirmHandleModal(true);
+  }
+
+  const [showGoogleMapPortal, setShowGoogleMapPortal] = useState(false);
+  const [latLng, setLatLng] = useState<object>({});
+
+  const googleHandleModal = (showYn:boolean) => {
+    setShowGoogleMapPortal(showYn);
+  };
+
+  function showMap(showYn:boolean, latLngFrom:object){
+    setLatLng(latLngFrom);
+    googleHandleModal(true);
+  }
+
 
   async function nextSearch(){
     const searchObj = searchConditionsSet.searchCondition;
@@ -150,6 +202,7 @@ const Main = () => {
       email : userStateSet.email,
       restaurantseq : restaurantseq,
       comment : restaurantListSet.restaurantList[choosenIndex].currentComment, 
+      restaurantId : restaurantListSet.restaurantList[choosenIndex]._id
     } 
 
     const retObj = await transactionAuth("post", "res/commentsave", obj, "", false, true, screenShow, errorShow);
@@ -358,16 +411,27 @@ const Main = () => {
     }
   }
 
-
-
   return(
-    <div className="">  
+    <div className="">
+      <div className=""> 
+        <CustomConfirm 
+          show={showCustomConfirmPortal} 
+          setConfirm={showCustomConfirmHandleModal}
+          setConfirmRes={setConfirmRes}
+          message={confirmMessage}
+          fName={fName}
+          params={params}
+        />
+
+        <GoogleMapPopupMain show={showGoogleMapPortal} latLng={latLng} googleHandleModal={googleHandleModal} />
+              
+      </div>
       <div className="w-full">
         {
           restaurantListSet.restaurantList.map((data:any, index:any)=>{ 
             return (
               <div key={index + data.restaurantseq + data.restaurantname}>  
-                <div className="flex justify-center mt-5 w-[100%] ">
+                <div className="flex justify-center mt-5 w-[100%] "> 
                   <div className="flex flex-col w-[80%] border-2 border-[#006341]  rounded hover:shadow-lg hover:shadow-green-900/50  ">
                     <div 
                     // onClick={()=>restaurantClickHandler(data.restaurantname)}
@@ -433,18 +497,24 @@ const Main = () => {
                           <span className="ms-1 text-sm">{data.likeCounts}</span>
                           <span className="ms-3 text-lg"><MdOutlineComment/></span>
                           <span className="ms-1 text-sm">{data.commentCounts}</span>
+                          
                           <span className="ms-3 text-lg hidden
                           2xl:block xl:block lg:block md:block sm:hidden
                           "><GoLocation/></span>
-                          <span className="ms-1 text-sm hidden
-                          2xl:block xl:block lg:block md:block sm:hidden
+                          <span 
+                          onClick={()=>showMap(true, data.latLng)}
+                          className="ms-1 text-sm hidden
+                          2xl:block xl:block lg:block md:block sm:hidden cursor-pointer
                           ">{data.address}</span>
+                        
                         </p>
                         <p className="flex justify-normal mt-2
                         2xl:hidden xl:hidden lg:hidden md:hidden sm:flex
                         ">
                           <span className="text-lg "><GoLocation/></span>
-                          <span className="ms-1 text-sm ">{data.address}</span>
+                          <span 
+                          onClick={()=>showMap(true, data.latLng)}
+                          className="ms-1 text-sm cursor-pointer ">{data.address}</span>
                         </p>
 
                         <p className="flex flex-col mt-2 w-full  ">
@@ -539,7 +609,8 @@ const Main = () => {
                         <p className="text-red-500 text-xs">{data.validationMsg}</p>
                         <p className="">
                           <ButtonCommentSave
-                          onClick={()=>commentSaveOnClickHandler(data.restaurantseq, index)}
+                          // onClick={()=>commentSaveOnClickHandler(data.restaurantseq, index)}
+                          onClick={()=>confirmModal("SAVE", "SAVE", data.restaurantseq, index)}
                           name={"save"}/>
                         </p>
                       </div>
@@ -552,15 +623,23 @@ const Main = () => {
                               <div key={val._id+ index2}>
                                 <div className="border-2 mb-2 rounded border-[#006341]  ">
                                   <div className="mx-1 my-2 flex justify-between w-full">
-                                    <p className="">
-                                      <span className="bg-white border border-[#006341] px-1 py-0.5 text-xs rounded">
+                                    <p className=" flex items-end">
+                                      <span className=" inline-block items-center font-bold truncate text-ellipsis max-w-[100px] 
+                                      2xl:max-w-[220px] xl:max-w-[220px] lg:max-w-[220px] md:max-w-[160px] sm:max-w-[100px]
+                                      bg-white   border-[#006341] px-1 text-xs rounded ">
                                       {
-                                      (!val.userinfo.name)?"guest":""
+                                      (!val.userinfo.username)?"guest":
+                                      val.userinfo.username
+                                      +val.userinfo.username
+                                      +val.userinfo.username
+                                      +val.userinfo.username
+                                      +val.userinfo.username
                                       
                                       }
-
                                       </span>
-                                      <span className="ms-1 text-xs">
+                                      <span className="inline-block ms-1 text-xs truncate max-w-[80px]
+                                      2xl:max-w-[220px] xl:max-w-[220px] lg:max-w-[220px] md:max-w-[160px] sm:max-w-[100px]
+                                      ">
                                         {getDate(val.regdate)}
                                       </span>
                                       
@@ -568,21 +647,69 @@ const Main = () => {
                                     {
                                       (val.userinfo._id === userStateSet.id)?
                                       <p className="flex items-end me-2">
-
-
                                         {
                                           (val.updateYn)?
-                                          <ButtonCommentSave 
-                                          onClick={()=>commentUpdateOnClickHandler(data.restaurantseq, val._id, index2, false)}
-                                          name={"update"}/>
-                                          :<ButtonCommentSave 
-                                          onClick={()=>commentUpdateSaveOnClickHandler(data.restaurantseq, val._id, index2)}
-                                          name={"save"}/>
+                                          <>
+                                          <span className=" hidden
+                                          2xl:block xl:block lg:block md:block sm:hidden">
+                                            <ButtonCommentSave 
+                                            onClick={()=>commentUpdateOnClickHandler(data.restaurantseq, val._id, index2, false)}
+                                            name={"update"}/>
+                                          </span>
+                                          <span className=" block
+                                          2xl:hidden xl:hidden lg:hidden md:hidden sm:block">
+                                            <button
+                                            className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+                                            border-[#006341] border p-0.5 rounded text-xs 
+                                            flex justify-center" 
+                                            onClick={()=>commentUpdateOnClickHandler(data.restaurantseq, val._id, index2, false)}
+                                            ><VscEdit/>
+                                            </button> 
+                                            
+                                          </span>
+                                          </>
+                                          :
+                                          <>
+                                            <span className=" hidden
+                                            2xl:block xl:block lg:block md:block sm:hidden">
+                                              <ButtonCommentSave 
+                                              onClick={()=>confirmModal("UPDATE", "UPDATE", data.restaurantseq, val._id, index2)}
+                                              name={"save"}/>
+                                            </span>
+
+                                            <span className=" block
+                                            2xl:hidden xl:hidden lg:hidden md:hidden sm:block">
+                                              <button
+                                              className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+                                              border-[#006341] border p-0.5 rounded text-xs 
+                                              flex justify-center" 
+                                              onClick={()=>confirmModal("UPDATE", "UPDATE", data.restaurantseq, val._id, index2)}
+                                              ><VscSaveAs/>
+                                              </button> 
+                                            </span>
+                                          
+                                          </>
+                                          
+
+
                                         }
-                                        <span className="ms-1">
+                                        <span className="ms-1 hidden
+                                            2xl:block xl:block lg:block md:block sm:hidden">
                                           <ButtonCommentSave 
-                                          onClick={()=>commentDeleteOnClickHandler(data.restaurantseq, val._id, index2)}
+                                          // onClick={()=>commentDeleteOnClickHandler(data.restaurantseq, val._id, index2)}
+                                          onClick={()=>confirmModal("DELETE", "DELETE", data.restaurantseq, val._id, index2)}
                                           name={"delete"}/>
+                                        </span>
+
+                                        <span className="ms-1 block
+                                            2xl:hidden xl:hidden lg:hidden md:hidden sm:block">
+                                          <button
+                                          className=" bg-white  text-[#006341] hover:bg-[#006341] hover:text-white
+                                          border-[#006341] border p-0.5 rounded text-xs 
+                                          flex justify-center" 
+                                          onClick={()=>confirmModal("DELETE", "DELETE", data.restaurantseq, val._id, index2)}
+                                          ><VscTrash/>
+                                          </button> 
                                         </span>
                                         
                                       </p>

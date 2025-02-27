@@ -11,13 +11,10 @@ import usePlacesAutocomplete, {
 } from 'use-places-autocomplete';
 
 const GoogleMap3 = (props:any) => {
-  const [lat, setLat] = useState(27.672932021393862);
-  const [lng, setLng] = useState(85.31184012689732);
+  const [lat, setLat] = useState(37.7728591);
+  const [lng, setLng] = useState(-122.2095387);
 
-  // const [searchText, setSearchText] = useState<string>("");
-
-
-
+  
   const libraries = useMemo(() => ['places'], []);
   const mapCenter = useMemo(() => ({ lat: lat, lng: lng }), [lat, lng]);
 
@@ -46,7 +43,6 @@ const GoogleMap3 = (props:any) => {
     } else {
       setLat(37.7833141);
       setLng(-122.2030887);  
-      // console.log("현재위치를 알수 없습니다");
     }
   }, []);
 
@@ -98,12 +94,12 @@ const GoogleMap3 = (props:any) => {
             center={mapCenter}
             mapTypeId={google.maps.MapTypeId.ROADMAP}
             mapContainerStyle={{ width: '500px', height: '300px' }}
-            onLoad={() => console.log('Map Loaded')}
+            // onLoad={() => console.log('Map Loaded')}
             onClick={(e)=>handlerMapClick(e)}
           >
             <MarkerF
               position={mapCenter}
-              onLoad={() => console.log('Marker Loaded')}
+              // onLoad={() => console.log('Marker Loaded')}
             />
 
             {/* {[1000, 2500].map((radius, idx) => {
@@ -187,9 +183,6 @@ const PlacesAutocomplete = ({
   };
 
   function applyClickHandler(){
-    console.log(googleMapType);
-    console.log(lat, lng)
-    console.log(value);
     if(googleMapType === "each"){
       setSearchText(value);
       setLatLng({lat:lat, lng:lng}); 
