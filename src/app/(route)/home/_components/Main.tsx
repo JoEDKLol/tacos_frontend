@@ -359,8 +359,6 @@ const Main = () => {
 
     const choosenIndex = restaurantListSet.restaurantList.findIndex((val) => val.restaurantseq === restaurantseq);
     
-    console.log(restaurantListSet.restaurantList[choosenIndex].lastCommentSeq);
-
     if(restaurantListSet.restaurantList[choosenIndex].lastCommentSeq === 0){
       return;
     }
@@ -401,7 +399,7 @@ const Main = () => {
     // console.log(obj);
 
     const retObj = await transactionAuth("post", "res/likeupdate", obj, "", false, true, screenShow, errorShow);
-    // console.log(retObj);
+    
     if(retObj.sendObj.success === 'y'){
       const choosenIndex = restaurantListSet.restaurantList.findIndex((val) => val.restaurantseq === restaurantseq);
       restaurantListSet.restaurantList[choosenIndex].likeCounts = retObj.sendObj.resObj.likeCounts;
@@ -488,11 +486,11 @@ const Main = () => {
                         <div className="">
                           <p 
                           // onClick={()=>restaurantClickHandler(data.restaurantname)} 
-                          className="text-3xl font-bold break-words  ">
+                          className="text-3xl font-bold break-words text-[#006341] ">
                           {data.restaurantname}
                           </p>
                         </div> 
-                        <p className="flex justify-normal mt-2 ms-2">
+                        <p className="flex justify-normal mt-2 ms-2 text-[#006341] ">
                           <span className=" text-lg"><AiFillLike/></span>
                           <span className="ms-1 text-sm">{data.likeCounts}</span>
                           <span className="ms-3 text-lg"><MdOutlineComment/></span>
@@ -504,20 +502,21 @@ const Main = () => {
                           <span 
                           onClick={()=>showMap(true, data.latLng)}
                           className="ms-1 text-sm hidden
+                          hover:text-base
                           2xl:block xl:block lg:block md:block sm:hidden cursor-pointer
                           ">{data.address}</span>
                         
                         </p>
-                        <p className="flex justify-normal mt-2
+                        <p className="flex justify-normal mt-2 text-[#006341]
                         2xl:hidden xl:hidden lg:hidden md:hidden sm:flex
                         ">
                           <span className="text-lg "><GoLocation/></span>
                           <span 
                           onClick={()=>showMap(true, data.latLng)}
-                          className="ms-1 text-sm cursor-pointer ">{data.address}</span>
+                          className="ms-1 hover:text-base text-sm cursor-pointer ">{data.address}</span>
                         </p>
 
-                        <p className="flex flex-col mt-2 w-full  ">
+                        <p className="flex flex-col mt-2 w-full text-[#006341] ">
                           
                           <span className="text-sm font-bold ">Introduction</span>
                           <span className=" text-sm h-[50px] break-words line-clamp-3 ">
@@ -630,10 +629,6 @@ const Main = () => {
                                       {
                                       (!val.userinfo.username)?"guest":
                                       val.userinfo.username
-                                      +val.userinfo.username
-                                      +val.userinfo.username
-                                      +val.userinfo.username
-                                      +val.userinfo.username
                                       
                                       }
                                       </span>

@@ -171,9 +171,9 @@ const PlacesAutocomplete = ({
           onChange={(e) => setValue(e.target.value)}
           // placeholder="123 Stariway To Heaven"
         />
-      <button 
+      {/* <button 
       onClick={()=>applyClickHandler()}
-      className=' text-[8px] font-bold border border-[#006341] text-[#006341] bg-white px-1 ms-1 rounded-lg hover:bg-[#006341] hover:text-white'>APPLY</button>
+      className=' text-[8px] font-bold border border-[#006341] text-[#006341] bg-white px-1 ms-1 rounded-lg hover:bg-[#006341] hover:text-white'>APPLY</button> */}
       </div>
       {status === 'OK' && (
       <div className='flex justify-center '>
