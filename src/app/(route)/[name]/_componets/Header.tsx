@@ -1,11 +1,26 @@
 'use client';
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 
 const Header = (props:any) => {  
-  
+  const router = useRouter();
   const layout = props.hearderLayout;
+
+  function goRestaurantMain(){
+    router.push('/' + props.restaurantName);
+  }
+
+  function goRestaurantAbout(){
+    router.push('/' + props.restaurantName + "/about");
+  }
+
+  function goRestaurantMenu(){
+    // console.log('/' + props.restaurantName + "/menu");
+    router.push('/' + props.restaurantName + "/menu");
+  }
+
 
   return( 
     
@@ -136,9 +151,9 @@ const Header = (props:any) => {
             
           }
         }>
-          <input className=" p-1 rounded text-center outline-none "
+          <input className=" p-1 rounded text-center outline-none cursor-pointer hover:opacity-60"
             value={layout.menuText1}
-            // onChange={(e)=>menuText1OnChange(e)}
+            onClick={()=>goRestaurantMain()}
             readOnly
             style={{
             backgroundColor:layout.menuBoxColor, 
@@ -150,9 +165,9 @@ const Header = (props:any) => {
           }}
           ></input>
 
-          <input className=" p-1 rounded text-center outline-none "
+          <input className=" p-1 rounded text-center outline-none cursor-pointer hover:opacity-60"
             value={layout.menuText2}
-            // onChange={(e)=>menuText2OnChange(e)}
+            onClick={()=>goRestaurantAbout()}
             readOnly
             style={{
             backgroundColor:layout.menuBoxColor, 
@@ -164,9 +179,9 @@ const Header = (props:any) => {
           }}
           ></input>
 
-          <input className=" p-1 rounded text-center outline-none "
+          <input className=" p-1 rounded text-center outline-none cursor-pointer hover:opacity-60"
             value={layout.menuText3}
-            // onChange={(e)=>menuText3OnChange(e)}
+            onClick={()=>goRestaurantMenu()}
             readOnly
             style={{
             backgroundColor:layout.menuBoxColor, 

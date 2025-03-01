@@ -137,7 +137,7 @@ const Layout = () => {
         (resLayoutYn)?
         <div>
         {
-          (hearderLayoutYn)?<Header hearderLayout={hearderLayout}/>
+          (hearderLayoutYn)?<Header hearderLayout={hearderLayout} restaurantName={restaurantName}/>
           :
           <div>
             <HeaderUpdateMove name={restaurantName}/>

@@ -4,13 +4,13 @@ import {
   MarkerF,
 } from '@react-google-maps/api';
 // import type { NextPage } from 'next';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from 'use-places-autocomplete';
 
-const GoogleMap4 = (props:any) => {
+const GoogleMap5 = (props:any) => {
   const [lat, setLat] = useState(props.latLng.lat);
   const [lng, setLng] = useState(props.latLng.lng);
 
@@ -24,6 +24,14 @@ const GoogleMap4 = (props:any) => {
     }),
     []
   );
+
+  useEffect(() => {
+    
+    if(!lat || !lng){
+      setLat(37.7833141);
+      setLng(-122.2030887);
+    }
+  }, []);
 
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.GOOGLE_MAPS_API_KEY as string,
@@ -44,7 +52,7 @@ const GoogleMap4 = (props:any) => {
   return (
     <div className="flex">
       
-      <div className='relative flex justify-center h-[300px]  w-full'>
+      <div className='relative flex justify-center h-[250px]  w-full'>
 
         
         <div className='absolute z-0' >
@@ -77,7 +85,7 @@ const GoogleMap4 = (props:any) => {
             zoom={16}
             center={mapCenter}
             mapTypeId={google.maps.MapTypeId.ROADMAP}
-            mapContainerStyle={{ width: '500px', height: '300px' }}
+            mapContainerStyle={{ width: '250px', height: '250px', borderRadius : "12px" }}
             // onLoad={() => console.log('Map Loaded')}
             onClick={(e)=>handlerMapClick(e)}
           >
@@ -96,8 +104,9 @@ const GoogleMap4 = (props:any) => {
 
 
 
-const PlacesAutocomplete = ({
 
+
+const PlacesAutocomplete = ({
   onAddressSelect,
 }: {
   lat:any
@@ -146,13 +155,14 @@ const PlacesAutocomplete = ({
     });
   };
 
+  
 
   return (
     <div className=" w-full ">
       <div className='flex justify-center mb-1'>
         <input
           value={value}
-          className=" w-[300px] text-xs border border-[#006341] text-[#006341]  outline-none px-2 py-1 rounded"
+          className=" w-[100px] text-xs border border-[#006341] text-[#006341]  outline-none px-2 py-1 rounded"
           disabled={!ready}
           onChange={(e) => setValue(e.target.value)}
           // placeholder="123 Stariway To Heaven"
@@ -170,4 +180,4 @@ const PlacesAutocomplete = ({
   );
 };
 
-export default GoogleMap4;
+export default GoogleMap5;
