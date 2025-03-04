@@ -1,3 +1,4 @@
+import CommonHearder from "@/app/components/common/CommonHeader";
 import Main from "./Main";
 
 const Layout = () => {
@@ -5,6 +6,7 @@ const Layout = () => {
   
   return(
     <>
+      <CommonHearder/>
       <Main/>
     </>
   );
