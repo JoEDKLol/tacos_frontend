@@ -8,6 +8,7 @@ import errorScreenShow from "@/app/store/errorScreen";
 import loadingScreenShow from "@/app/store/loadingScreen";
 import userState from "@/app/store/user";
 import { transactionAuth } from "@/app/utils/axiosAuth";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CgCloseR } from "react-icons/cg";
@@ -47,6 +48,9 @@ const Main = () => {
   const [updateYn, setUpdateYn] = useState<boolean>(false);
 
   const [categoryId, setCategoryId] = useState<string>("");
+  const [menuScreenYn, setMenuScreenYn] = useState<boolean>(false);
+
+  const [img, setImg] = useState<string>("");
 
   useEffect(()=>{
     if(userStateSet.userseq > 0){
@@ -246,14 +250,25 @@ const Main = () => {
   }
 
   async function categoryDeleteOnClick(){
-    
+    const obj = {
+      _id : categoryId, 
+    }
+
+    const retObj = await transactionAuth("post", "management/categorydelete", obj, "", false, true, screenShow, errorShow);
+    if(retObj.sendObj.success === "y"){
+      categorySearch();
+    }
+  }
+
+  function menuOnClick(){
+    setMenuScreenYn(!menuScreenYn);
   }
 
   return(
     <>  
       {
         (userStateSet.id)?
-        <>
+        <div className="">
           <div className="w-full" >
             <div className="flex justify-center items-center h-10 bg-[#006341]">
               <p className="text-white text-xl">Menu Update</p>
@@ -266,7 +281,103 @@ const Main = () => {
             <div>
               <ManageMove/>
             </div>:
-            <div>
+            <div className="relative">
+              {/* menu registration start */}
+              <div className="absolute z-10">
+                <div className="fixed w-full h-full">
+                  <div className="flex justify-center  w-full h-full">
+                    <div className="border-2 rounded bg-white w-[300px] h-[550px] p-2">
+                      <div className="grid grid-cols-1">
+                        <div className="">
+                          {/* <p className="w-[100px] ">Category</p> */}
+                            <select
+                            className="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg w-full p-2
+                            
+                            ">
+                            <option >Choose a Category</option>
+                            {/* <option >1</option> */}
+                            {
+                              categories.map((data, index)=>{
+                                return(
+                                  <option key={data._id + index} value={data._id}>{data.name}</option>
+                                )
+                              })
+                            }
+                            </select>
+                        </div>
+                        {/* img */}
+                        <div className="flex justify-center mt-2">
+                          <div className=' ring-1 w-[200px] h-[200px] ring-[#006341] rounded relative ' >
+                            {img ? (
+                              
+                                  <Image 
+                                  src={img}
+                                  quality={30}
+                                  layout="fill"
+                                  style={{ objectFit: "cover" , borderRadius: '5px' }}
+                                  alt='' />
+                              ) : ""
+                            }
+                          </div> 
+                        </div>
+
+                        <div className="flex justify-center mt-1">
+                          <div className="me-1">
+                            <label className="cursor-pointer text-[10px] border hover:bg-gray-400 text-black font-bold py-1 px-1 rounded bg-gray-200" htmlFor="file_input">
+                                Upload Img 
+                            </label>
+                            <input className=" text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer
+                            hidden
+                            " id="file_input" type="file"
+                            accept="image/*" 
+                            // onChange={(e)=>userFileUploadHandler(e)}
+                            />
+
+                          </div>
+                          <div className="" > 
+                            <label className=" cursor-pointer text-[10px]  border hover:bg-gray-400 text-black font-bold py-1 px-1 rounded bg-gray-200"
+                            htmlFor="img_delete"
+                            // onClick={()=>userDeleteImg()}
+                            >
+                              Delete
+                            </label>
+                          </div>
+                        </div>
+
+
+                        <div className="p-2">
+                          <div className="flex justify-between text-sm  ">
+                            <p className="w-[50px]">Name</p>
+                            <p className="flex flex-1 ">
+                              <input type="text" className="border w-full rounded"/>
+                            </p>
+                          </div>
+
+                          <div className="flex justify-between text-sm mt-1">
+                            <p className="w-[50px]">Price</p>
+                            <p className="flex flex-1 ">
+                              <input type="text" className="border w-full rounded"/>
+                            </p>
+                          </div>
+                          
+                          <div className="mt-2">
+                            <p className="text-sm">Description</p>
+                            <p>
+                              <textarea className="border w-full rounded p-1 text-sm"></textarea>
+                            </p>
+                          </div>
+
+
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {/* menu registration end */}
+
               <div className="flex justify-end p-1 border border-white bg-[#739e8f] ">
                 <p className="flex justify-center items-center mr-1">
                   <ButtonRefresh 
@@ -313,7 +424,7 @@ const Main = () => {
                 <div className="grid grid-cols-1
                 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1
                 ">
-                  <div className="my-2 max-w-[300px] max-h-[150px] overflow-y-scroll border">
+                  <div className="my-2 max-w-[300px] max-h-[180px] overflow-y-scroll border">
                     <table className="w-full  overflow-scroll">
                       <thead>
                         <tr className="border-b border-slate-300 bg-slate-50">
@@ -371,7 +482,7 @@ const Main = () => {
                         
                         
                       </p>
-                      <p className="flex justify-end">
+                      <p className="flex justify-end pt-2">
                         <button 
                         onClick={()=>newOnClick()}
                         className="border rounded px-1 text-sm">new</button>
@@ -395,9 +506,15 @@ const Main = () => {
                         
                       </p>
                     </div>
+                    <div className="flex justify-end border-t mt-2">
+                      <button 
+                      onClick={()=>menuOnClick()}
+                      className="mt-2 border rounded px-1 text-sm">menu</button>
+                    </div>
                   </div>
-
                 </div>
+
+
               </div>
 
               {/* menu start */}
@@ -408,7 +525,7 @@ const Main = () => {
           }
 
           
-        </>
+        </div>
         :<LoginMove/>
 
 
