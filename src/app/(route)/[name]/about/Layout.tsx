@@ -48,7 +48,7 @@ const Layout = () => {
         setHearderLayout(retObj.sendObj.resObj.header);
         setLayout(retObj.sendObj.resObj.about);
         setLatLng(retObj.sendObj.resObj.latLng);
-        // console.log("??????" + retObj.sendObj.resObj.address);
+
         setAddress(retObj.sendObj.resObj.address);
         setHearderLayoutYn(true);
         setLayoutYn(true);

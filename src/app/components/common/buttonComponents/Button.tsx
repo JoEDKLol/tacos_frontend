@@ -38,6 +38,16 @@ const ButtonSmall = (props:any) => {
   );
 }
 
+const ButtonXSmall = (props:any) => {
+  return (
+    <button
+    onClick={props.onClick}
+    className="hover:bg-[#006341] bg-white hover:text-white text-[#006341] 
+    border-[#006341] border px-3 py-1 rounded text-xs font-bold" 
+    >{props.name}</button>
+  );
+}
+
 const ButtonSmallMove = (props:any) => {
   return (
     <button
@@ -48,6 +58,8 @@ const ButtonSmallMove = (props:any) => {
     ><span className="pt-[1px] pe-[2px] text-[14px]"><RiArrowRightCircleLine/></span>{props.name}</button> 
   );
 }
+
+
 
 const ButtonSmallSettingMove = (props:any) => {
   return (
@@ -259,7 +271,7 @@ export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag,
   , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
   , ButtonNextSearcHome, ButtonRefresh, ButtonClose, ButtonComment
   , ButtonCommentSelected, ButtonCommentSave, ButtonLike, ButtonDisLike
-  , ButtonLikeNotWorking
+  , ButtonLikeNotWorking, ButtonXSmall
 };
 
 

@@ -50,62 +50,6 @@ const Layout = () => {
         setHearderLayoutYn(true);
         setHomeLayoutYn(true);
       }else{
-        // setHearderLayout(
-        // {
-        //   bgColor : "#ffffff", 
-        //   headerHight : "70", 
-        //   borderColor : "#000000", 
-        //   headerBorderWidth : "1", 
-        //   hearderType : "", 
-        //   hearderImg : "b", 
-        //   hearderThumbImg : "", 
-        //   logoType : "b", 
-        //   img : "", 
-        //   thumbImg : "", 
-        //   imageWidthSize : "50", 
-        //   imageHeightSize : "50", 
-        //   logoBoxBorderColor : "#000000", 
-        //   logoBoxRadius : "10", 
-        //   logoBoxBorderSize : "1", 
-        //   logoSize : "15", 
-        //   logoColor : "#ffffff", 
-        //   logoBoxBgColor : "#ffffff", 
-        //   logoBoxSize : "50", 
-        //   logoBoxSizeHeigh : "50", 
-        //   restaurantTitleSize : "20", 
-        //   restaurantTitleColor : "#ffffff", 
-        //   titleBoxBgColor : "#ffffff", 
-        //   titleBoxSize : "150", 
-        //   titleBoxSizeHeight : "50", 
-        //   titleBoxBorderColor : "#000000", 
-        //   titleBoxBorderSize : "1", 
-        //   titleBoxRadius : "10", 
-        //   menuBgColor : "#ffffff", 
-        //   menuHeight : "40", 
-        //   menuBorderColor : "#000000", 
-        //   menuBorderWidth : "1", 
-        //   menuTextSize : "15", 
-        //   menuTextColor : "#000000", 
-        //   menuItemPadding : "350", 
-        //   menuBoxColor : "#ffffff", 
-        //   menuTextBoxSize : "100", 
-        //   menuTextBoxSizeHeight : "20", 
-        //   menuBoxBorderColor : "#ffffff", 
-        //   menuTextBorderWidth : "1", 
-        //   menuTextBoxRadiusSize : "10", 
-        //   logoText : "", 
-        //   titleText : "", 
-        //   menuText1 : "HOME", 
-        //   menuText2 : "ABOUT", 
-        //   menuText3 : "MENU"
-        // });
-        // setHomeLayout({
-        //   bgColor:"#ffffff",
-        //   bgColorQuill:"#ffffff", 
-        //   content:"", 
-        //   quillWidth:"70",
-        //   quillTop:"10"
-        // });
 
         if(retObj.sendObj.resObj.header){
           setHearderLayout(retObj.sendObj.resObj.header);

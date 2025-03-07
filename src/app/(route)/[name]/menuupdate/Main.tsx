@@ -1,7 +1,7 @@
 'use client';
 
 import ColorButton from "@/app/components/colorButton/ColorButton";
-import { ButtonBase, ButtonCommentSave, ButtonRefresh, ButtonSmall } from "@/app/components/common/buttonComponents/Button";
+import { ButtonBase, ButtonCommentSave, ButtonRefresh, ButtonXSmall } from "@/app/components/common/buttonComponents/Button";
 import LoginMove from "@/app/components/common/LoginMove";
 import ManageMove from "@/app/components/common/ManageMove";
 import errorScreenShow from "@/app/store/errorScreen";
@@ -17,6 +17,7 @@ import { FaRegWindowClose } from "react-icons/fa";
 import imageCompression from "browser-image-compression";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { RiArrowDropUpLine } from "react-icons/ri";
+import { IoIosArrowBack, IoIosArrowDown, IoIosArrowForward, IoIosArrowUp } from "react-icons/io";
 
 interface categoryList {
   _id:string
@@ -55,15 +56,30 @@ const Main = () => {
   restaurantName = decodeURIComponent(restaurantName);
 
 
-  const [bgColorButton, setBgColorButton] = useState<string>("#ffffff"); //초기값
-  const [bgColor, setBgColor] = useState<string>(""); //초기값 
-  const [cabgColorButton, setCabgColorButton] = useState<string>("#ffffff"); //초기값
-  const [cabgColor, setCabgColor] = useState<string>(""); //초기값 
-  const [caTextColorButton, setCaTextColorButton] = useState<string>("#ffffff"); //초기값
-  const [caTextColor, setCaTextColor] = useState<string>(""); //초기값
-  
-  const [caBorderColorButton, setCaBorderColorButton] = useState<string>("#ffffff"); //초기값
-  const [caBorderColor, setCaBorderColor] = useState<string>(""); //초기값 
+  const [bgColorButton, setBgColorButton] = useState<string>("#ffffff");
+  const [bgColor, setBgColor] = useState<string>("");  
+  const [cabgColorButton, setCabgColorButton] = useState<string>("#ffffff"); 
+  const [cabgColor, setCabgColor] = useState<string>("");  
+  const [caTextColorButton, setCaTextColorButton] = useState<string>("#ffffff"); 
+  const [caTextColor, setCaTextColor] = useState<string>(""); 
+  const [caBorderColorButton, setCaBorderColorButton] = useState<string>("#ffffff"); 
+  const [caBorderColor, setCaBorderColor] = useState<string>(""); 
+  const [menuBgColorButton, setMenuBgColorButton] = useState<string>("#ffffff"); 
+  const [menuBgColor, setMenuBgColor] = useState<string>(""); 
+  const [menuBorderColorButton, setMenuBorderColorButton] = useState<string>("#ffffff"); 
+  const [menuBorderColor, setMenuBorderColor] = useState<string>(""); 
+  const [menuNameColorButton, setMenuNameColorButton] = useState<string>("#ffffff"); 
+  const [menuNameColor, setMenuNameColor] = useState<string>(""); 
+  const [menuPriceColorButton, setMenuPriceColorButton] = useState<string>("#ffffff"); 
+  const [menuPriceColor, setMenuPriceColor] = useState<string>("");
+  const [menuDesColorButton, setMenuDesColorButton] = useState<string>("#ffffff"); 
+  const [menuDesColor, setMenuDesColor] = useState<string>("");
+  const [menuDesBgColorButton, setMenuDesBgColorButton] = useState<string>("#ffffff"); 
+  const [menuDesBgColor, setMenuDesBgColor] = useState<string>("");
+  const [menuDesBdColorButton, setMenuDesBdColorButton] = useState<string>("#ffffff"); 
+  const [menuDesBdColor, setMenuBdBgColor] = useState<string>("");
+  const [menuImgBdColorButton, setMenuImgBdColorButton] = useState<string>("#ffffff"); 
+  const [menuImgBdBdColor, setMenuImgBdBgColor] = useState<string>(""); 
 
   const [colorBox1, setColorBox1] = useState<string>("hidden");
   const [colorBox2, setColorBox2] = useState<string>("hidden");
@@ -75,6 +91,8 @@ const Main = () => {
   const [colorBox8, setColorBox8] = useState<string>("hidden");
   const [colorBox9, setColorBox9] = useState<string>("hidden");
   const [colorBox10, setColorBox10] = useState<string>("hidden");
+  const [colorBox11, setColorBox11] = useState<string>("hidden");
+  const [colorBox12, setColorBox12] = useState<string>("hidden");
 
 
   const [homeLayoutYn, setHomeLayoutYn] = useState<boolean>(false);
@@ -100,6 +118,47 @@ const Main = () => {
 
   const [menus, setMenus] = useState<menusList>([]);
   const [categoryScreenYn, setCategoryScreenYn] = useState<boolean>(true);
+  const [colorScreenYn, setColorScreenYn] = useState<boolean>(true);
+  const [sizeScreenYn, setSizeScreenYn] = useState<boolean>(true);
+
+  // size
+  const [categoryBoxHeight, setCategoryBoxHeight] = useState<string>("50");
+  const [categoryBoxWidth, setCategoryBoxWidth] = useState<string>("200");
+  const [categoryTextSize, setCategoryTextSize] = useState<string>("15");
+  const [categoryBorderSize, setCategoryBorderSize] = useState<string>("1");
+  const [categoryBorderRadius, setCategoryBorderRadius] = useState<string>("10");
+  const [categoryMarginTop, setCategoryMarginTop] = useState<string>("0");
+
+  const [menuBoxHeight, setmenuBoxHeight] = useState<string>("400");
+  const [menuBoxWidth, setmenuBoxWidth] = useState<string>("300");
+  const [menuBoxBorderSize, setMenuBoxBorderSize] = useState<string>("1");
+  const [menuBoxMarginTop, setmenuBoxMarginTop] = useState<string>("10");
+  const [menuBoxMarginLeft, setmenuBoxMarginLeft] = useState<string>("10");
+  const [menuBoxRadius, setMenuBoxRadius] = useState<string>("10");
+
+  const [imgBoxHeight, setImgBoxHeight] = useState<string>("200");
+  const [imgBoxWidth, setImgBoxWidth] = useState<string>("200");
+  const [imgBorderSize, setImgBorderSize] = useState<string>("1");
+  const [imgBoxRadius, setImgBoxRadius] = useState<string>("10");
+  const [imgBoxMarginTop, setImgBoxMarginTop] = useState<string>("0");
+
+  const [menuNameTextSize, setMenuNameTextSize] = useState<string>("15");
+  const [menuPriceTextSize, setMenuPriceTextSize] = useState<string>("15");
+  const [menuDesTextSize, setMenuDesTextSize] = useState<string>("15");
+  const [menuNameFontWeight, setMenuNameFontWeight] = useState<string>("normal");
+  const [menuPriceFontWeight, setMenuPriceFontWeight] = useState<string>("normal");
+  const [menuDesFontWeight, setMenuDesFontWeight] = useState<string>("normal");
+  const [menuNameMarginTop, setMenuNameMarginTop] = useState<string>("0");
+  const [menuPriceMarginTop, setMenuPriceMarginTop] = useState<string>("0");
+  const [menuDesMarginTop, setMenuDesMarginTop] = useState<string>("0");
+
+  const [menuDesBoxHeight, setMenuDesBoxHeight] = useState<string>("100");
+  const [menuDesBoxWidth, setMenuDesBoxWidth] = useState<string>("280");
+  const [menuDesBoxBorderSize, setMenuDesBoxBorderSize] = useState<string>("1");
+  const [menuDesBoxRadius, setMenuDesBoxRadius] = useState<string>("10");
+
+  
+  
   
 
   useEffect(()=>{
@@ -211,6 +270,70 @@ const Main = () => {
     setCaBorderColor(caBorderColorButton);
   }
 
+  function manuBgInputOnchage(e:any){
+    setMenuBgColorButton(e.target.value)
+  }
+
+  function manuBgColorApply(){
+    setMenuBgColor(menuBgColorButton);
+  }
+
+  function manuBorderInputOnchage(e:any){
+    setMenuBorderColorButton(e.target.value)
+  }
+
+  function manuBorderColorApply(){
+    setMenuBorderColor(menuBorderColorButton);
+  }
+
+  function manuNameInputOnchage(e:any){
+    setMenuNameColorButton(e.target.value)
+  }
+
+  function manuNameColorApply(){
+    setMenuNameColor(menuNameColorButton);
+  }
+
+  function manuPriceInputOnchage(e:any){
+    setMenuPriceColorButton(e.target.value)
+  }
+
+  function manuPriceColorApply(){
+    setMenuPriceColor(menuPriceColorButton);
+  }
+
+  function manuDesInputOnchage(e:any){
+    setMenuDesColorButton(e.target.value)
+  }
+
+  function manuDesColorApply(){
+    setMenuDesColor(menuDesColorButton);
+  }
+
+  function manuDesBgInputOnchage(e:any){
+    setMenuDesBgColorButton(e.target.value)
+  }
+
+  function manuDesBgColorApply(){
+    setMenuDesBgColor(menuDesBgColorButton);
+  }
+
+  function manuDesBdInputOnchage(e:any){
+    setMenuDesBdColorButton(e.target.value)
+  }
+
+  function manuDesBdColorApply(){
+    setMenuBdBgColor(menuDesBdColorButton);
+  }
+
+  function manuImgBdInputOnchage(e:any){
+    setMenuImgBdColorButton(e.target.value)
+  }
+
+  function manuImgBdColorApply(){
+    setMenuImgBdBgColor(menuImgBdColorButton);
+  }
+
 // color end
   
 
@@ -221,6 +344,47 @@ const Main = () => {
       restaurantname : restaurantName, 
       menu : {
         bgColor:bgColor, 
+        cabgColor:cabgColor, 
+        caTextColor:caTextColor, 
+        caBorderColor:caBorderColor, 
+        menuBgColor:menuBgColor, 
+        menuBorderColor:menuBorderColor, 
+        menuNameColor:menuNameColor, 
+        menuPriceColor:menuPriceColor, 
+        menuDesColor:menuDesColor, 
+        menuDesBgColor:menuDesBgColor, 
+        menuDesBdColor:menuDesBdColor, 
+        menuImgBdBdColor:menuImgBdBdColor, 
+        categoryBoxHeight:categoryBoxHeight, 
+        categoryBoxWidth:categoryBoxWidth, 
+        categoryTextSize:categoryTextSize, 
+        categoryBorderSize:categoryBorderSize, 
+        categoryBorderRadius:categoryBorderRadius, 
+        categoryMarginTop:categoryMarginTop, 
+        menuBoxHeight:menuBoxHeight, 
+        menuBoxWidth:menuBoxWidth, 
+        menuBoxBorderSize:menuBoxBorderSize, 
+        menuBoxMarginTop:menuBoxMarginTop, 
+        menuBoxMarginLeft:menuBoxMarginLeft, 
+        menuBoxRadius:menuBoxRadius, 
+        imgBoxHeight:imgBoxHeight, 
+        imgBoxWidth:imgBoxWidth, 
+        imgBorderSize:imgBorderSize, 
+        imgBoxRadius:imgBoxRadius, 
+        imgBoxMarginTop:imgBoxMarginTop, 
+        menuNameTextSize:menuNameTextSize, 
+        menuPriceTextSize:menuPriceTextSize, 
+        menuDesTextSize:menuDesTextSize, 
+        menuNameFontWeight:menuNameFontWeight, 
+        menuPriceFontWeight:menuPriceFontWeight, 
+        menuDesFontWeight:menuDesFontWeight, 
+        menuNameMarginTop:menuNameMarginTop, 
+        menuPriceMarginTop:menuPriceMarginTop, 
+        menuDesMarginTop:menuDesMarginTop, 
+        menuDesBoxHeight:menuDesBoxHeight, 
+        menuDesBoxWidth:menuDesBoxWidth, 
+        menuDesBoxBorderSize:menuDesBoxBorderSize, 
+        menuDesBoxRadius:menuDesBoxRadius, 
       }
     }
 
@@ -239,6 +403,8 @@ const Main = () => {
     if(colorBoxNum === "8") setColorBox8("hidden");
     if(colorBoxNum === "9") setColorBox9("hidden");
     if(colorBoxNum === "10") setColorBox10("hidden");
+    if(colorBoxNum === "11") setColorBox11("hidden");
+    if(colorBoxNum === "12") setColorBox12("hidden");
 
   }
 
@@ -253,6 +419,8 @@ const Main = () => {
     if(colorBoxNum === "8") setColorBox8("block");
     if(colorBoxNum === "9") setColorBox9("block");
     if(colorBoxNum === "10") setColorBox10("block");
+    if(colorBoxNum === "11") setColorBox11("block");
+    if(colorBoxNum === "12") setColorBox12("block");
   }
 
   function mainSearch(){
@@ -269,24 +437,69 @@ const Main = () => {
     }
 
     const retObj = await transactionAuth("get", "management/menulayoutsearch", obj, "", false, true, screenShow, errorShow);
-    
+    // console.log(retObj);
     if(retObj.sendObj.success === "y"){
       if(retObj.sendObj.resObj.menu){
         setLayOut(retObj.sendObj.resObj.menu);
       }else{
         setLayOut(
           {
+            bgColorButton:"#ffffff",
             bgColor:"#ffffff",
-            // bgColorQuill:"#ffffff", 
-            // content:"", 
-            // quillWidth:"70",
-            // quillTop:"10", 
-            // locationColor:"#000000", 
-            // addressColor:"#000000", 
-            // phoneNumberColor:"#000000", 
-            // locationTextSize:"15", 
-            // addressTextSize:"15", 
-            // phoneNumberTextSize:"15", 
+            cabgColorButton:"#ffffff",
+            cabgColor:"#ffffff",
+            caTextColorButton:"#000000",
+            caTextColor:"#000000",
+            caBorderColorButton:"#000000",
+            caBorderColor:"#000000",
+            menuBgColorButton:"#ffffff",
+            menuBgColor:"#ffffff",
+            menuBorderColorButton:"#000000",
+            menuBorderColor:"#000000",
+            menuNameColorButton:"#000000",
+            menuNameColor:"#000000",
+            menuPriceColorButton:"#000000",
+            menuPriceColor:"#000000",
+            menuDesColorButton:"#000000",
+            menuDesColor:"#000000",
+            menuDesBgColorButton:"#ffffff",
+            menuDesBgColor:"#ffffff",
+            menuDesBdColorButton:"#000000",
+            menuDesBdColor:"#000000",
+            menuImgBdColorButton:"#000000",
+            menuImgBdBdColor:"#000000",
+            categoryBoxHeight:"50", 
+            categoryBoxWidth:"200",
+            categoryTextSize:"15",
+            categoryBorderSize:"1",
+            categoryBorderRadius:"10",
+            categoryMarginTop:"0",
+            menuBoxHeight:"400",
+            menuBoxWidth:"300",
+            menuBoxBorderSize:"1",
+            menuBoxMarginTop:"10",
+            menuBoxMarginLeft:"10",
+            menuBoxRadius:"10",
+            imgBoxHeight:"200",
+            imgBoxWidth:"200",
+            imgBorderSize:"1",
+            imgBoxRadius:"10",
+            imgBoxMarginTop:"0",
+            menuNameTextSize:"15",
+            menuPriceTextSize:"15",
+            menuDesTextSize:"15",
+            menuNameFontWeight:"normal",
+            menuPriceFontWeight:"normal",
+            menuDesFontWeight:"normal",
+            menuNameMarginTop:"0",
+            menuPriceMarginTop:"0",
+            menuDesMarginTop:"0",
+            menuDesBoxHeight:"100",
+            menuDesBoxWidth:"280",
+            menuDesBoxBorderSize:"1",
+            menuDesBoxRadius:"10",
+
+
           }
         );
         
@@ -343,6 +556,59 @@ const Main = () => {
   function setLayOut(layOutObj:any){
     setBgColorButton(layOutObj.bgColor);
     setBgColor(layOutObj.bgColor);
+    setCabgColorButton(layOutObj.cabgColor);
+    setCabgColor(layOutObj.cabgColor);
+    setCaTextColorButton(layOutObj.caTextColor); 
+    setCaTextColor(layOutObj.caTextColor);
+    setCaBorderColorButton(layOutObj.caBorderColor); 
+    setCaBorderColor(layOutObj.caBorderColor);
+    setMenuBgColorButton(layOutObj.menuBgColor); 
+    setMenuBgColor(layOutObj.menuBgColor);
+    setMenuBorderColorButton(layOutObj.menuBorderColor); 
+    setMenuBorderColor(layOutObj.menuBorderColor);
+    setMenuNameColorButton(layOutObj.menuNameColor); 
+    setMenuNameColor(layOutObj.menuNameColor);
+    setMenuPriceColorButton(layOutObj.menuPriceColor); 
+    setMenuPriceColor(layOutObj.menuPriceColor);
+    setMenuDesColorButton(layOutObj.menuDesColor) 
+    setMenuDesColor(layOutObj.menuDesColor)
+    setMenuDesBgColorButton(layOutObj.menuDesBgColor); 
+    setMenuDesBgColor(layOutObj.menuDesBgColor);
+    setMenuDesBdColorButton(layOutObj.menuDesBdColor); 
+    setMenuBdBgColor(layOutObj.menuDesBdColor);
+    setMenuImgBdColorButton(layOutObj.menuImgBdBdColor); 
+    setMenuImgBdBgColor(layOutObj.menuImgBdBdColor);
+
+    setCategoryBoxHeight(layOutObj.categoryBoxHeight);
+    setCategoryBoxWidth(layOutObj.categoryBoxWidth);
+    setCategoryTextSize(layOutObj.categoryTextSize);
+    setCategoryBorderSize(layOutObj.categoryBorderSize);
+    setCategoryBorderRadius(layOutObj.categoryBorderRadius);
+    setCategoryMarginTop(layOutObj.categoryMarginTop);
+    setmenuBoxHeight(layOutObj.menuBoxHeight);
+    setmenuBoxWidth(layOutObj.menuBoxWidth);
+    setMenuBoxBorderSize(layOutObj.menuBoxBorderSize);
+    setmenuBoxMarginTop(layOutObj.menuBoxMarginTop);
+    setmenuBoxMarginLeft(layOutObj.menuBoxMarginLeft);
+    setMenuBoxRadius(layOutObj.menuBoxRadius);
+    setImgBoxHeight(layOutObj.imgBoxHeight);
+    setImgBoxWidth(layOutObj.imgBoxWidth);
+    setImgBorderSize(layOutObj.imgBorderSize);
+    setImgBoxRadius(layOutObj.imgBoxRadius);
+    setImgBoxMarginTop(layOutObj.imgBoxMarginTop);
+    setMenuNameTextSize(layOutObj.menuNameTextSize);
+    setMenuPriceTextSize(layOutObj.menuPriceTextSize);
+    setMenuDesTextSize(layOutObj.menuDesTextSize);
+    setMenuNameFontWeight(layOutObj.menuNameFontWeight);
+    setMenuPriceFontWeight(layOutObj.menuPriceFontWeight);
+    setMenuDesFontWeight(layOutObj.menuDesFontWeight);
+    setMenuNameMarginTop(layOutObj.menuNameMarginTop);
+    setMenuPriceMarginTop(layOutObj.menuPriceMarginTop);
+    setMenuDesMarginTop(layOutObj.menuDesMarginTop);
+    setMenuDesBoxHeight(layOutObj.menuDesBoxHeight);
+    setMenuDesBoxWidth(layOutObj.menuDesBoxWidth);
+    setMenuDesBoxBorderSize(layOutObj.menuDesBoxBorderSize);
+    setMenuDesBoxRadius(layOutObj.menuDesBoxRadius);
   }
 
   function categoryOnChange(e:any){
@@ -585,6 +851,406 @@ const Main = () => {
     setCategoryScreenYn(!categoryScreenYn);
   }
 
+  function closeColor(){
+    setColorScreenYn(!colorScreenYn);
+  }
+
+  function closeSize(){
+    setSizeScreenYn(!sizeScreenYn);
+  }
+
+  function categoryBoxSize(type:string){
+
+    let numSize = 0;
+    
+    if(type === "heightUp"){
+      numSize = Number(categoryBoxHeight);
+      numSize = numSize + 3;
+      setCategoryBoxHeight(numSize + "");
+    }else if(type === "heightDown"){
+      numSize = Number(categoryBoxHeight);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setCategoryBoxHeight(numSize + "");
+    }else if(type === "widthDown"){
+      numSize = Number(categoryBoxWidth);
+      numSize = numSize + 3;
+      setCategoryBoxWidth(numSize + "");
+    }else if(type === "widthUp"){
+      numSize = Number(categoryBoxWidth);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setCategoryBoxWidth(numSize + "");
+    }
+  }
+
+  function categoryText(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(categoryTextSize);
+      numSize = numSize + 1;
+      setCategoryTextSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(categoryTextSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setCategoryTextSize(numSize + "");
+    }
+  }
+
+  function categoryBorder(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(categoryBorderSize);
+      numSize = numSize + 1;
+      setCategoryBorderSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(categoryBorderSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setCategoryBorderSize(numSize + "");
+    }
+  }
+
+  function categoryRadius(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(categoryBorderRadius);
+      numSize = numSize + 2;
+      setCategoryBorderRadius(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(categoryBorderRadius);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setCategoryBorderRadius(numSize + "");
+    }
+  }
+
+  function categoryMaginTop(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(categoryMarginTop);
+      numSize = numSize + 2;
+      setCategoryMarginTop(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(categoryMarginTop);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setCategoryMarginTop(numSize + "");
+    }
+  }
+
+  function menuBoxSize(type:string){
+
+    let numSize = 0;
+    
+    if(type === "heightUp"){
+      numSize = Number(menuBoxHeight);
+      numSize = numSize + 3;
+      setmenuBoxHeight(numSize + "");
+    }else if(type === "heightDown"){
+      numSize = Number(menuBoxHeight);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setmenuBoxHeight(numSize + "");
+    }else if(type === "widthDown"){
+      numSize = Number(menuBoxWidth);
+      numSize = numSize + 3;
+      setmenuBoxWidth(numSize + "");
+    }else if(type === "widthUp"){
+      numSize = Number(menuBoxWidth);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setmenuBoxWidth(numSize + "");
+    }
+  }
+
+  
+  function imgBoxSize(type:string){
+
+    let numSize = 0;
+    
+    if(type === "heightUp"){
+      numSize = Number(imgBoxHeight);
+      numSize = numSize + 3;
+      setImgBoxHeight(numSize + "");
+    }else if(type === "heightDown"){
+      numSize = Number(imgBoxHeight);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setImgBoxHeight(numSize + "");
+    }else if(type === "widthDown"){
+      numSize = Number(imgBoxWidth);
+      numSize = numSize + 3;
+      setImgBoxWidth(numSize + "");
+    }else if(type === "widthUp"){
+      numSize = Number(imgBoxWidth);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setImgBoxWidth(numSize + "");
+    }
+  }
+
+  function menuBoxBorder(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuBoxBorderSize);
+      numSize = numSize + 1;
+      setMenuBoxBorderSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuBoxBorderSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setMenuBoxBorderSize(numSize + "");
+    }
+  }
+
+  function menuBoxLocation(type:string){
+    let numSize = 0;
+    
+    if(type === "heightUp"){
+      numSize = Number(menuBoxMarginTop);
+      numSize = numSize + 2;
+      setmenuBoxMarginTop(numSize + "");
+    }else if(type === "heightDown"){
+      numSize = Number(menuBoxMarginTop);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setmenuBoxMarginTop(numSize + "");
+    }else if(type === "widthDown"){
+      numSize = Number(menuBoxMarginLeft);
+      numSize = numSize + 2;
+      setmenuBoxMarginLeft(numSize + "");
+    }else if(type === "widthUp"){
+      numSize = Number(menuBoxMarginLeft);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setmenuBoxMarginLeft(numSize + "");
+    }
+  }
+
+  function menuBoxRadiusSize(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuBoxRadius);
+      numSize = numSize + 2;
+      setMenuBoxRadius(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuBoxRadius);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setMenuBoxRadius(numSize + "");
+    }
+  }
+
+  function imgBoxBdSize(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(imgBorderSize);
+      numSize = numSize + 1;
+      setImgBorderSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(imgBorderSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setImgBorderSize(numSize + "");
+    }
+  }
+
+  function imgBoxRadiusSize(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(imgBoxRadius);
+      numSize = numSize + 2;
+      setImgBoxRadius(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(imgBoxRadius);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setImgBoxRadius(numSize + "");
+    }
+  }
+
+  function imgBoxLocation(type:string){
+    let numSize = 0;
+    
+    if(type === "heightUp"){
+      numSize = Number(imgBoxMarginTop);
+      numSize = numSize + 2;
+      setImgBoxMarginTop(numSize + "");
+    }else if(type === "heightDown"){
+      numSize = Number(imgBoxMarginTop);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setImgBoxMarginTop(numSize + "");
+    }
+  }
+
+  function menuNameText(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuNameTextSize);
+      numSize = numSize + 1;
+      setMenuNameTextSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuNameTextSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setMenuNameTextSize(numSize + "");
+    }
+  }
+
+  function menuPriceText(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuPriceTextSize);
+      numSize = numSize + 1;
+      setMenuPriceTextSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuPriceTextSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setMenuPriceTextSize(numSize + "");
+    }
+  }
+
+  function menuDesText(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuDesTextSize);
+      numSize = numSize + 1;
+      setMenuDesTextSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuDesTextSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setMenuDesTextSize(numSize + "");
+    }
+  }
+
+  function menuNameFW(){
+    if(menuNameFontWeight === "normal"){
+      setMenuNameFontWeight("bold");
+    }else{
+      setMenuNameFontWeight("normal");
+    }
+  }
+
+  function menuPriceFW(){
+    if(menuPriceFontWeight === "normal"){
+      setMenuPriceFontWeight("bold");
+    }else{
+      setMenuPriceFontWeight("normal");
+    }
+  }
+
+  function menuDesFW(){
+    if(menuDesFontWeight === "normal"){
+      setMenuDesFontWeight("bold");
+    }else{
+      setMenuDesFontWeight("normal");
+    }
+  }
+
+  function menuNameTextLocation(type:string){
+    let numSize = 0;
+    
+    if(type === "sizeUp"){
+      numSize = Number(menuNameMarginTop);
+      numSize = numSize + 2;
+      setMenuNameMarginTop(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuNameMarginTop);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setMenuNameMarginTop(numSize + "");
+    }
+  }
+
+  function menuPriceTextLocation(type:string){
+    let numSize = 0;
+    
+    if(type === "sizeUp"){
+      numSize = Number(menuPriceMarginTop);
+      numSize = numSize + 2;
+      setMenuPriceMarginTop(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuPriceMarginTop);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setMenuPriceMarginTop(numSize + "");
+    }
+  }
+
+  function menuDesTextLocation(type:string){
+    let numSize = 0;
+    
+    if(type === "sizeUp"){
+      numSize = Number(menuDesMarginTop);
+      numSize = numSize + 2;
+      setMenuDesMarginTop(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuDesMarginTop);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setMenuDesMarginTop(numSize + "");
+    }
+  }
+
+  function menuDesBoxSize(type:string){
+    let numSize = 0;
+    
+    if(type === "heightUp"){
+      numSize = Number(menuDesBoxHeight);
+      numSize = numSize + 3;
+      setMenuDesBoxHeight(numSize + "");
+    }else if(type === "heightDown"){
+      numSize = Number(menuDesBoxHeight);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setMenuDesBoxHeight(numSize + "");
+    }else if(type === "widthDown"){
+      numSize = Number(menuDesBoxWidth);
+      numSize = numSize + 3;
+      setMenuDesBoxWidth(numSize + "");
+    }else if(type === "widthUp"){
+      numSize = Number(menuDesBoxWidth);
+      numSize = numSize - 3;
+      if(numSize < 0) return;
+      setMenuDesBoxWidth(numSize + "");
+    }
+  }
+
+  function menuDesBoxBdSize(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuDesBoxBorderSize);
+      numSize = numSize + 1;
+      setMenuDesBoxBorderSize(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuDesBoxBorderSize);
+      numSize = numSize - 1;
+      if(numSize < 0) return;
+      setMenuDesBoxBorderSize(numSize + "");
+    }
+  }
+
+  function menuDesBoxRadiusSize(type:string){
+    let numSize = 0;
+    if(type === "sizeUp"){
+      numSize = Number(menuDesBoxRadius);
+      numSize = numSize + 2;
+      setMenuDesBoxRadius(numSize + "");
+    }else if(type === "sizeDown"){
+      numSize = Number(menuDesBoxRadius);
+      numSize = numSize - 2;
+      if(numSize < 0) return;
+      setMenuDesBoxRadius(numSize + "");
+    }
+  }
+
+  
+
   return(
     <>  
       {
@@ -746,15 +1412,33 @@ const Main = () => {
                 </p>
                 <p><ButtonBase onClick={()=>save()} name={"SAVE"}/> </p>
               </div>
+
+              {/* category start */}
+              <div className="h-full border-t border-[#006341]">
+                <div className="flex justify-between my-2">
+                  <p></p>
+                  <p className="font-bold text-[#006341]">Color</p>
+                  <p className="mr-1 text-2xl mt-0.5 text-[#006341]  cursor-pointer "
+                  onClick={()=>closeColor()}
+                  >
+                    {
+                      (colorScreenYn)?<RiArrowDropUpLine />:<RiArrowDropDownLine/>
+                    }
+                    
+                  </p>
+                </div>
+              </div>
               
               {/* color component */}
-              <div className=" mt-2 mb-2 grid place-items-center grid-cols-2 z-0
+              {
+                (colorScreenYn)?
+                <div className=" mt-2 mb-2 grid place-items-center grid-cols-2 z-0
                 2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2
                 ">
                 
                 <div className="relative w-[150px] ">
                   <p className="flex justify-center my-1 w-[100%] ">
-                    <ButtonSmall onClick={()=>colorBoxOpen("1")} name={"BG-Color"}/>
+                    <ButtonXSmall onClick={()=>colorBoxOpen("1")} name={"BG-Color"}/>
                   </p> 
                   <div className={ colorBox1 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
                     <div className="flex justify-end bg-[#006341]" >
@@ -782,7 +1466,7 @@ const Main = () => {
 
                 <div className="relative w-[150px] ">
                   <p className="flex justify-center my-1 w-[100%] ">
-                    <ButtonSmall onClick={()=>colorBoxOpen("2")} name={"Ca-BG-Color"}/>
+                    <ButtonXSmall onClick={()=>colorBoxOpen("2")} name={"Ca-BG-Color"}/>
                   </p> 
                   <div className={ colorBox2 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
                     <div className="flex justify-end bg-[#006341]" >
@@ -811,7 +1495,7 @@ const Main = () => {
                 {/* category text */}
                 <div className="relative w-[150px] ">
                   <p className="flex justify-center my-1 w-[100%] ">
-                    <ButtonSmall onClick={()=>colorBoxOpen("3")} name={"Ca-Text-Color"}/>
+                    <ButtonXSmall onClick={()=>colorBoxOpen("3")} name={"Ca-Text-Color"}/>
                   </p> 
                   <div className={ colorBox3 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
                     <div className="flex justify-end bg-[#006341]" >
@@ -840,7 +1524,7 @@ const Main = () => {
                 {/* category bordeer */}
                 <div className="relative w-[150px] ">
                   <p className="flex justify-center my-1 w-[100%] ">
-                    <ButtonSmall onClick={()=>colorBoxOpen("4")} name={"Ca-Border-Color"}/>
+                    <ButtonXSmall onClick={()=>colorBoxOpen("4")} name={"Ca-Border-Color"}/>
                   </p> 
                   <div className={ colorBox4 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
                     <div className="flex justify-end bg-[#006341]" >
@@ -866,10 +1550,561 @@ const Main = () => {
                   </div>
                 </div>
 
+                {/* menu bg */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("5")} name={"Menu-Bg-Color"}/>
+                  </p> 
+                  <div className={ colorBox5 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("5")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuBgColorButton} setColor={setMenuBgColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuBgColorButton} 
+                        onChange={(e)=>manuBgInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuBgColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
 
+                {/* menu border */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("6")} name={"Menu-Border-Color"}/>
+                  </p> 
+                  <div className={ colorBox6 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("6")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuBorderColorButton} setColor={setMenuBorderColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuBorderColorButton} 
+                        onChange={(e)=>manuBorderInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuBorderColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
 
-              </div>
+                {/* menu name */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("7")} name={"Menu-Name-Color"}/>
+                  </p> 
+                  <div className={ colorBox7 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("7")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuNameColorButton} setColor={setMenuNameColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuNameColorButton} 
+                        onChange={(e)=>manuNameInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuNameColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
+
+                {/* menu price */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("8")} name={"Menu-Price-Color"}/>
+                  </p> 
+                  <div className={ colorBox8 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("8")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuPriceColorButton} setColor={setMenuPriceColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuPriceColorButton} 
+                        onChange={(e)=>manuPriceInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuPriceColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
+
+                {/* menu description */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("9")} name={"Menu-Des-Color"}/>
+                  </p> 
+                  <div className={ colorBox9 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("9")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuDesColorButton} setColor={setMenuDesColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuDesColorButton} 
+                        onChange={(e)=>manuDesInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuDesColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
+
+                {/* menu description Bg */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("10")} name={"Menu-Des-Bg-Color"}/>
+                  </p> 
+                  <div className={ colorBox10 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("10")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuDesBgColorButton} setColor={setMenuDesBgColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuDesBgColorButton} 
+                        onChange={(e)=>manuDesBgInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuDesBgColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
+
+                {/* menu description Border */}
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("11")} name={"Menu-Des-Bd-Color"}/>
+                  </p> 
+                  <div className={ colorBox11 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("11")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuDesBdColorButton} setColor={setMenuDesBdColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuDesBdColorButton} 
+                        onChange={(e)=>manuDesBdInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuDesBdColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
+
+                <div className="relative w-[150px] ">
+                  <p className="flex justify-center my-1 w-[100%] ">
+                    <ButtonXSmall onClick={()=>colorBoxOpen("12")} name={"Menu-Img-Bd-Color"}/>
+                  </p> 
+                  <div className={ colorBox12 +  " absolute z-10 bg-white border-4 rounded-lg w-full border-[#006341]"}>
+                    <div className="flex justify-end bg-[#006341]" >
+                      <p 
+                      onClick={()=>colorBoxClose("12")}
+                      className="mb-1 me-1 text-white cursor-pointer"><CgCloseR /></p>
+                    </div>
+                    <div className="flex justify-center mt-1">
+                      <ColorButton color={menuImgBdColorButton} setColor={setMenuImgBdColorButton}/>
+                    </div> 
+                    <div className="flex justify-center">
+                      <p className="m-1 flex justify-between w-full">
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={menuImgBdColorButton} 
+                        onChange={(e)=>manuImgBdInputOnchage(e)}
+                        />
+                        <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"
+                        onClick={()=>manuImgBdColorApply()}
+                        >
+                        Apply
+                        </button>
+                      </p>
+                    </div> 
+                  </div>
+                </div>
+
+              </div>:""
+              }
               {/* color component end */}
+
+              {/* size start */}
+              <div className="h-full border-t border-[#006341]">
+                <div className="flex justify-between my-2">
+                  <p></p>
+                  <p className="font-bold text-[#006341]">Size</p>
+                  <p className="mr-1 text-2xl mt-0.5 text-[#006341]  cursor-pointer "
+                  onClick={()=>closeSize()}
+                  >
+                    {
+                      (sizeScreenYn)?<RiArrowDropUpLine />:<RiArrowDropDownLine/>
+                    }
+                    
+                  </p>
+                </div>
+              </div>
+
+              {
+                (sizeScreenYn)?
+                <div className=" mt-2 mb-2 grid place-items-center grid-cols-2 z-0
+                2xl:grid-cols-5 xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2
+                ">
+                  <div className=" border p-2 border-black rounded w-[170px] h-[270px] mt-1 ">
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Category-Box-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>categoryBoxSize("heightUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>categoryBoxSize("heightDown")}
+                      ><IoIosArrowDown/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white mr-1 text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}} 
+                      onClick={()=>categoryBoxSize("widthUp")}
+                      ><IoIosArrowBack/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}}
+                      onClick={()=>categoryBoxSize("widthDown")}
+                      ><IoIosArrowForward/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Category-Text-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>categoryText("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>categoryText("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Category-Border-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>categoryBorder("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>categoryBorder("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Ca-Border-Radius</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>categoryRadius("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>categoryRadius("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Category-Location</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>categoryMaginTop("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>categoryMaginTop("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                  </div>
+
+                  <div className=" border p-2 border-black rounded w-[170px] h-[270px] mt-1 ">
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Box-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuBoxSize("heightUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuBoxSize("heightDown")}
+                      ><IoIosArrowDown/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white mr-1 text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuBoxSize("widthUp")}
+                      ><IoIosArrowBack/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}}
+                      onClick={()=>menuBoxSize("widthDown")}
+                      ><IoIosArrowForward/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Box-Bd-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuBoxBorder("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuBoxBorder("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Box-Location</p>
+                    <div className="flex justify-center pb-1">
+                    <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuBoxLocation("heightUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuBoxLocation("heightDown")}
+                      ><IoIosArrowDown/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white mr-1 text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuBoxLocation("widthUp")}
+                      ><IoIosArrowBack/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}}
+                      onClick={()=>menuBoxLocation("widthDown")}
+                      ><IoIosArrowForward/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Box-Radius</p>
+                    <div className="flex justify-center pb-1">
+                    <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuBoxRadiusSize("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuBoxRadiusSize("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Img-Box-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>imgBoxSize("heightUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>imgBoxSize("heightDown")}
+                      ><IoIosArrowDown/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white mr-1 text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}} 
+                      onClick={()=>imgBoxSize("widthUp")}
+                      ><IoIosArrowBack/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}}
+                      onClick={()=>imgBoxSize("widthDown")}
+                      ><IoIosArrowForward/></button>
+                    </div>
+
+                    
+
+                  </div>
+
+                  <div className=" border p-2 border-black rounded w-[170px] h-[270px] mt-1 ">
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Img-Box-Bd-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>imgBoxBdSize("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>imgBoxBdSize("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Img-Box-Radius</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>imgBoxRadiusSize("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>imgBoxRadiusSize("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Img-Box-Location</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>imgBoxLocation("heightUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>imgBoxLocation("heightDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Name-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuNameText("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuNameText("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Price-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuPriceText("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuPriceText("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+                  </div>
+
+                  <div className=" border p-2 border-black rounded w-[170px] h-[270px] mt-1 ">
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Des-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesText("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuDesText("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Name-Weight</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" px-1 rounded cursor-pointer text-sm hover:text-base border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuNameFW()}
+                      >Bold</button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Price-Weight</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" px-1 rounded cursor-pointer text-sm hover:text-base border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuPriceFW()}
+                      >Bold</button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Des-Weight</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" px-1 rounded cursor-pointer text-sm hover:text-base border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesFW()}
+                      >Bold</button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Name-Location</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuNameTextLocation("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuNameTextLocation("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                  </div>
+
+                  <div className=" border p-2 border-black rounded w-[170px] h-[270px] mt-1 ">
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Price-Location</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuPriceTextLocation("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuPriceTextLocation("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Des-Location</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesTextLocation("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuDesTextLocation("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Des-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesBoxSize("heightUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuDesBoxSize("heightDown")}
+                      ><IoIosArrowDown/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white mr-1 text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesBoxSize("widthUp")}
+                      ><IoIosArrowBack/></button>
+                      <button className=" text-[20px] hover:text-[25px] bg-white text-[#006341] cursor-pointer border border-black rounded " style={{ fontWeight:"bold"}}
+                      onClick={()=>menuDesBoxSize("widthDown")}
+                      ><IoIosArrowForward/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Des-Bd-Size</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesBoxBdSize("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuDesBoxBdSize("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+                    <p className="flex font-bold justify-center text-sm text-[#006341] border-b border-[#006341] mb-1">Menu-Des-Box-Radius</p>
+                    <div className="flex justify-center pb-1">
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}} 
+                      onClick={()=>menuDesBoxRadiusSize("sizeUp")}
+                      ><IoIosArrowUp/></button>
+                      <button className=" rounded cursor-pointer text-[20px] hover:text-[25px] border border-[#006341] bg-white text-[#006341] mr-1" style={{ fontWeight:"bold"}}
+                      onClick={()=>menuDesBoxRadiusSize("sizeDown")}
+                      ><IoIosArrowDown/></button>
+                    </div>
+
+
+                  </div>
+
+                  
+
+                  
+
+
+                </div>
+                :""
+              }
+              {/* size end */}
               
               {/* category start */}
               <div className="h-full border-t border-[#006341]">
@@ -889,7 +2124,7 @@ const Main = () => {
 
               {
                 (categoryScreenYn)?
-                <div className="flex justify-center  ">
+              <div className="flex justify-center  ">
                 <div className="grid grid-cols-1
                 2xl:grid-cols-2 xl:grid-cols-2 lg:grid-cols-2 md:grid-cols-2 sm:grid-cols-1
                 ">
@@ -931,7 +2166,7 @@ const Main = () => {
 
                   <div className="mx-5 my-2">
                     <div className="grid grid-cols-1 text-[#006341] ">
-                      <p className="mb-2 text-sm font-bold ">name
+                      <div className="mb-2 text-sm font-bold ">name
                         <input type="text" 
                         disabled={inputStatus}
                         className= 
@@ -939,8 +2174,8 @@ const Main = () => {
                         ms-2 border rounded outline-none ps-2 py-1 border-[#006341] `} 
                         onChange={(e)=>categoryOnChange(e)}
                         value={categoryName}/>
-                      </p>
-                      <p className="text-sm w-full font-bold flex justify-normal ">order
+                      </div>
+                      <div className="text-sm w-full font-bold flex justify-normal ">order
                         <input type="number" 
                         disabled={inputStatus}
                         className=
@@ -950,8 +2185,8 @@ const Main = () => {
                         value={order}/>
                         
                         
-                      </p>
-                      <p className="flex justify-end pt-2">
+                      </div>
+                      <div className="flex justify-end pt-2">
                         {/* <button 
                         onClick={()=>newOnClick()}
                         className="border rounded px-1 text-sm">new</button> */}
@@ -978,7 +2213,7 @@ const Main = () => {
                         }
                         
                         
-                      </p>
+                      </div>
                     </div>
                     <div className="flex justify-end border-t mt-2 pt-2">
                       {/* <button 
@@ -999,57 +2234,79 @@ const Main = () => {
               {/* category end */}
               
               {/* menu start */}
-              <div className={" h-[200vh] border p-1" } style={{backgroundColor:bgColor}}>
+              <div className={" h-[100%] border p-1" } style={{backgroundColor:bgColor}}>
 
-              <div className="flex justify-center  ">
-                <div className="">
-                  <select
-                  onChange={(e)=>changeCategoryMenu(e)}
-                  className="w-full bg-transparent placeholder:text-slate-400 
-                  text-sm border 
-                  border-[#006341] rounded pl-3 pr-8 py-2 transition duration-300 ease 
-                  focus:outline-none 
-
-                  shadow-sm focus:shadow-md appearance-none cursor-pointer"
-                  style={{
-                    backgroundColor:cabgColor, 
-                    color:caTextColor,
-                    borderColor:caBorderColor, 
-                  }}
+                <div className="flex justify-center  ">
+                  <div className=""
+                    style={{
+                      marginTop:categoryMarginTop+"px"
+                    }}
                   >
-                  <option value="">Choose a Category</option>
-                  {
-                    categories.map((data, index)=>{
-                      return(
-                        <option key={data._id + index} value={data._id}>{data.name}</option>
-                      )
-                    })
-                  }
-                  </select>
+                    <select
+                    onChange={(e)=>changeCategoryMenu(e)}
+                    className="w-full bg-transparent placeholder:text-slate-400 
+                    pl-3 pr-8 py-2 transition duration-300 ease 
+                    focus:outline-none appearance-none cursor-pointer"
+                    style={{
+                      backgroundColor:cabgColor, 
+                      color:caTextColor,
+                      borderColor:caBorderColor,
+                      height:categoryBoxHeight + "px",
+                      width:categoryBoxWidth  + "px",
+                      fontSize:categoryTextSize + "px",
+                      borderWidth:categoryBorderSize + "px",
+                      borderRadius:categoryBorderRadius + "px"
+                    }}
+                    >
+                    <option value="">Choose a Category</option>
+                    {
+                      categories.map((data, index)=>{
+                        return(
+                          <option key={data._id + index} value={data._id}>{data.name}</option>
+                        )
+                      })
+                    }
+                    </select>
+                  </div>
                 </div>
-              </div>
 
-                <div className="flex flex-wrap p-10 ">
+                <div className="grid grid-cols-1 justify-center
+                2xl:flex  xl:flex  lg:flex  md:flex  sm:grid
+                2xl:flex-wrap  xl:flex-wrap  lg:flex-wrap  md:flex-wrap  sm:grid-cols-1  "
+                style={{
+                  marginTop:menuBoxMarginTop+"px",
+                  marginLeft:menuBoxMarginLeft+"px",
+                  marginRight:menuBoxMarginLeft+"px",
+                }}
+                >
                   
                   {
                     menus.map((data, index)=>{
                       return(
                         <div key={data._id+index} >
-                          <div className="mx-2" 
+                          <div className="mx-5" 
                             style={{
-                            width:"300px", 
-                            height:"400px", 
-                            borderWidth:"2px",
-                            backgroundColor:"red", 
-                            borderRadius:"10px",
-                            borderColor:"white"
+                            width:menuBoxWidth + "px", 
+                            height:menuBoxHeight + "px", 
+                            borderWidth:menuBoxBorderSize + "px",
+                            backgroundColor:menuBgColor,
+                            borderColor:menuBorderColor, 
+                            borderRadius:menuBoxRadius + "px"
                           }}>
 
                             
                             
                             <div className="w-full flex justify-center">
-                              <div className=' ring-1 ring-[#006341] rounded relative '
-                                  style={{width:"200px", height:"200px", borderWidth:"2px", borderColor:"white"}}
+                              <div className=' rounded relative '
+                                style={{
+                                  width:imgBoxWidth+"px", 
+                                  height:imgBoxHeight+"px", 
+                                  borderWidth:imgBorderSize + "px", 
+                                  borderColor:menuImgBdBdColor, 
+                                  borderRadius:imgBoxRadius + "px", 
+                                  marginTop:imgBoxMarginTop+"px",
+                                }}
+                                  
                               >
                                 {data.img ? (
                                   
@@ -1057,29 +2314,54 @@ const Main = () => {
                                       src={data.img}
                                       quality={30}
                                       layout="fill"
-                                      style={{ objectFit: "cover" , borderRadius: '5px' }}
+                                      style={{ objectFit: "cover" , borderRadius:imgBoxRadius + "px",  }}
                                       alt='' />
                                   ) : ""
                                 }
                               </div>
                             </div> 
 
-                            <div className="w-full mt-5">
-                              <p className="flex justify-center ">
+                            <div className="w-full " >
+                              <p className="flex justify-center " 
+                              style={{
+                                color:menuNameColor, 
+                                fontSize:menuNameTextSize + "px",
+                                fontWeight:menuNameFontWeight,
+                                marginTop:menuNameMarginTop + "px",
+                                }}>
                                 {data.name}
                               </p>
-                              <p className="flex justify-center ">
+                              <p className="flex justify-center " 
+                              style={{
+                                color:menuPriceColor,
+                                fontSize:menuPriceTextSize + "px",
+                                fontWeight:menuPriceFontWeight,
+                                marginTop:menuPriceMarginTop + "px",
+                                }}>
                                 {data.price}
                               </p>
                             </div>
 
-                            <div className="mt-2">
-                              <p className="mt-1 flex justify-center">
+                            <div className=""
+                            style={{
+                              marginTop:menuDesMarginTop + "px"
+                            }}
+                            >
+                              <p className="mt-1 flex justify-center" >
                                 <textarea 
                                 value={data.description}
                                 disabled={true}
-                                className="resize-none border-4 border-black h-[90px] w-[280px] px-2 py-1 text-sm bg-slate-100
-                                focus:border-[#006341] focus:bg-white text-[#006341] outline-none rounded"
+                                style={{
+                                  color:menuDesColor, backgroundColor:menuDesBgColor, borderColor:menuDesBdColor,
+                                  fontSize:menuDesTextSize + "px",
+                                  fontWeight:menuDesFontWeight,
+                                  height:menuDesBoxHeight + "px",
+                                  width:menuDesBoxWidth + "px", 
+                                  borderWidth:menuDesBoxBorderSize + "px", 
+                                  borderRadius:menuDesBoxRadius + "px", 
+
+                                }}
+                                className="resize-none  px-2 py-1 outline-none "
                                 ></textarea>
                               </p>
                             </div>

@@ -557,7 +557,7 @@ const Main = () => {
 
               </div>
 
-              <div className={" h-[110vh] border p-1 flex justify-center " } style={{backgroundColor:bgColor, paddingTop:quillTop + "px"}}>
+              <div className={" h-[100%] border p-1 flex justify-center " } style={{backgroundColor:bgColor, paddingTop:quillTop + "px"}}>
                 
                 <div className="">
                   <QuillEditorScreen bgColor={bgColorQuill} content={content} setContent={setContent} readOnly={readOnly} styleType={"style"} quillWidth={quillWidth} />
