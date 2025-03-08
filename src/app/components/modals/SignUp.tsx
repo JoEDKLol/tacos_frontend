@@ -163,6 +163,7 @@ const SignUp = (props:any) => {
       email : verifyEmail
     }
     const resObj = await transaction("post", "sendemail", obj, "", false, true, screenShow, errorShow);
+    console.log(resObj);
     if(resObj.sendObj.success==="y"){
       setIsRunning(true);
       setEmailObjDisable({objDisable:true, classHover:" bg-gray-100 "})
@@ -261,8 +262,8 @@ const SignUp = (props:any) => {
     <Portal
       selector="portal"
       show={props.show}>
-      <div className="fixed">
-        <div className=' absolute top-0 right-0 left-0 z-10 w-[100%] h-[100%] border flex justify-center items-center'>
+      <div className="static">
+        <div className=' fixed top-0 right-0 left-0 z-10 w-[100%] h-[100%] border flex justify-center items-center'>
           <div className={block +  "  w-[300px] h-[400px] border-2 rounded-md border-[#006341] shadow-lg shadow-green-900/50  bg-white"}>
             
             {(!signUpSeccess)?<>

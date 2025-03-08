@@ -7,7 +7,7 @@ const LoginMove = () => {
     <>
       <div className="grid place-items-center grid-cols-1">
 				<div className="flex justify-center mt-40 mb-4">
-					<p className="text-xl font-bold">You need to Login.</p>
+					<p className="text-xl font-bold">You need to SignIn.</p>
 				</div>
 			</div>
     </>

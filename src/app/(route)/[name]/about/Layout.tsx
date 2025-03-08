@@ -6,11 +6,11 @@ import loadingScreenShow from "@/app/store/loadingScreen";
 import { transactionAuth } from "@/app/utils/axiosAuth";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import HomeMove from "@/app/components/common/HomeMove";
-import HeaderUpdateMove from "@/app/components/common/HeaderUpdateMove";
+// import HomeMove from "@/app/components/common/HomeMove";
+// import HeaderUpdateMove from "@/app/components/common/HeaderUpdateMove";
 import Header from "../_componets/Header";
 import Main from "./Main";
-import AboutUpdateMove from "@/app/components/common/AboutUpdateMove";
+// import AboutUpdateMove from "@/app/components/common/AboutUpdateMove";
 
 const Layout = () => {
 
@@ -87,10 +87,10 @@ const Layout = () => {
         (resLayoutYn)?
         <div>
         {
-          (hearderLayoutYn)?<Header hearderLayout={hearderLayout}/>
+          (hearderLayoutYn)?<Header hearderLayout={hearderLayout} restaurantName={restaurantName}/>
           :
           <div>
-            <HeaderUpdateMove name={restaurantName}/>
+            {/* <HeaderUpdateMove name={restaurantName}/> */}
           </div>
         }
 
@@ -98,11 +98,12 @@ const Layout = () => {
           (layoutYn)?<Main aboutLayout={layout} latLng={latLng} address={address} />
           :
           <div>
-            <AboutUpdateMove name={restaurantName}/>
+            {/* <AboutUpdateMove name={restaurantName}/> */}
           </div>
         }
         </div>
-        :<HomeMove/>
+        :""
+        // <HomeMove/>
       }
 
       

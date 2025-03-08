@@ -1,12 +1,10 @@
 'use client';
 
-import userState from "@/app/store/user";
 import { useRouter } from "next/navigation";
 
 
 
 const HeaderUpdateMove = (props:any) => {
-  const userStateSet = userState();
   const router = useRouter();
   function gotoScreenOnClick(){
     router.push("/" + props.name + "/headerupdate");
@@ -18,17 +16,12 @@ const HeaderUpdateMove = (props:any) => {
 				<div className="flex justify-center mt-40 mb-4">
 					<p className="text-[#006341]">There is no header update layout.
 
-          {
-            (userStateSet.id)?
             <button
             onClick={()=>gotoScreenOnClick()} 
             className="cursor-pointer font-bold text-[#006341] hover:text-[#CE1126]">
             Go to headerupdate 
             </button>
-            :
-            ""
-          }
-
+          
           
           </p>
         </div>

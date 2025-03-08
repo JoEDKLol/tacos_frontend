@@ -260,9 +260,11 @@ const Main = () => {
     }
     
     const retObj = await transactionAuth("get", "res/searchreslist", obj, "", false, true, screenShow, errorShow);
+      
     if(retObj.sendObj.success==="y"){
-      // console.log(retObj.sendObj.resObj);
-      setRestaurant(retObj.sendObj.resObj);
+      if(retObj.sendObj.resObj.length > 0){
+        setRestaurant(retObj.sendObj.resObj);
+      }
     }
   }
 
@@ -801,14 +803,19 @@ const Main = () => {
     const retObj = await transactionAuth("get", "searchuser", obj, "", false, true, screenShow, errorShow);
 
     if(retObj.sendObj.success==="y"){
+
+      
+
       setUserimg(retObj.sendObj.resObj.searchUser.userimg);
       setUserthumbImg(retObj.sendObj.resObj.searchUser.userthumbImg);
-      setUsername(retObj.sendObj.resObj.searchUser.username);
+      if(retObj.sendObj.resObj.searchUser.username){
+        setUsername(retObj.sendObj.resObj.searchUser.username);
+      }
+    
       setComments(retObj.sendObj.resObj.searchComment);
       setLikes(retObj.sendObj.resObj.searchLike);
       setCommentsCnt(retObj.sendObj.resObj.commentsCnt);
       setLikesCnt(retObj.sendObj.resObj.likesCnt);
-
       setCommentsCurrentSeq(retObj.sendObj.resObj.lastCommentSeq);
       setLikesCurrentSeq(retObj.sendObj.resObj.lastLikeSeq);
     }
@@ -1240,16 +1247,13 @@ const Main = () => {
             //profile/////////////////////////////////////////////////////////// 
             <div className="flex justify-center w-full">
               <div className="flex flex-col w-[80%]">
-              {
-                  (restaurant.length > 0)?
                   <div>
                     <div className="flex justify-end mt-2">
                       <ButtonSmall 
                       onClick={()=>userSaveOnClick()}
                       name={"SAVE"}/> 
                     </div>
-                  </div>:""
-                }
+                  </div>
 
                 
 

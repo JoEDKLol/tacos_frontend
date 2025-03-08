@@ -75,7 +75,7 @@ const Main = (props:any) => {
     const retObj = await transaction("get", "res/menusearch", obj, "", false, true, screenShow, errorShow);
 
     if(retObj.sendObj.success === "y"){
-      console.log(retObj.sendObj.resObj);
+      // console.log(retObj.sendObj.resObj);
       setMenus(retObj.sendObj.resObj)
     }
   }

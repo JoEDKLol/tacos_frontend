@@ -11,9 +11,9 @@ import CommonTransaction from "./api/common/Index";
 export const metadata: Metadata = {
   title: "taco oaxaca",
   description: "taco oaxaca",
-  // icons: {
-  //   icon: "/tacos.ico",
-  // },  
+  icons: {
+    icon: "/tacos.ico",
+  },  
 };
 
 
