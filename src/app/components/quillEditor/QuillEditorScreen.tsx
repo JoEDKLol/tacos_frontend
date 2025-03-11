@@ -29,7 +29,7 @@ const QuillEditorScreen = (props:any) => {
   const imageHandler = async (imageBase64URL:any, imageBlob:any, editor:any) => {
 
     // const imgUploadRes = await transactionFile("blog/fileUpload", imageBlob, obj, "", false, true, setLoadingBarState, setErrorPage);
-    const imgUploadRes = await transactionFile("res/fileUpload", imageBlob, {}, "", false, true, screenShow, errorShow);
+    const imgUploadRes = await transactionFile("res/fileUploadS3", imageBlob, {}, "", false, true, screenShow, errorShow);
 
     if(imgUploadRes.sendObj.success === "y"){
       const range = editor.getSelection();

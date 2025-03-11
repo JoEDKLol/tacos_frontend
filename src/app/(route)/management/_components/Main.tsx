@@ -364,7 +364,7 @@ const Main = () => {
     try {
 
       const compressedFile = await imageCompression(file, options);
-      const imgUploadRes = await transactionFile("res/fileUpload", compressedFile, {}, "", false, true, screenShow, errorShow);
+      const imgUploadRes = await transactionFile("res/fileUploadS3", compressedFile, {}, "", false, true, screenShow, errorShow);
       if(imgUploadRes.sendObj.success === 'y'){
         setImg(imgUploadRes.sendObj.resObj.img_url);
         setThumbImg(imgUploadRes.sendObj.resObj.thumbImg_url);
@@ -494,7 +494,7 @@ const Main = () => {
 
       const compressedFile = await imageCompression(file, options);
       
-      const imgUploadRes = await transactionFile("res/fileUpload", compressedFile, {}, "", false, true, screenShow, errorShow);
+      const imgUploadRes = await transactionFile("res/fileUploadS3", compressedFile, {}, "", false, true, screenShow, errorShow);
       if(imgUploadRes.sendObj.success === 'y'){
         // setImg(imgUploadRes.sendObj.resObj.img_url);
         // setThumbImg(imgUploadRes.sendObj.resObj.thumbImg_url);
@@ -749,11 +749,10 @@ const Main = () => {
     };
 
 
-
     try {
 
       const compressedFile = await imageCompression(file, options);
-      const imgUploadRes = await transactionFile("res/fileUpload", compressedFile, {}, "", false, true, screenShow, errorShow);
+      const imgUploadRes = await transactionFile("res/fileUploadS3", compressedFile, {}, "", false, true, screenShow, errorShow);
       if(imgUploadRes.sendObj.success === 'y'){
         setUserimg(imgUploadRes.sendObj.resObj.img_url);
         setUserthumbImg(imgUploadRes.sendObj.resObj.thumbImg_url);
@@ -767,9 +766,22 @@ const Main = () => {
 
   }
 
-  function userDeleteImg(){
-    setUserimg("");
-    setUserthumbImg("");
+  async function userDeleteImg(){
+    // console.log(userimg);
+    // console.log("uploads"+userimg.split("uploads")[1]);
+    
+    const obj = {
+      userseq:userStateSet.userseq,
+      email:userStateSet.email,
+      file_key:"uploads"+userimg.split("uploads")[1],
+    }
+    
+    const retObj = await transactionAuth("post", "res/fileDeleteS3", obj, "", false, true, screenShow, errorShow);
+    if(retObj.sendObj.success === 'y'){
+      setUserimg("");
+      setUserthumbImg("");
+    }
+    
   }
 
 

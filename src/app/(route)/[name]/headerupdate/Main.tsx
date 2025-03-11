@@ -798,7 +798,7 @@ const Main = () => {
 
       const compressedFile = await imageCompression(file, options);
       
-      const imgUploadRes = await transactionFile("res/fileUpload", compressedFile, {}, "", false, true, screenShow, errorShow);
+      const imgUploadRes = await transactionFile("res/fileUploadS3", compressedFile, {}, "", false, true, screenShow, errorShow);
       if(imgUploadRes.sendObj.success === 'y'){
         // setImg(imgUploadRes.sendObj.resObj.img_url);
         // setThumbImg(imgUploadRes.sendObj.resObj.thumbImg_url);
@@ -838,7 +838,7 @@ const Main = () => {
 
       const compressedFile = await imageCompression(file, options);
       
-      const imgUploadRes = await transactionFile("res/fileUpload", compressedFile, {}, "", false, true, screenShow, errorShow);
+      const imgUploadRes = await transactionFile("res/fileUploadS3", compressedFile, {}, "", false, true, screenShow, errorShow);
       if(imgUploadRes.sendObj.success === 'y'){
         // setImg(imgUploadRes.sendObj.resObj.img_url);
         // setThumbImg(imgUploadRes.sendObj.resObj.thumbImg_url);
