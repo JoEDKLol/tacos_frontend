@@ -5,7 +5,7 @@ import { CiSettings } from "react-icons/ci";
 import { PiHashStraightBold } from "react-icons/pi";
 import { GrRefresh } from "react-icons/gr";
 import { CgClose } from "react-icons/cg";
-// import { AiFillLike } from "react-icons/ai";
+import { PiQrCodeLight } from "react-icons/pi";
 import { AiOutlineLike } from "react-icons/ai";
 const ButtonLg = (props:any) => {
   return (
@@ -265,13 +265,24 @@ const ButtonLikeNotWorking = () => {
   );
 }
 
+const ButtonQRMove = (props:any) => {
+  return (
+    <button
+    onClick={props.onClick}
+    className="hover:bg-[#006341] bg-white hover:text-white text-[#006341] 
+    border-[#006341] border px-1 rounded text-xs font-bold
+    flex justify-center" 
+    ><span className="pt-[1px] pe-[2px] text-[14px]"><PiQrCodeLight/></span>{props.name}</button> 
+  );
+}
+
 
 export {ButtonLg, ButtonBase, ButtonSmall, ButtonSmallMove, ButtonTag, 
   ButtonSmallSettingMove, ButtonTagSearch, ButtonTagListInMainSearch
   , ButtonHashTagAddMainSearch, ButtonHashTagAddMainSearchIcon, ButtonTagHome
   , ButtonNextSearcHome, ButtonRefresh, ButtonClose, ButtonComment
   , ButtonCommentSelected, ButtonCommentSave, ButtonLike, ButtonDisLike
-  , ButtonLikeNotWorking, ButtonXSmall
+  , ButtonLikeNotWorking, ButtonXSmall, ButtonQRMove
 };
 
 

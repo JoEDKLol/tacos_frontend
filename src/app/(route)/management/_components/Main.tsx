@@ -1,6 +1,6 @@
 'use client';
 
-import { ButtonCommentSave, ButtonSmall, ButtonSmallMove, ButtonSmallSettingMove, ButtonTag } from "@/app/components/common/buttonComponents/Button";
+import { ButtonCommentSave, ButtonQRMove, ButtonSmall, ButtonSmallMove, ButtonSmallSettingMove, ButtonTag } from "@/app/components/common/buttonComponents/Button";
 import LoginMove from "@/app/components/common/LoginMove";
 // import GoogleMap3 from "@/app/components/googleMap/GoogleMap3";
 // import GoogleMapPopup from "@/app/components/googleMap/googleMapPopup";
@@ -282,14 +282,19 @@ const Main = () => {
   
 
   function deleteImg(){
-    setImg("");
+    resDeleteImg();
   }
 
   function eachDeleteImg(restaurantseq:any){
-    const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
-    restaurant[choosenIndex].img = "";
-    restaurant[choosenIndex].thumbImg = "";
-    setRestaurant([...restaurant]);
+
+    // const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
+    // restaurant[choosenIndex].img = "";
+    // restaurant[choosenIndex].thumbImg = "";
+    // setRestaurant([...restaurant]);
+
+    resEachDeleteImg(restaurantseq);
+  
+  
   }
 
   function init(){
@@ -416,7 +421,7 @@ const Main = () => {
     setRestaurantAddressIndex(choosenIndex);
     setRestaurant([...restaurant]);
   }
-////////////////////////////
+
   function eachIntroductionOnChange(e:any, restaurantseq:any){
     setCurrentFocusRestaurantName(false);
     setCurrentFocusRestaurantAddress(false);
@@ -522,11 +527,16 @@ const Main = () => {
     if(res){
       if(parfName === "UPDATE"){  
         updateOnClick(parValues[0]);
-      }
-      else if(parfName === "DELETE"){
+      }else if(parfName === "DELETE"){
         deleteOnClick(parValues[0]);
       }else if(parfName === "SAVE"){
         saveOnClick();
+      }else if(parfName === "IMGDELETE"){
+        deleteImg();
+      }else if(parfName === "EACHIMGDELETE"){
+        eachDeleteImg(parValues[0]);
+      }else if(parfName === "USERIMGDELETE"){
+        userDeleteImg();
       }
       
       
@@ -695,7 +705,7 @@ const Main = () => {
     if(page==="home") router.push('/' + name + "/homeupdate");
     if(page==="about") router.push('/' + name + "/aboutupdate");
     if(page==="menu") router.push('/' + name + "/menuupdate");
-      
+    if(page==="qr") router.push('/' + name + "/qrcode");   
   }
 
   const googleHandleModal = (restaurantseq:number, showYn:boolean, type:string) => {
@@ -781,7 +791,40 @@ const Main = () => {
       setUserimg("");
       setUserthumbImg("");
     }
+  }
+
+  async function resDeleteImg(){
+    // console.log(userimg);
+    // console.log("uploads"+userimg.split("uploads")[1]);
     
+    const obj = {
+      userseq:userStateSet.userseq,
+      email:userStateSet.email,
+      file_key:"uploads"+img.split("uploads")[1],
+    }
+    
+    const retObj = await transactionAuth("post", "res/fileDeleteS3", obj, "", false, true, screenShow, errorShow);
+    if(retObj.sendObj.success === 'y'){
+      setImg("");
+      setThumbImg("");
+    }
+  }
+
+  async function resEachDeleteImg(restaurantseq:any){
+    const choosenIndex = restaurant.findIndex((val) => val.restaurantseq === restaurantseq);
+
+    const obj = {
+      userseq:userStateSet.userseq,
+      email:userStateSet.email,
+      file_key:"uploads"+restaurant[choosenIndex].img.split("uploads")[1],
+    }
+    
+    const retObj = await transactionAuth("post", "res/fileDeleteS3", obj, "", false, true, screenShow, errorShow);
+    if(retObj.sendObj.success === 'y'){
+      restaurant[choosenIndex].img = "";
+      restaurant[choosenIndex].thumbImg = "";
+      setRestaurant([...restaurant]);
+    }
   }
 
 
@@ -995,7 +1038,8 @@ const Main = () => {
                                 <div className="" > 
                                   <label className=" cursor-pointer text-[10px]  border hover:bg-gray-400 text-black font-bold py-1 px-1 rounded bg-gray-200"
                                   htmlFor="img_delete"
-                                  onClick={()=>eachDeleteImg(item.restaurantseq)}
+                                  // onClick={()=>eachDeleteImg(item.restaurantseq)}
+                                  onClick={()=>confirmModal("IMAGE DELETE", "EACHIMGDELETE", item.restaurantseq)}
                                   >
                                     Delete
                                   </label>
@@ -1007,7 +1051,8 @@ const Main = () => {
                                 <p className="pe-1 pb-1"><ButtonSmallSettingMove onClick={()=>movePageOnclickHandler("header", item.restaurantname)} name="header"/></p>
                                 <p className="pe-1 pb-1"><ButtonSmallSettingMove onClick={()=>movePageOnclickHandler("home", item.restaurantname)} name="home"/></p>
                                 <p className="pe-1 pb-1"><ButtonSmallSettingMove onClick={()=>movePageOnclickHandler("about", item.restaurantname)} name="about"/></p>
-                                <p className="pe-1 pb-1"><ButtonSmallSettingMove onClick={()=>movePageOnclickHandler("menu", item.restaurantname)} name="menu"/></p> 
+                                <p className="pe-1 pb-1 border-b mb-1"><ButtonSmallSettingMove onClick={()=>movePageOnclickHandler("menu", item.restaurantname)} name="menu"/></p> 
+                                <p className="pe-1 pb-1 "><ButtonQRMove onClick={()=>movePageOnclickHandler("qr", item.restaurantname)} name="QR code"/></p>
                               </div>
 
                             </div>
@@ -1154,7 +1199,8 @@ const Main = () => {
                         <div className="" > 
                           <label className=" cursor-pointer text-[10px]  border hover:bg-gray-400 text-black font-bold py-1 px-1 rounded bg-gray-200"
                           htmlFor="img_delete"
-                          onClick={()=>deleteImg()}
+                          // onClick={()=>deleteImg()}
+                          onClick={()=>confirmModal("IMAGE DELETE", "IMGDELETE", "")}
                           >
                             Delete
                           </label>
@@ -1313,7 +1359,8 @@ const Main = () => {
                       <div className="" > 
                         <label className=" cursor-pointer text-[10px]  border hover:bg-gray-400 text-black font-bold py-1 px-1 rounded bg-gray-200"
                         htmlFor="img_delete"
-                        onClick={()=>userDeleteImg()}
+                        // onClick={()=>userDeleteImg()}
+                        onClick={()=>confirmModal("DELETE", "USERIMGDELETE", "")}
                         >
                           Delete
                         </label>
