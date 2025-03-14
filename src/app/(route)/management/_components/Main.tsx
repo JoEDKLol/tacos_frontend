@@ -264,6 +264,8 @@ const Main = () => {
     if(retObj.sendObj.success==="y"){
       if(retObj.sendObj.resObj.length > 0){
         setRestaurant(retObj.sendObj.resObj);
+      }else{
+        setRestaurant([]);
       }
     }
   }
