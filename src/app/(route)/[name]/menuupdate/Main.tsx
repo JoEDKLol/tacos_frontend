@@ -751,7 +751,7 @@ const Main = () => {
     const retObj = await transactionAuth("post", "management/menusave", obj, "", false, true, screenShow, errorShow);
     // console.log(retObj);
     if(retObj.sendObj.success === "y"){
-
+      menuSearch();
     }
   }
 
@@ -822,7 +822,10 @@ const Main = () => {
   function menuUpdateScreen(obj:any){
 
     setMenuUpdateYn(true);
-    setMenuCategoryId(obj.categoryid);
+
+    console.log(obj.categoryid);
+
+    setMenuCategoryId((obj.categoryid)?obj.categoryid:"");
     setImg(obj.img);
     setMenuScreenYn(true);
     setMenuName(obj.name);
@@ -2270,9 +2273,8 @@ const Main = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 justify-center
-                2xl:flex  xl:flex  lg:flex  md:flex  sm:grid
-                2xl:flex-wrap  xl:flex-wrap  lg:flex-wrap  md:flex-wrap  sm:grid-cols-1  "
+                <div className="flex flex-wrap justify-center
+                  "
                 style={{
                   marginTop:menuBoxMarginTop+"px",
                   marginLeft:menuBoxMarginLeft+"px",

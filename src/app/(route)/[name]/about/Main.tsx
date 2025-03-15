@@ -12,7 +12,7 @@ const Main = (props:any) => {
       <div className={" h-[100%] p-1 flex justify-center  " } style={{backgroundColor:layout.bgColor, paddingTop:layout.quillTop + "px"}}>
         <div className="">  
           <QuillEditorScreen bgColor={layout.bgColorQuill} content={layout.content} readOnly={true} styleType={"style2"} quillWidth={layout.quillWidth}/>
-          <div className="mt-10 grid grid-cols-1
+          <div className="my-10 grid grid-cols-1
           2xl:flex xl:flex lg:flex md:flex sm:grid
           2xl:justify-center xl:justify-center lg:justify-center md:justify-center sm:grid-cols-1
           ">

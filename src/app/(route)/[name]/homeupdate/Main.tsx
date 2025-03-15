@@ -215,7 +215,7 @@ const Main = () => {
                     </div> 
                     <div className="flex justify-center">
                       <p className="m-1 flex justify-between w-full">
-                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={bgColorButton} 
+                        <input className="text-sm p-1 ps-2 w-[90px] border border-[#006341] outline-none rounded" value={quillColorButton} 
                         onChange={(e)=>quillBgInputOnchage(e)}
                         />
                         <button className="text-xs w-[30%] border border-[#006341] bg-white text-[#006341] hover:bg-[#006341] hover:text-white font-bold py-1 rounded"

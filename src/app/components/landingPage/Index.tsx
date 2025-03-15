@@ -17,22 +17,22 @@ const LangdingPage = () => {
 
     const img1 = {
       index : 0,
-      url : "/landingImgs/_8f324ccf-2985-4ba4-9e12-f5f6e8119eea.jpg"
+      url : "/landingImgs/restaurant.PNG"
     }
 
     const img2 = {
       index : 1,
-      url : "/landingImgs/_36d446e2-cd81-46e7-810e-38de6556f484.jpg"
+      url : "/landingImgs/header.PNG"
     }
 
     const img3 = {
       index : 2,
-      url : "/landingImgs/_77107536-e204-4bfc-9ef2-4e35057cfd14.jpg"
+      url : "/landingImgs/about.PNG"
     }
 
     const img4 = {
       index : 3,
-      url : "/landingImgs/_a3f7f0c8-832f-459c-a0de-373f90e63e0b.jpg"
+      url : "/landingImgs/menu.PNG"
     }
 
 
@@ -122,6 +122,8 @@ const LangdingPage = () => {
                   alt=""
                   quality={30} // 이미지 품질, 기본값 75
                   layout="fill"
+                  // width={200}
+                  // height={200}
                   style={{ objectFit: "cover", borderRadius: "10px" }}
                   />
                 </div>

@@ -197,6 +197,7 @@ const Main = () => {
             locationTextSize:"15", 
             addressTextSize:"15", 
             phoneNumberTextSize:"15", 
+            phoneNum:"",
           }
         );
         
@@ -561,7 +562,7 @@ const Main = () => {
                 
                 <div className="">
                   <QuillEditorScreen bgColor={bgColorQuill} content={content} setContent={setContent} readOnly={readOnly} styleType={"style"} quillWidth={quillWidth} />
-                  <div className="mt-10 grid grid-cols-1 
+                  <div className="my-10 grid grid-cols-1 
                   2xl:flex xl:flex lg:flex md:flex sm:grid
                   2xl:justify-center xl:justify-center lg:justify-center md:justify-center sm:grid-cols-1
                   ">

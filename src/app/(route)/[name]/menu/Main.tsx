@@ -133,9 +133,8 @@ const Main = (props:any) => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 justify-center
-        2xl:flex  xl:flex  lg:flex  md:flex  sm:grid
-        2xl:flex-wrap  xl:flex-wrap  lg:flex-wrap  md:flex-wrap  sm:grid-cols-1  "
+        <div className="flex flex-wrap justify-center
+         "
         style={{
           marginTop:layout.menuBoxMarginTop+"px",
           marginLeft:layout.menuBoxMarginLeft+"px",
