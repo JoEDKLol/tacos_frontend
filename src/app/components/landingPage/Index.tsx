@@ -143,10 +143,10 @@ const LangdingPage = () => {
           }
 
                 <div className="h-[400px] w-[400px] absolute z-10 flex justify-between items-center">
-                  <button className="bg-slate-500 text-2xl ps-1 pe-2 py-2 ms-1 rounded-lg opacity-70 text-white"
+                  <button className="bg-slate-500 text-2xl ps-1 pe-2 py-2 ms-1 rounded-lg opacity-50 text-white"
                   onClick={()=>imgBtnOnClick("prev")}
                   ><IoIosArrowBack/></button>
-                  <button className="bg-slate-500 text-2xl ps-1 pe-2 py-2 me-1 rounded-lg opacity-70 text-white"
+                  <button className="bg-slate-500 text-2xl ps-1 pe-2 py-2 me-1 rounded-lg opacity-50 text-white"
                   onClick={()=>imgBtnOnClick("next")}
                   ><IoIosArrowForward/></button>
                 </div>

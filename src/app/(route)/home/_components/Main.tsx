@@ -22,6 +22,14 @@ import GoogleMapPopupMain from "@/app/components/modals/GoogleMapPopupMain";
 import { VscEdit } from "react-icons/vsc";
 import { VscSaveAs } from "react-icons/vsc";
 import { VscTrash } from "react-icons/vsc";
+// import UserProfile from "@/app/components/modals/UserProfile";
+import Link from "next/link";
+
+// interface userInfo {
+//   _id:string,
+//   userimg:string, 
+//   username:string,
+// }
 
 const Main = () => {
   const userStateSet = userState();
@@ -41,6 +49,13 @@ const Main = () => {
 
 
   const [showCustomConfirmPortal, setShowCustomConfirmPortal] = useState<boolean>(false);
+  
+  // const [showUserProfile, setShowUserProfile] = useState<boolean>(false);
+  // const [userProfileInfo, setUserProfileInfo] = useState<userInfo>({
+  //   _id:"",
+  //   userimg:"", 
+  //   username:"",
+  // });
 
   const showCustomConfirmHandleModal = (showYn:boolean) => {
     setShowCustomConfirmPortal(showYn);
@@ -409,6 +424,17 @@ const Main = () => {
     }
   }
 
+  // const userProfileModal = (showYn:boolean) => {
+  //   setShowUserProfile(showYn);
+  // };
+
+  // function commentNameClick(info:userInfo){
+  //   // setUserProfileInfo(info);
+  //   // userProfileModal(true);
+
+    
+  // }
+
   return(
     <div className="">
       <div className=""> 
@@ -422,6 +448,7 @@ const Main = () => {
         />
 
         <GoogleMapPopupMain show={showGoogleMapPortal} latLng={latLng} googleHandleModal={googleHandleModal} />
+        {/* <UserProfile show={showUserProfile} userProfileModal={userProfileModal} userInfo={userProfileInfo} /> */}
               
       </div>
       <div className="w-full">
@@ -623,15 +650,29 @@ const Main = () => {
                                 <div className="border-2 mb-2 rounded border-[#006341]  ">
                                   <div className="mx-1 my-2 flex justify-between w-full">
                                     <p className=" flex items-end">
-                                      <span className=" inline-block items-center font-bold truncate text-ellipsis max-w-[100px] 
-                                      2xl:max-w-[220px] xl:max-w-[220px] lg:max-w-[220px] md:max-w-[160px] sm:max-w-[100px]
-                                      bg-white   border-[#006341] px-1 text-xs rounded ">
-                                      {
-                                      (!val.userinfo.username)?"guest":
-                                      val.userinfo.username
                                       
-                                      }
-                                      </span>
+                                        <span 
+                                        // onClick={()=>commentNameClick(val.userinfo)}
+                                        className=" inline-block items-center font-bold truncate text-ellipsis max-w-[100px] 
+                                        2xl:max-w-[220px] xl:max-w-[220px] lg:max-w-[220px] md:max-w-[160px] sm:max-w-[100px]
+                                        hover:text-sm hover:underline cursor-pointer 
+                                        bg-white   border-[#006341] px-1 text-xs rounded  ">
+
+                                        <Link href={{
+                                          pathname: '/profile',
+                                          query: { id: val.userinfo._id },
+                                        }}
+                                        // as={`/profile/`}
+                                        >
+                                          {
+                                          (!val.userinfo.username)?"guest":
+                                          val.userinfo.username 
+                                          }
+
+                                          </Link>
+
+                                        </span>
+                                       
                                       <span className="inline-block ms-1 text-xs truncate max-w-[80px]
                                       2xl:max-w-[220px] xl:max-w-[220px] lg:max-w-[220px] md:max-w-[160px] sm:max-w-[100px]
                                       ">
