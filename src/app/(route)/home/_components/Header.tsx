@@ -267,25 +267,6 @@ const Header = () => {
   }
 
 
-
-  // async function setRestaurantLikes(){
-  //   const obj = {
-  //     userseq:userStateSet.userseq,
-  //   }
-  //   console.log(restaurantListSet.restaurantList);
-  //   const retObj = await transactionAuth("get", "res/likesearch", obj, "", false, true, screenShow, errorShow);
-    
-  //   if(retObj.sendObj.success === "y"){
-
-  //     if(retObj.sendObj.resObj.length > 0){
-
-
-
-  //     }
-
-  //   }
-
-  // }
   
   return( 
     <header

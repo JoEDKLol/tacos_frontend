@@ -76,7 +76,7 @@ const Main = () => {
   const [listLayOut2, setListLayOut2] = useState<string>(" hover:text-[#819e94] hover:border-[#819e94] ");
   
   const searchParams = useSearchParams()
-  const userId = searchParams.get('id')
+  const userId = searchParams.get('id') || '';
   const router = useRouter();
 
   useEffect(()=>{

@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Layout from "./_componests/Layout";
 
 
@@ -6,7 +7,7 @@ import Layout from "./_componests/Layout";
 const Profile = () => {
   
   return(<>  
-    <><Layout/></>
+    <Suspense><Layout/></Suspense>
   </>
   );
 };
