@@ -50,12 +50,11 @@ const handler = NextAuth({
 	],
 	callbacks: {        
 		async signIn({ user, account}) {
-
 			if(account){
 				if(account.provider === "google"){
 					try{
 						const obj = await transaction("post", "googlesignin", user, "", false, false, "", null);
-						if(obj.refreshToken){
+					  if(obj.refreshToken){
 							setCookies(obj.refreshToken);
 						}else{
 							return false;
@@ -78,8 +77,8 @@ const handler = NextAuth({
 		
 	},
 	pages: {
-		signIn: "/", // custom sign-in page's url 
-		error: '/',
+		signIn: "/home", // custom sign-in page's url 
+		error: '/home',
 	},
     
   });
