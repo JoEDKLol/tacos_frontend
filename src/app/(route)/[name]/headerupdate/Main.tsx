@@ -424,11 +424,13 @@ const Main = () => {
     setMenuTextBoxSizeHeight(menuTextBoxSizeHeightNum + "")
   }
 
+  //header logo
   function deleteImg(){
     setImg("");
     setThumbImg("");
   }
 
+  //header bg img
   function deleteHearderImg(){
     setHearderImg("");
     setHearderThumbImg("");

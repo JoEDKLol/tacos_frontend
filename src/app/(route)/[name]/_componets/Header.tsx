@@ -41,7 +41,7 @@ const Header = (props:any) => {
                   <Image
                   src={layout.hearderImg}
                   alt=""
-                  quality={70} 
+                  quality={75} 
                   layout="fill"
                   loading="lazy"
                   style={{ objectFit: "cover"}}
@@ -74,7 +74,7 @@ const Header = (props:any) => {
                     layout.img ? <Image
                     src={layout.img}
                     alt=""
-                    quality={70} 
+                    quality={75} 
                     layout="fill"
                     loading="lazy"
                     style={{ 

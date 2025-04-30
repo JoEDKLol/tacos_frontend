@@ -12,7 +12,7 @@ const Main = () => {
   return(
     <div className="">  
       
-      <div className=' flex justify-center items-center h-[100vh]'>
+      <div className=' flex justify-center items-center pb-32 h-[100vh]'>
         <div>
           <p className='font-bold text-center text-2xl text-[#006341]'>{restaurantName + " QR code"}</p>
           <div className='border-2 rounded-lg mt-3 p-0.5 border-[#006341]'>
@@ -22,7 +22,7 @@ const Main = () => {
               errorCorrectionLevel: 'M',
               margin: 3,
               scale: 4,
-              width: 400,
+              width: 350,
               color: {
                 dark: '#006341',
                 // light: '#FFBF60FF',

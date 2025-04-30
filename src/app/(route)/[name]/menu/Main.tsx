@@ -174,7 +174,7 @@ const Main = (props:any) => {
                           
                               <Image 
                               src={data.img}
-                              quality={30}
+                              quality={75}
                               layout="fill"
                               style={{ objectFit: "cover" , borderRadius:layout.imgBoxRadius + "px",  }}
                               alt='' />

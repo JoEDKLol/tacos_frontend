@@ -1,4 +1,4 @@
-'use client';0
+'use client';
 const checkInputData = (userObj:any) => {
     //userName:'', email:'', password:'', repassword:''
     

@@ -46,7 +46,7 @@ const UserProfile = (props:any) => {
                   (props.userInfo.userimg)?
                   <Image
                   src={props.userInfo.userimg}
-                  quality={30}
+                  quality={75}
                   layout="fill"
                   style={{ objectFit: "cover" , borderRadius: '5px' }}
                   alt='' />

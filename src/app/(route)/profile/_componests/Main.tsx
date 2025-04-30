@@ -218,7 +218,7 @@ const Main = () => {
                           (userimg)?
                           <Image 
                           src={userimg}
-                          quality={30}
+                          quality={75}
                           layout="fill"
                           style={{ objectFit: "cover" , borderRadius: '5px' }}
                           alt='' />
@@ -337,7 +337,7 @@ const Main = () => {
                                     <div className='ring-1 w-[55px] h-[55px] ring-[#006341] rounded relative ' >
                                     <Image 
                                     src={value.restaurantinfo.thumbImg}
-                                    quality={30}
+                                    quality={75}
                                     layout="fill"
                                     style={{ objectFit: "cover" , borderRadius: '5px' }}
                                     alt='' />

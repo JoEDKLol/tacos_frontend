@@ -62,7 +62,7 @@ const CommonHearder = () => {
 
     {
       (signinYn)?
-      <div className={`w-full mt-1 border-b-2 border-white flex justify-end items-center border h-[24px]`}>
+      <div className={`w-full mt-1 border-b-2 bg-white flex justify-end items-center border h-[24px]`}>
         <button 
         onClick={()=>movetoHomeOnclickHandler()}
         className="text-[10px] mr-1 px-2 py-0.5 border rounded-3xl bg-[#588676] text-white">

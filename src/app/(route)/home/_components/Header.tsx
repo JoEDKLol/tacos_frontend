@@ -285,7 +285,7 @@ const Header = () => {
             <Image
               src={"/logo/logo2.jpg"}
               alt=""
-              quality={30} // 이미지 품질, 기본값 75
+              quality={75} // 이미지 품질, 기본값 75
               layout="fill"
               style={{ objectFit: "cover", borderRadius: '12px'}}
               />

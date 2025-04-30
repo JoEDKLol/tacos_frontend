@@ -132,7 +132,7 @@ const LangdingPage = () => {
                   <Image
                   src={value.url}
                   alt=""
-                  quality={30} // 이미지 품질, 기본값 75
+                  quality={75} // 이미지 품질, 기본값 75
                   layout="fill"
                   // width={200}
                   // height={200}

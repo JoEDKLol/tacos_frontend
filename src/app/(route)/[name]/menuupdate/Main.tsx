@@ -1317,7 +1317,7 @@ const Main = () => {
                                 
                                     <Image 
                                     src={img}
-                                    quality={30}
+                                    quality={75}
                                     layout="fill"
                                     style={{ objectFit: "cover" , borderRadius: '5px' }}
                                     alt='' />
@@ -2314,9 +2314,9 @@ const Main = () => {
                                   
                                       <Image 
                                       src={data.img}
-                                      quality={30}
+                                      quality={75}
                                       layout="fill"
-                                      style={{ objectFit: "cover" , borderRadius:imgBoxRadius + "px",  }}
+                                      style={{ objectFit: "cover" ,  borderRadius:imgBoxRadius + "px",  }} //objectPosition:"50% 50%",
                                       alt='' />
                                   ) : ""
                                 }

@@ -66,9 +66,9 @@ const QuillEditorScreen = (props:any) => {
       },
       
       imageCompress: {
-        quality: 0.5,
-        maxWidth: 500, 
-        maxHeight: 500, 
+        quality: 1,
+        maxWidth: 1000, 
+        maxHeight: 1000, 
         debug: false, // default
         suppressErrorLogging: false, 
         // insertIntoEditor : undefined
